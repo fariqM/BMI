@@ -1,0 +1,11 @@
+<<<BUNDLE>>>>>
+Vue-Router
+NobleUI
+MetisMenu
+laravel-vue-datatable
+
+
+
+####Form Validation with lenght input 
+https://bootstrap-vue.org/docs/components/form-input#formatter-support 
+- di taruh samping kanan bawah form, dengan dibungkus badge

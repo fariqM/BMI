@@ -1,0 +1,34 @@
+.sidebar .sidebar-body .nav .nav-item .nav-link:hover {
+    color: #AE5A2C; 
+}
+.sidebar .sidebar-body .nav .nav-item .nav-link[aria-expanded="true"] {
+    color: #AE5A2C; 
+}
+.sidebar .sidebar-body .nav .nav-item:hover .nav-link .link-title {
+    margin-left: 36px; 
+}
+.sidebar .sidebar-body .nav .nav-item:hover .nav-link .link-icon {
+    color: #AE5A2C;
+    fill: rgba(239, 243, 255, 0.5); 
+}
+.costum-nav-item:hover .costum-nav-link{
+    -webkit-transition: all .3s ease-in-out;
+            transition: all .3s ease-in-out;
+    margin-left: 9px;
+}
+.costum-nav-item .costum-nav-link{
+    -webkit-transition: all .7s ease-in-out;
+    -webkit-transition: all .4s ease-in-out;
+    transition: all .4s ease-in-out;
+}
+.costum-nav-item:hover{
+    color: #AE5A2C;
+}
+
+.costum-nav-item-active{
+    color: #AE5A2C;
+}
+
+ .costum-submenu{
+    margin-left:6px
+}
