@@ -17,13 +17,19 @@ import { TablePlugin, IconsPlugin, ButtonPlugin  } from 'bootstrap-vue'
 // IziToast
 import VueIziToast from 'vue-izitoast';
 import 'izitoast/dist/css/iziToast.css';
+import VueSweetalert2 from 'vue-sweetalert2';
+import 'sweetalert2/dist/sweetalert2.min.css';
+import MaskedInput from 'vue-text-mask'
 
 Vue.use(TablePlugin)
 Vue.use(IconsPlugin)
 Vue.use(ButtonPlugin)
-
 Vue.use(VueIziToast);
 Vue.use(VueRouter);
+Vue.use(VueSweetalert2);
+
+
+Vue.component('masked-input', MaskedInput);
 
 Vue.component('navigation', require('./components/Navigation.vue').default);
 Vue.component('navbar', require('./components/Navbar.vue').default);

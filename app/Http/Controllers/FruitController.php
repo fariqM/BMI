@@ -19,25 +19,43 @@ class FruitController extends Controller
     }
 
     public function addfruit(){
-        request()->validate([
+        $fruit = request()->validate([
             'name' => 'required|min:3',
             'varian' => 'required',
             'latin_name' => 'required',
             'origin' => 'required',
             'year_found' => 'required',
         ]);
-
-        $fruit =Fruit::create([
-            'name' => request('name'),
-            'varian' => request('varian'),
-            'latin_name' => request('latin_name'),
-            'origin' => request('origin'),
-            'year_found' => request('year_found'),
-        ]);
+        Fruit::create($fruit);
 
         return response()->json([
             'message' => 'Succes',
             // 'fruit' => $fruit,
         ]);
+    }
+
+    public function update(Fruit $fruit){     
+
+        $attr = request()->validate([
+            'name' => 'required|min:3',
+            'varian' => 'required',
+            'latin_name' => 'required',
+            'origin' => 'required',
+            'year_found' => 'required',
+        ]);
+       
+        
+        $fruit->update($attr);
+
+        return response()->json([
+            'message' => 'success',
+        ]);
+    }
+
+    public function destroy(Fruit $fruit){
+        $fruit->delete();
+        return response()->json([
+            'message' => 'success',
+        ],200);
     }
 }

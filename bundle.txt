@@ -3,6 +3,10 @@ Vue-Router
 NobleUI
 MetisMenu
 laravel-vue-datatable
+https://github.com/text-mask/text-mask
+SweetAlert2
+IziAlert
+
 
 
 

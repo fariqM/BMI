@@ -55,6 +55,7 @@
 										<b-icon icon="arrow-clockwise" aria-hidden="true"></b-icon>
 										segarkan
 									</b-button>
+								
 								</div>
 								<div>
 									<b-button
@@ -115,19 +116,26 @@
 										</svg>
 									</div>
 								</template>
-								<template #cell(action)="">
+								<template #cell(action)="data">
 									<div class="justify-content-between">
 										<router-link
-											:to="{ name: 'home' }"
+											:to="{ name: 'edit.fruit', params: {FruitId: data.item.id} }"
+											class="badge badge-info"
+											><b-icon
+												icon="search"
+											></b-icon></router-link
+										>
+										
+										<router-link
+											:to="{name: 'edit.fruit', params: {FruitId: data.item.id} }"
 											class="badge badge-primary"
 											>Edit</router-link
 										>
-										<router-link
-											:to="{ name: 'pages.about' }"
-											class="badge badge-danger"
-											>Hapus</router-link
-										>
+										<DeleteBtn :FruitId="data.item.id"></DeleteBtn>
 									</div>
+								</template>
+								<template #cell(index)="oble">
+									{{ oble.index+1 }}
 								</template>
 								<template #head(name)="">
 									namaku
@@ -143,16 +151,23 @@
 </template>
 
 <script>
+import DeleteBtn from './DeleteBtn'
 export default {
+
+	components: {
+		DeleteBtn
+	},
+	
 	data() {
 		return {
 			isBusy: false,
 			fruits: [],
 			kolom: [
+				"index",
 				{ key: "id", label: "Id", sortable: true },
 				{ key: "name", label: "Nama", sortable: true },
 				"varian",
-				"latin_name",
+				"origin",
 				"origin",
 				"year_found",
 				"action",
@@ -256,7 +271,7 @@ input.costum-input {
 	text-justify: center;
 	/* outline-style: initial; */
 }
-.grid-item-container-2{
+.grid-item-container-2 {
 	display: grid;
 	grid-template-columns: 1fr auto;
 	gap: 5px;
@@ -278,7 +293,6 @@ input.costum-input {
 		/* background: darkkhaki; */
 		display: grid;
 		grid-template-columns: 1fr auto;
-	
 	}
 }
 

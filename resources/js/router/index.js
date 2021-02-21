@@ -31,8 +31,8 @@ export default{
         },
 
         {
-            path: '/updatefruit',
-            name: 'update.fruit',
+            path: '/fruits/:FruitId',
+            name: 'edit.fruit',
             component: UpdateFruit
         },
     ]

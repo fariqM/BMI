@@ -20,8 +20,8 @@ Route::namespace('App\Http\Controllers')->group(function(){
         Route::post('add-fruit', 'FruitController@addfruit');
         Route::get('index', 'FruitController@index');
         Route::get('{fruit:id}', 'FruitController@show')->name('fruits.show');
-        Route::patch('{fruit:slug}/edit', 'FruitController@update');
-        Route::delete('{fruit:slug}/delete', 'FruitController@destroy');
+        Route::patch('{fruit:id}/edit', 'FruitController@update');
+        Route::delete('{fruit:id}/delete', 'FruitController@destroy');
     });
 
 });

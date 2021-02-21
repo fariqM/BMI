@@ -66,7 +66,6 @@
 							autocomplete="off"
 							placeholder="Asal Negara"
 						/>
-						<div class="mt-2">Value: 15</div>
 						<div v-if="theErrors.origin" class="mt-2 text-danger">
 							{{ theErrors.origin[0] }}
 						</div>
@@ -93,16 +92,16 @@
 				</div>
 
 				<div class="my-grid">
-					<div >
+					<div>
 						<button type="submit" class="btn btn-primary mr-2">Submit</button>
 					</div>
-                    <div>
-                        <router-link
+					<div>
+						<router-link
 							class="btn btn-outline-secondary"
 							:to="{ name: 'pages.tes' }"
 							>Kembali</router-link
 						>
-                    </div>
+					</div>
 				</div>
 			</form>
 		</div>
@@ -132,7 +131,8 @@ export default {
 			try {
 				let response = await axios.post("/api/fruits/add-fruit", this.form);
 				if (response.status == 200) {
-					(this.form.name = ""), (this.form.varian = "");
+					this.form.name = "";
+					this.form.varian = "";
 					this.form.latin_name = "";
 					this.form.origin = "";
 					this.form.year_found = "";
@@ -152,8 +152,8 @@ export default {
 </script>
 
 <style>
-.my-grid{
-    display: grid;
-    grid-template-columns: 1fr auto;
+.my-grid {
+	display: grid;
+	grid-template-columns: 1fr auto;
 }
 </style>

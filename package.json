@@ -28,6 +28,8 @@
         "bootstrap-vue": "^2.21.2",
         "metismenu": "^3.0.6",
         "vue-izitoast": "^1.2.1",
-        "vue-router": "^3.5.1"
+        "vue-router": "^3.5.1",
+        "vue-sweetalert2": "^4.2.0",
+        "vue-text-mask": "^6.1.2"
     }
 }
