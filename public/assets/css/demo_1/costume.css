@@ -253,10 +253,10 @@ label.costum-checkbox {
     }
 }
 
-.grid-action-column{
-	display: grid;
+.grid-action-column {
+    display: grid;
     gap: 4%;
-	grid-template-columns: auto auto auto;
+    grid-template-columns: auto auto auto;
 }
 /* End Costum Tabel Index*/
 
@@ -265,22 +265,22 @@ label.costum-checkbox {
     cursor: pointer;
 }
 
-.custom-button-animate{
+.custom-button-animate {
     padding: 0px;
     display: grid;
     grid-template-columns: auto auto;
     grid-template-rows: 1fr 1fr;
     align-items: center;
 }
-.custom-button-animate-item1{
-   grid-row: span 2;
-   height: auto;
-}
-.custom-button-animate-item2{
+.custom-button-animate-item1 {
     grid-row: span 2;
     height: auto;
-    margin: .5rem 0.5rem .4rem; 
- }
+}
+.custom-button-animate-item2 {
+    grid-row: span 2;
+    height: auto;
+    margin: 0.5rem 0.5rem 0.4rem;
+}
 
 /* End Costum button */
 
@@ -290,4 +290,11 @@ label.costum-checkbox {
 }
 .col-form-label {
     padding-bottom: 0;
+}
+/* End Costum Modal */
+
+/* Costum badge  */
+.costum-badge {
+    margin-bottom: 4px;
+    margin-right: 3px;
 }

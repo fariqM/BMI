@@ -31,6 +31,7 @@ Route::namespace('App\Http\Controllers')->group(function(){
         Route::get('index/{raw:id}', 'RawController@show');
         Route::get('lastrecord', 'RawController@lastrecord');
         Route::patch('{raw:id}/move', 'RawController@move');
+        Route::get('output-index', 'RecordController@recordBB');
     });
 
 
@@ -62,6 +63,7 @@ Route::namespace('App\Http\Controllers')->group(function(){
         Route::get('index', 'RecordController@index');
         Route::post('move/{raw:id}', 'RecordController@move');
         Route::get('check/{raw:id}', 'RecordController@check');
+        
     });
 
 });

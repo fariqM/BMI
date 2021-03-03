@@ -19,11 +19,11 @@ class CreateRecordsTable extends Migration
             $table->string('tally', 64)->unique()->nullable();
             $table->foreignId('origin');
             $table->foreign('origin')->references('id')->on('warehouses')->onDelete('restrict');
-            $table->foreignId('destination');
-            $table->foreign('destination')->references('id')->on('warehouses')->onDelete('restrict');
+            $table->foreignId('warehouse_id');
+            $table->foreign('warehouse_id')->references('id')->on('warehouses')->onDelete('restrict');
             $table->string('nop', 32)->nullable();
             $table->smallInteger('unit')->autoIncrement(false)->nullable();
-            $table->string('status', 16);
+            $table->string('status', 50);
             $table->string('confirm_status', 16)->nullable();
             $table->timestamp('confirm_at')->nullable();
             $table->timestamps();

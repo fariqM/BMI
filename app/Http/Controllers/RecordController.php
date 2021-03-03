@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Resources\RawResource;
+use App\Http\Resources\RecordResource;
 use App\Http\Resources\WarehouseResource;
 use App\Models\Raw;
 use App\Models\Record;
@@ -15,7 +16,6 @@ class RecordController extends Controller
 
         // first set data for record attribute before it updated
         $series = $raw->series;
-        $warehouse_id = $raw->warehouse_id;
         $nop = $raw->nop - request('nop');
 
 
@@ -31,16 +31,21 @@ class RecordController extends Controller
 
         $record = Record::create([
             'series' => $series,
-            'origin' => $warehouse_id,
-            'destination' => 1,
+            'origin' => 1,
+            'warehouse_id' => 1,
             'nop' => $nop,
             'status' => 'moving',
-            'confrim_status' => 'unconfirmed',
+            'confirm_status' => 'unconfirmed',
         ]);
 
         return response()->json([
             'message' => 'success'
         ]);
+    }
+
+    public function recordBB(){
+        $records = Record::where('origin','1')->with('warehouse')->get();
+        return RecordResource::collection($records);
     }
 
     public function check(Raw $raw){

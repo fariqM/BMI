@@ -7,8 +7,8 @@
 					<router-link :to="{ name: 'bb.index' }">Index</router-link>
 				</li>
 				<li class="breadcrumb-item active" aria-current="page">
-                    Output
-                </li>
+					Output record
+				</li>
 			</ol>
 		</nav>
 
@@ -16,12 +16,18 @@
 			<div class="col-md-12 grid-margin stretch-card">
 				<div class="card">
 					<div class="card-body">
-						<h6 class="card-title">Data bahan baku</h6>
+						<h6 class="card-title">
+							Index of output records in <b>Gudang Bahan Baku</b>
+						</h6>
 						<p class="card-description">
 							Read the
-							<a href="https://datatables.net/" target="_blank">
-								Caption blbababla </a
-							>Keterangan blablabla
+							<a
+								href="https://dreamywaze--myukm.000webhostapp.com/"
+								target="_blank"
+							>
+								User Guide</a
+							>
+							for more info
 						</p>
 						<div class="grid-container">
 							<div class="grid-item-container grid-item-1">
@@ -75,9 +81,12 @@
 						</div>
 						<div class="table-responsive">
 							<b-table
-								head-variant="light"
+								head-variant="dark"
 								hover
 								show-empty
+								fixed
+								bordered
+								striped
 								responsive="sm"
 								:per-page="perPage"
 								:current-page="currentPage"
@@ -122,6 +131,39 @@
 										</svg>
 									</div>
 								</template>
+
+								<template #cell(confirm_at)="data">
+									<template v-if="data.item.confirm_at == null">
+										Not set
+									</template>
+									<template v-if="data.item.confirm_at != null">
+										{{ data.item.confirm_at }}
+									</template>
+								</template>
+
+								<template #cell(status)="data">
+									<template v-if="data.item.status == 'moving'">
+										<span class="badge badge-info">
+											<b-icon class="costum-badge" icon="box-arrow-up-right"></b-icon>
+											moving
+										</span>
+									</template>
+								</template>
+
+								<template #cell(confirm_status)="data">
+									<template v-if="data.item.confirm_status == 'unconfirmed'">
+										<span class="badge badge-warning">
+											<b-icon class="costum-badge" icon="exclamation-triangle-fill" variant="danger"></b-icon>
+											{{ data.item.confirm_status }}
+										</span>
+									</template>
+									<template v-if="data.item.confirm_status == 'confirmed'">
+										<span class="badge badge-success">
+											{{ data.item.confirm_status }}
+										</span>
+									</template>
+								</template>
+
 								<template #cell(action)="">
 									<div class="justify-content-between">
 										<router-link :to="{ name: 'home' }" class="badge badge-info"
@@ -133,7 +175,6 @@
 											class="badge badge-primary"
 											>Edit</router-link
 										>
-									
 									</div>
 								</template>
 							</b-table>
@@ -174,24 +215,18 @@
 </template>
 
 <script>
-
 export default {
-
 	data() {
 		return {
 			isBusy: false,
 			raws: [],
 			kolom: [
 				{ key: "series", label: "Series", sortable: true },
-				"type",
-				{ key: "size", label: "Size", sortable: true },
-				{ key: "periode", label: "Periode", sortable: true },
-				"nop",
-				"periode",
-				"warehouse",
-				"supplier",
-				"invoice",
-				"action",
+				{ key: "destination_name", label: "Destination", sortable: true },
+				{ key: "nop", label: "NOP", sortable: true },
+				{ key: "status", label: "Raw status", sortable: true },
+				{ key: "confirm_status", label: "Confirmed status", sortable: true },
+				{ key: "confirm_at", label: "Confirm at", sortable: true },
 			],
 			sortBy: "periode",
 			sortDesc: false,
@@ -231,7 +266,7 @@ export default {
 		},
 		async toggleBusy() {
 			this.isBusy = !this.isBusy;
-			let { data } = await axios.get("/api/gudang-bahanbaku/index");
+			let { data } = await axios.get("/api/gudang-bahanbaku/output-index");
 			this.raws = [];
 			this.raws = data.data;
 			this.totalRows = this.raws.length;

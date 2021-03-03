@@ -6456,17 +6456,23 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         this.$toast.warning("Stock is 0, please check afresh!", "Oops..", {
           position: "topRight"
         });
+        this.btnLoading = false;
       } else {
-        this.form.nop -= this.form.nop_virtual;
+        this.form.nop = this.form.nop - this.form.nop_virtual;
 
-        if (this.nop_before >= 0) {
+        if (this.form.nop >= 0) {
           this.store();
-        } else if (this.nop_before < 0) {
+        } else if (this.form.nop < 0) {
           this.$toast.error("Out of stock, please check nop stock.", "Failed!,", {
             position: "topRight"
           });
+          this.form.nop = this.nop_before;
+          this.btnLoading = false;
         }
-      }
+      } // console.log("nop  = "+ this.form.nop);
+      // console.log("nop before = "+ this.nop_before);
+      // console.log("nop virtual = "+ this.form.nop_virtual);
+
     },
     store: function store() {
       var _this2 = this;
@@ -6490,11 +6496,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
                   break;
                 }
 
-                _this2.btnLoading = false;
-                _context2.next = 8;
+                _context2.next = 7;
                 return axios.get("/api/gudang-bahanbaku/index");
 
-              case 8:
+              case 7:
                 _yield$axios$get2 = _context2.sent;
                 data = _yield$axios$get2.data;
                 _this2.raws = [];
@@ -6502,6 +6507,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
                 _this2.totalRows = _this2.raws.length;
                 console.log(_this2.form);
                 $("#exampleModalCenter").modal("hide");
+                _this2.btnLoading = false;
 
                 _this2.$toast.success("Raw has been successfully moved", "Done!", {
                   position: "topRight"
@@ -6517,7 +6523,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
                 _this2.btnLoading = false;
                 _this2.theErrors = _context2.t0.response.data.errors;
 
-                _this2.$toast.error("Ada yang error!", "Oops,", {
+                _this2.$toast.error("Something wrong when updating data!", "Oops,", {
                   position: "topRight"
                 });
 
@@ -7176,6 +7182,47 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
@@ -7185,15 +7232,27 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         key: "series",
         label: "Series",
         sortable: true
-      }, "type", {
-        key: "size",
-        label: "Size",
+      }, {
+        key: "destination_name",
+        label: "Destination",
         sortable: true
       }, {
-        key: "periode",
-        label: "Periode",
+        key: "nop",
+        label: "NOP",
         sortable: true
-      }, "nop", "periode", "warehouse", "supplier", "invoice", "action"],
+      }, {
+        key: "status",
+        label: "Raw status",
+        sortable: true
+      }, {
+        key: "confirm_status",
+        label: "Confirmed status",
+        sortable: true
+      }, {
+        key: "confirm_at",
+        label: "Confirm at",
+        sortable: true
+      }],
       sortBy: "periode",
       sortDesc: false,
       filter: null,
@@ -7249,7 +7308,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               case 0:
                 _this.isBusy = !_this.isBusy;
                 _context.next = 3;
-                return axios.get("/api/gudang-bahanbaku/index");
+                return axios.get("/api/gudang-bahanbaku/output-index");
 
               case 3:
                 _yield$axios$get = _context.sent;
@@ -36005,110 +36064,112 @@ var render = function() {
                     "div",
                     { staticClass: "custom-button-animate-item1" },
                     [
-                      [
-                        _c(
-                          "svg",
-                          {
-                            staticStyle: {
-                              margin: "auto",
-                              background: "none",
-                              display: "block",
-                              "shape-rendering": "auto"
-                            },
-                            attrs: {
-                              xmlns: "http://www.w3.org/2000/svg",
-                              "xmlns:xlink": "http://www.w3.org/1999/xlink",
-                              width: "28px",
-                              height: "28px",
-                              viewBox: "0 0 100 100",
-                              preserveAspectRatio: "xMidYMid"
-                            }
-                          },
-                          [
+                      _vm.btnLoading
+                        ? [
                             _c(
-                              "circle",
+                              "svg",
                               {
+                                staticStyle: {
+                                  margin: "auto",
+                                  background: "none",
+                                  display: "block",
+                                  "shape-rendering": "auto"
+                                },
                                 attrs: {
-                                  cx: "50",
-                                  cy: "50",
-                                  r: "0",
-                                  fill: "none",
-                                  stroke: "#26232b",
-                                  "stroke-width": "8"
+                                  xmlns: "http://www.w3.org/2000/svg",
+                                  "xmlns:xlink": "http://www.w3.org/1999/xlink",
+                                  width: "28px",
+                                  height: "28px",
+                                  viewBox: "0 0 100 100",
+                                  preserveAspectRatio: "xMidYMid"
                                 }
                               },
                               [
-                                _c("animate", {
-                                  attrs: {
-                                    attributeName: "r",
-                                    repeatCount: "indefinite",
-                                    dur: "0.6896551724137931s",
-                                    values: "0;40",
-                                    keyTimes: "0;1",
-                                    keySplines: "0 0.2 0.8 1",
-                                    calcMode: "spline",
-                                    begin: "0s"
-                                  }
-                                }),
+                                _c(
+                                  "circle",
+                                  {
+                                    attrs: {
+                                      cx: "50",
+                                      cy: "50",
+                                      r: "0",
+                                      fill: "none",
+                                      stroke: "#26232b",
+                                      "stroke-width": "8"
+                                    }
+                                  },
+                                  [
+                                    _c("animate", {
+                                      attrs: {
+                                        attributeName: "r",
+                                        repeatCount: "indefinite",
+                                        dur: "0.6896551724137931s",
+                                        values: "0;40",
+                                        keyTimes: "0;1",
+                                        keySplines: "0 0.2 0.8 1",
+                                        calcMode: "spline",
+                                        begin: "0s"
+                                      }
+                                    }),
+                                    _vm._v(" "),
+                                    _c("animate", {
+                                      attrs: {
+                                        attributeName: "opacity",
+                                        repeatCount: "indefinite",
+                                        dur: "0.6896551724137931s",
+                                        values: "1;0",
+                                        keyTimes: "0;1",
+                                        keySplines: "0.2 0 0.8 1",
+                                        calcMode: "spline",
+                                        begin: "0s"
+                                      }
+                                    })
+                                  ]
+                                ),
                                 _vm._v(" "),
-                                _c("animate", {
-                                  attrs: {
-                                    attributeName: "opacity",
-                                    repeatCount: "indefinite",
-                                    dur: "0.6896551724137931s",
-                                    values: "1;0",
-                                    keyTimes: "0;1",
-                                    keySplines: "0.2 0 0.8 1",
-                                    calcMode: "spline",
-                                    begin: "0s"
-                                  }
-                                })
-                              ]
-                            ),
-                            _vm._v(" "),
-                            _c(
-                              "circle",
-                              {
-                                attrs: {
-                                  cx: "50",
-                                  cy: "50",
-                                  r: "0",
-                                  fill: "none",
-                                  stroke: "#6b3f20",
-                                  "stroke-width": "8"
-                                }
-                              },
-                              [
-                                _c("animate", {
-                                  attrs: {
-                                    attributeName: "r",
-                                    repeatCount: "indefinite",
-                                    dur: "0.6896551724137931s",
-                                    values: "0;40",
-                                    keyTimes: "0;1",
-                                    keySplines: "0 0.2 0.8 1",
-                                    calcMode: "spline",
-                                    begin: "-0.3448275862068966s"
-                                  }
-                                }),
-                                _vm._v(" "),
-                                _c("animate", {
-                                  attrs: {
-                                    attributeName: "opacity",
-                                    repeatCount: "indefinite",
-                                    dur: "0.6896551724137931s",
-                                    values: "1;0",
-                                    keyTimes: "0;1",
-                                    keySplines: "0.2 0 0.8 1",
-                                    calcMode: "spline",
-                                    begin: "-0.3448275862068966s"
-                                  }
-                                })
+                                _c(
+                                  "circle",
+                                  {
+                                    attrs: {
+                                      cx: "50",
+                                      cy: "50",
+                                      r: "0",
+                                      fill: "none",
+                                      stroke: "#6b3f20",
+                                      "stroke-width": "8"
+                                    }
+                                  },
+                                  [
+                                    _c("animate", {
+                                      attrs: {
+                                        attributeName: "r",
+                                        repeatCount: "indefinite",
+                                        dur: "0.6896551724137931s",
+                                        values: "0;40",
+                                        keyTimes: "0;1",
+                                        keySplines: "0 0.2 0.8 1",
+                                        calcMode: "spline",
+                                        begin: "-0.3448275862068966s"
+                                      }
+                                    }),
+                                    _vm._v(" "),
+                                    _c("animate", {
+                                      attrs: {
+                                        attributeName: "opacity",
+                                        repeatCount: "indefinite",
+                                        dur: "0.6896551724137931s",
+                                        values: "1;0",
+                                        keyTimes: "0;1",
+                                        keySplines: "0.2 0 0.8 1",
+                                        calcMode: "spline",
+                                        begin: "-0.3448275862068966s"
+                                      }
+                                    })
+                                  ]
+                                )
                               ]
                             )
                           ]
-                        )
-                      ]
+                        : _vm._e()
                     ],
                     2
                   ),
@@ -36139,11 +36200,9 @@ var render = function() {
       _c("div", { staticClass: "col-md-12 grid-margin stretch-card" }, [
         _c("div", { staticClass: "card" }, [
           _c("div", { staticClass: "card-body" }, [
-            _c("h6", { staticClass: "card-title" }, [
-              _vm._v("Data bahan baku")
-            ]),
-            _vm._v(" "),
             _vm._m(2),
+            _vm._v(" "),
+            _vm._m(3),
             _vm._v(" "),
             _c("div", { staticClass: "grid-container" }, [
               _c("div", { staticClass: "grid-item-container grid-item-1" }, [
@@ -36584,7 +36643,10 @@ var staticRenderFns = [
           staticClass: "modal-title",
           attrs: { id: "exampleModalCenterTitle" }
         },
-        [_vm._v("\n\t\t\t\t\t\tModal title\n\t\t\t\t\t")]
+        [
+          _vm._v("\n\t\t\t\t\t\tMove raw to "),
+          _c("b", [_vm._v("Gudang Sawmill")])
+        ]
       ),
       _vm._v(" "),
       _c(
@@ -36626,14 +36688,28 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
+    return _c("h6", { staticClass: "card-title" }, [
+      _vm._v("Index of raws in "),
+      _c("b", [_vm._v("Gudang Bahan Baku")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
     return _c("p", { staticClass: "card-description" }, [
       _vm._v("\n\t\t\t\t\t\tRead the\n\t\t\t\t\t\t"),
       _c(
         "a",
-        { attrs: { href: "https://datatables.net/", target: "_blank" } },
-        [_vm._v("\n\t\t\t\t\t\t\tCaption blbababla ")]
+        {
+          attrs: {
+            href: "https://dreamywaze--myukm.000webhostapp.com/",
+            target: "_blank"
+          }
+        },
+        [_vm._v("\n\t\t\t\t\t\t\tUser Guide")]
       ),
-      _vm._v("Keterangan blablabla\n\t\t\t\t\t")
+      _vm._v(" for more info\n\t\t\t\t\t")
     ])
   }
 ]
@@ -37195,7 +37271,7 @@ var render = function() {
             staticClass: "breadcrumb-item active",
             attrs: { "aria-current": "page" }
           },
-          [_vm._v("\n                    Output\n                ")]
+          [_vm._v("\n\t\t\t\tOutput record\n\t\t\t")]
         )
       ])
     ]),
@@ -37204,11 +37280,9 @@ var render = function() {
       _c("div", { staticClass: "col-md-12 grid-margin stretch-card" }, [
         _c("div", { staticClass: "card" }, [
           _c("div", { staticClass: "card-body" }, [
-            _c("h6", { staticClass: "card-title" }, [
-              _vm._v("Data bahan baku")
-            ]),
-            _vm._v(" "),
             _vm._m(1),
+            _vm._v(" "),
+            _vm._m(2),
             _vm._v(" "),
             _c("div", { staticClass: "grid-container" }, [
               _c("div", { staticClass: "grid-item-container grid-item-1" }, [
@@ -37361,9 +37435,7 @@ var render = function() {
                             "aria-hidden": "true"
                           }
                         }),
-                        _vm._v(
-                          "\n\t\t\t\t\t\t\t\t\t\tsegarkan\n\t\t\t\t\t\t\t\t\t"
-                        )
+                        _vm._v("\n\t\t\t\t\t\t\t\t\tsegarkan\n\t\t\t\t\t\t\t\t")
                       ],
                       1
                     )
@@ -37390,7 +37462,7 @@ var render = function() {
                           attrs: { icon: "plus-square", "aria-hidden": "true" }
                         }),
                         _vm._v(
-                          "\n\t\t\t\t\t\t\t\t\t\tTambahkan\n\t\t\t\t\t\t\t\t\t"
+                          "\n\t\t\t\t\t\t\t\t\tTambahkan\n\t\t\t\t\t\t\t\t"
                         )
                       ],
                       1
@@ -37407,9 +37479,12 @@ var render = function() {
               [
                 _c("b-table", {
                   attrs: {
-                    "head-variant": "light",
+                    "head-variant": "dark",
                     hover: "",
                     "show-empty": "",
+                    fixed: "",
+                    bordered: "",
+                    striped: "",
                     responsive: "sm",
                     "per-page": _vm.perPage,
                     "current-page": _vm.currentPage,
@@ -37498,6 +37573,101 @@ var render = function() {
                       proxy: true
                     },
                     {
+                      key: "cell(confirm_at)",
+                      fn: function(data) {
+                        return [
+                          data.item.confirm_at == null
+                            ? [
+                                _vm._v(
+                                  "\n\t\t\t\t\t\t\t\t\tNot set\n\t\t\t\t\t\t\t\t"
+                                )
+                              ]
+                            : _vm._e(),
+                          _vm._v(" "),
+                          data.item.confirm_at != null
+                            ? [
+                                _vm._v(
+                                  "\n\t\t\t\t\t\t\t\t\t" +
+                                    _vm._s(data.item.confirm_at) +
+                                    "\n\t\t\t\t\t\t\t\t"
+                                )
+                              ]
+                            : _vm._e()
+                        ]
+                      }
+                    },
+                    {
+                      key: "cell(status)",
+                      fn: function(data) {
+                        return [
+                          data.item.status == "moving"
+                            ? [
+                                _c(
+                                  "span",
+                                  { staticClass: "badge badge-info" },
+                                  [
+                                    _c("b-icon", {
+                                      staticClass: "costum-badge",
+                                      attrs: { icon: "box-arrow-up-right" }
+                                    }),
+                                    _vm._v(
+                                      "\n\t\t\t\t\t\t\t\t\t\tmoving\n\t\t\t\t\t\t\t\t\t"
+                                    )
+                                  ],
+                                  1
+                                )
+                              ]
+                            : _vm._e()
+                        ]
+                      }
+                    },
+                    {
+                      key: "cell(confirm_status)",
+                      fn: function(data) {
+                        return [
+                          data.item.confirm_status == "unconfirmed"
+                            ? [
+                                _c(
+                                  "span",
+                                  { staticClass: "badge badge-warning" },
+                                  [
+                                    _c("b-icon", {
+                                      staticClass: "costum-badge",
+                                      attrs: {
+                                        icon: "exclamation-triangle-fill",
+                                        variant: "danger"
+                                      }
+                                    }),
+                                    _vm._v(
+                                      "\n\t\t\t\t\t\t\t\t\t\t" +
+                                        _vm._s(data.item.confirm_status) +
+                                        "\n\t\t\t\t\t\t\t\t\t"
+                                    )
+                                  ],
+                                  1
+                                )
+                              ]
+                            : _vm._e(),
+                          _vm._v(" "),
+                          data.item.confirm_status == "confirmed"
+                            ? [
+                                _c(
+                                  "span",
+                                  { staticClass: "badge badge-success" },
+                                  [
+                                    _vm._v(
+                                      "\n\t\t\t\t\t\t\t\t\t\t" +
+                                        _vm._s(data.item.confirm_status) +
+                                        "\n\t\t\t\t\t\t\t\t\t"
+                                    )
+                                  ]
+                                )
+                              ]
+                            : _vm._e()
+                        ]
+                      }
+                    },
+                    {
                       key: "cell(action)",
                       fn: function() {
                         return [
@@ -37540,7 +37710,7 @@ var render = function() {
             _vm._v(" "),
             _c("div", { staticClass: "footer-table-container" }, [
               _c("div", { staticClass: "footer-table-container-item1" }, [
-                _vm._v("\n\t\t\t\t\t\t\t\tPagination :\n\t\t\t\t\t\t\t\t"),
+                _vm._v("\n\t\t\t\t\t\t\tPagination :\n\t\t\t\t\t\t\t"),
                 _c(
                   "select",
                   {
@@ -37581,9 +37751,9 @@ var render = function() {
                           },
                           [
                             _vm._v(
-                              "\n\t\t\t\t\t\t\t\t\t\t\t" +
+                              "\n\t\t\t\t\t\t\t\t\t\t" +
                                 _vm._s(pagess.text) +
-                                "\n\t\t\t\t\t\t\t\t\t\t"
+                                "\n\t\t\t\t\t\t\t\t\t"
                             )
                           ]
                         )
@@ -37636,14 +37806,28 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
+    return _c("h6", { staticClass: "card-title" }, [
+      _vm._v("\n\t\t\t\t\t\tIndex of output records in "),
+      _c("b", [_vm._v("Gudang Bahan Baku")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
     return _c("p", { staticClass: "card-description" }, [
-      _vm._v("\n\t\t\t\t\t\t\tRead the\n\t\t\t\t\t\t\t"),
+      _vm._v("\n\t\t\t\t\t\tRead the\n\t\t\t\t\t\t"),
       _c(
         "a",
-        { attrs: { href: "https://datatables.net/", target: "_blank" } },
-        [_vm._v("\n\t\t\t\t\t\t\t\tCaption blbababla ")]
+        {
+          attrs: {
+            href: "https://dreamywaze--myukm.000webhostapp.com/",
+            target: "_blank"
+          }
+        },
+        [_vm._v("\n\t\t\t\t\t\t\tUser Guide")]
       ),
-      _vm._v("Keterangan blablabla\n\t\t\t\t\t\t")
+      _vm._v("\n\t\t\t\t\t\tfor more info\n\t\t\t\t\t")
     ])
   }
 ]

@@ -12,7 +12,7 @@
 				<div class="modal-content">
 					<div class="modal-header">
 						<h5 class="modal-title" id="exampleModalCenterTitle">
-							Modal title
+							Move raw to <b>Gudang Sawmill</b>
 						</h5>
 						<button
 							type="button"
@@ -72,7 +72,7 @@
 							class="btn btn-primary custom-button-animate"
 						>
 							<div class="custom-button-animate-item1">
-								<template >
+								<template v-if="btnLoading">
 									<svg
 										xmlns="http://www.w3.org/2000/svg"
 										xmlns:xlink="http://www.w3.org/1999/xlink"
@@ -173,12 +173,12 @@
 			<div class="col-md-12 grid-margin stretch-card">
 				<div class="card">
 					<div class="card-body">
-						<h6 class="card-title">Data bahan baku</h6>
+						<h6 class="card-title">Index of raws in <b>Gudang Bahan Baku</b> </h6>
 						<p class="card-description">
 							Read the
-							<a href="https://datatables.net/" target="_blank">
-								Caption blbababla </a
-							>Keterangan blablabla
+							<a href="https://dreamywaze--myukm.000webhostapp.com/" target="_blank">
+								User Guide</a
+							> for more info
 						</p>
 						<div class="grid-container">
 							<div class="grid-item-container grid-item-1">
@@ -430,11 +430,13 @@ export default {
 				this.$toast.warning("Stock is 0, please check afresh!", "Oops..", {
 					position: "topRight",
 				});
+				this.btnLoading = false
 			} else {
-				this.form.nop -= this.form.nop_virtual;
-				if (this.nop_before >= 0) {
+				this.form.nop = this.form.nop - this.form.nop_virtual;
+				if (this.form.nop >= 0) {
 					this.store();
-				} else if (this.nop_before < 0) {
+					
+				} else if (this.form.nop < 0) {
 					this.$toast.error(
 						"Out of stock, please check nop stock.",
 						"Failed!,",
@@ -442,8 +444,14 @@ export default {
 							position: "topRight",
 						}
 					);
+					this.form.nop = this.nop_before
+					this.btnLoading = false
 				}
 			}
+			// console.log("nop  = "+ this.form.nop);
+			// console.log("nop before = "+ this.nop_before);
+			// console.log("nop virtual = "+ this.form.nop_virtual);
+
 		},
 		async store() {
 			try {
@@ -452,13 +460,14 @@ export default {
 					this.form
 				);
 				if (response.status == 200) {
-					this.btnLoading = false
+					
 					let { data } = await axios.get("/api/gudang-bahanbaku/index");
 					this.raws = [];
 					this.raws = data.data;
 					this.totalRows = this.raws.length;
 					console.log(this.form);
 					$("#exampleModalCenter").modal("hide");
+					this.btnLoading = false
 					this.$toast.success("Raw has been successfully moved", "Done!", {
 						position: "topRight",
 					});
@@ -466,7 +475,7 @@ export default {
 			} catch (e) {
 				this.btnLoading = false
 				this.theErrors = e.response.data.errors;
-				this.$toast.error("Ada yang error!", "Oops,", { position: "topRight" });
+				this.$toast.error("Something wrong when updating data!", "Oops,", { position: "topRight" });
 			}
 		},
 	},

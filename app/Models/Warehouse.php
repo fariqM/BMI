@@ -18,4 +18,8 @@ class Warehouse extends Model
     public function users(){
         return $this->hasMany(User::class);
     }
+
+    public function records(){
+        return $this->hasMany(Record::class);
+    }
 }
