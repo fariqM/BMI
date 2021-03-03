@@ -1,34 +1,293 @@
+/* Costum Sidebar */
 .sidebar .sidebar-body .nav .nav-item .nav-link:hover {
-    color: #AE5A2C; 
+    color: #ae5a2c;
 }
 .sidebar .sidebar-body .nav .nav-item .nav-link[aria-expanded="true"] {
-    color: #AE5A2C; 
+    color: #ae5a2c;
 }
 .sidebar .sidebar-body .nav .nav-item:hover .nav-link .link-title {
-    margin-left: 36px; 
+    margin-left: 36px;
 }
 .sidebar .sidebar-body .nav .nav-item:hover .nav-link .link-icon {
-    color: #AE5A2C;
-    fill: rgba(239, 243, 255, 0.5); 
+    color: #ae5a2c;
+    fill: rgba(239, 243, 255, 0.5);
 }
-.costum-nav-item:hover .costum-nav-link{
-    -webkit-transition: all .3s ease-in-out;
-            transition: all .3s ease-in-out;
+.costum-nav-item:hover .costum-nav-link {
+    -webkit-transition: all 0.3s ease-in-out;
+    transition: all 0.3s ease-in-out;
     margin-left: 9px;
 }
-.costum-nav-item .costum-nav-link{
-    -webkit-transition: all .7s ease-in-out;
-    -webkit-transition: all .4s ease-in-out;
-    transition: all .4s ease-in-out;
+.costum-nav-item .costum-nav-link {
+    -webkit-transition: all 0.7s ease-in-out;
+    -webkit-transition: all 0.4s ease-in-out;
+    transition: all 0.4s ease-in-out;
 }
-.costum-nav-item:hover{
-    color: #AE5A2C;
-}
-
-.costum-nav-item-active{
-    color: #AE5A2C;
+.costum-nav-item:hover {
+    color: #ae5a2c;
 }
 
- .costum-submenu{
-    margin-left:6px
+.costum-nav-item-active {
+    color: #ae5a2c;
+}
+
+.costum-submenu {
+    margin-left: 6px;
+}
+/* End Costum Sidebar */
+
+/* ##################################################### */
+
+/* Sorting Icon */
+.table.b-table > thead > tr > [aria-sort],
+.table.b-table > tfoot > tr > [aria-sort] {
+    cursor: pointer;
+    background-image: none;
+    background-repeat: no-repeat;
+    background-size: 0.65em 1em;
+}
+.table.b-table > thead > tr > [aria-sort]:not(.b-table-sort-icon-left),
+.table.b-table > tfoot > tr > [aria-sort]:not(.b-table-sort-icon-left) {
+    background-position: right calc(0.75rem / 2) center;
+    padding-right: calc(0.75rem + 0.65em);
+}
+.table.b-table > thead > tr > [aria-sort].b-table-sort-icon-left,
+.table.b-table > tfoot > tr > [aria-sort].b-table-sort-icon-left {
+    background-position: left calc(0.75rem / 2) center;
+    padding-left: calc(0.75rem + 0.65em);
+}
+.table.b-table > thead > tr > [aria-sort="none"],
+.table.b-table > tfoot > tr > [aria-sort="none"] {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' width='101' height='101' view-box='0 0 101 101' preserveAspectRatio='none'%3e%3cpath fill='black' opacity='.3' d='M51 1l25 23 24 22H1l25-22zM51 101l25-23 24-22H1l25 22z'/%3e%3c/svg%3e");
+}
+.table.b-table > thead > tr > [aria-sort="ascending"],
+.table.b-table > tfoot > tr > [aria-sort="ascending"] {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' width='101' height='101' view-box='0 0 101 101' preserveAspectRatio='none'%3e%3cpath fill='black' d='M51 1l25 23 24 22H1l25-22z'/%3e%3cpath fill='black' opacity='.3' d='M51 101l25-23 24-22H1l25 22z'/%3e%3c/svg%3e");
+}
+.table.b-table > thead > tr > [aria-sort="descending"],
+.table.b-table > tfoot > tr > [aria-sort="descending"] {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' width='101' height='101' view-box='0 0 101 101' preserveAspectRatio='none'%3e%3cpath fill='black' opacity='.3' d='M51 1l25 23 24 22H1l25-22z'/%3e%3cpath fill='black' d='M51 101l25-23 24-22H1l25 22z'/%3e%3c/svg%3e");
+}
+.table.b-table.table-dark > thead > tr > [aria-sort="none"],
+.table.b-table.table-dark > tfoot > tr > [aria-sort="none"],
+.table.b-table > .thead-dark > tr > [aria-sort="none"] {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' width='101' height='101' view-box='0 0 101 101' preserveAspectRatio='none'%3e%3cpath fill='white' opacity='.3' d='M51 1l25 23 24 22H1l25-22zM51 101l25-23 24-22H1l25 22z'/%3e%3c/svg%3e");
+}
+.table.b-table.table-dark > thead > tr > [aria-sort="ascending"],
+.table.b-table.table-dark > tfoot > tr > [aria-sort="ascending"],
+.table.b-table > .thead-dark > tr > [aria-sort="ascending"] {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' width='101' height='101' view-box='0 0 101 101' preserveAspectRatio='none'%3e%3cpath fill='white' d='M51 1l25 23 24 22H1l25-22z'/%3e%3cpath fill='white' opacity='.3' d='M51 101l25-23 24-22H1l25 22z'/%3e%3c/svg%3e");
+}
+.table.b-table.table-dark > thead > tr > [aria-sort="descending"],
+.table.b-table.table-dark > tfoot > tr > [aria-sort="descending"],
+.table.b-table > .thead-dark > tr > [aria-sort="descending"] {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' width='101' height='101' view-box='0 0 101 101' preserveAspectRatio='none'%3e%3cpath fill='white' opacity='.3' d='M51 1l25 23 24 22H1l25-22z'/%3e%3cpath fill='white' d='M51 101l25-23 24-22H1l25 22z'/%3e%3c/svg%3e");
+}
+.table.b-table > thead > tr > .table-dark[aria-sort="none"],
+.table.b-table > tfoot > tr > .table-dark[aria-sort="none"] {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' width='101' height='101' view-box='0 0 101 101' preserveAspectRatio='none'%3e%3cpath fill='white' opacity='.3' d='M51 1l25 23 24 22H1l25-22zM51 101l25-23 24-22H1l25 22z'/%3e%3c/svg%3e");
+}
+.table.b-table > thead > tr > .table-dark[aria-sort="ascending"],
+.table.b-table > tfoot > tr > .table-dark[aria-sort="ascending"] {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' width='101' height='101' view-box='0 0 101 101' preserveAspectRatio='none'%3e%3cpath fill='white' d='M51 1l25 23 24 22H1l25-22z'/%3e%3cpath fill='white' opacity='.3' d='M51 101l25-23 24-22H1l25 22z'/%3e%3c/svg%3e");
+}
+.table.b-table > thead > tr > .table-dark[aria-sort="descending"],
+.table.b-table > tfoot > tr > .table-dark[aria-sort="descending"] {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' width='101' height='101' view-box='0 0 101 101' preserveAspectRatio='none'%3e%3cpath fill='white' opacity='.3' d='M51 1l25 23 24 22H1l25-22z'/%3e%3cpath fill='white' d='M51 101l25-23 24-22H1l25 22z'/%3e%3c/svg%3e");
+}
+.table.b-table.table-sm > thead > tr > [aria-sort]:not(.b-table-sort-icon-left),
+.table.b-table.table-sm
+    > tfoot
+    > tr
+    > [aria-sort]:not(.b-table-sort-icon-left) {
+    background-position: right calc(0.3rem / 2) center;
+    padding-right: calc(0.3rem + 0.65em);
+}
+.table.b-table.table-sm > thead > tr > [aria-sort].b-table-sort-icon-left,
+.table.b-table.table-sm > tfoot > tr > [aria-sort].b-table-sort-icon-left {
+    background-position: left calc(0.3rem / 2) center;
+    padding-left: calc(0.3rem + 0.65em);
+}
+/* End Sorting Icon */
+
+/* ##################################################### */
+
+/* Costum Tabel Index */
+.container {
+    margin-top: 30px;
+}
+
+.grid-container {
+    display: grid;
+
+    grid-template-columns: 2fr auto;
+    margin-bottom: 5px;
+}
+.grid-item-container {
+    /* background: chartreuse; */
+    display: grid;
+    align-content: center;
+    grid-template-columns: 1fr 3fr;
+}
+.grid-subitem-2 {
+    /* background-color: rgb(166, 190, 26); */
+    border-style: inherit;
+}
+/* .grid-subitem-1 {
+	background-color: rgb(0, 255, 13);
+}
+.grid-item-1 {
+	background-color: blue;
+} */
+/* .grid-item-2 {
+	
+	background-color: rgb(0, 255, 128);
+} */
+
+input.costum-input:focus {
+    outline-color: #d6d6d6;
+    outline: none !important;
+    box-shadow: 0 0 10px #a393df;
+}
+input.costum-input:hover {
+    outline-color: #d6d6d6;
+    outline: none !important;
+    box-shadow: 0 0 10px #a393df;
+}
+
+input.costum-input {
+    outline-color: #d6d6d6;
+    width: 100%;
+    font-size: medium;
+    padding-left: 10px;
+    border-style: groove;
+    border-color: #cfcfcf;
+    text-justify: center;
+    /* outline-style: initial; */
+}
+.grid-item-container-2 {
+    display: grid;
+
+    grid-template-columns: 1fr auto;
+    gap: 5px;
+}
+
+@media screen and (max-width: 600px) {
+    .grid-container {
+        display: grid;
+        /* background: crimson; */
+        grid-template-columns: 1fr;
+    }
+    .grid-item-container {
+        /* background: chartreuse; */
+        display: grid;
+        align-content: end;
+        grid-template-columns: 1fr;
+    }
+    .grid-item-container-2 {
+        /* background: darkkhaki; */
+        display: grid;
+        grid-template-columns: 1fr auto;
+    }
+}
+
+input.asdasd {
+    outline-style: ridge;
+}
+input.costum-checkbox {
+    height: 15px;
+    width: 15px;
+    border-style: inherit;
+    position: relative;
+    top: 6px;
+    margin-left: 5px;
+}
+input.costum-checkbox:hover {
+    box-shadow: 0 0 10px #a393df;
+}
+input.costum-checkbox:checked {
+    box-shadow: 0 0 5px #005cc8;
+}
+
+label.costum-checkbox {
+    position: relative;
+    top: 5px;
+    -webkit-transition: all 0.7s ease-in-out;
+    -webkit-transition: all 0.4s ease-in-out;
+    transition: all 0.4s ease-in-out;
+}
+.costum-label-filter {
+    position: relative;
+    top: 5px;
+    margin-left: 5px;
+    margin-right: 5px;
+}
+.footer-table-container {
+    display: grid;
+    grid-template-columns: 1fr auto;
+}
+.footer-table-container-item1 {
+    display: grid;
+    gap: 5px;
+    align-items: center;
+    justify-items: center;
+    /* text-align: center; */
+    grid-template-columns: 100px 100px;
+}
+
+@media screen and (max-width: 600px) {
+    .footer-table-container {
+        display: grid;
+        gap: 10px;
+        padding-left: 14px;
+        grid-template-columns: 1fr;
+    }
+    .footer-table-container-item1 {
+        display: grid;
+        text-align: start;
+        justify-items: start;
+        grid-template-columns: 1fr 1fr;
+    }
+    .footer-table-container-item2 {
+        display: grid;
+        justify-items: center;
+    }
+}
+
+.grid-action-column{
+	display: grid;
+    gap: 4%;
+	grid-template-columns: auto auto auto;
+}
+/* End Costum Tabel Index*/
+
+/* Costum  button */
+.del-btn:hover {
+    cursor: pointer;
+}
+
+.custom-button-animate{
+    padding: 0px;
+    display: grid;
+    grid-template-columns: auto auto;
+    grid-template-rows: 1fr 1fr;
+    align-items: center;
+}
+.custom-button-animate-item1{
+   grid-row: span 2;
+   height: auto;
+}
+.custom-button-animate-item2{
+    grid-row: span 2;
+    height: auto;
+    margin: .5rem 0.5rem .4rem; 
+ }
+
+/* End Costum button */
+
+/* Costum Modal form group */
+.form-group label {
+    margin-bottom: 0;
+}
+.col-form-label {
+    padding-bottom: 0;
 }

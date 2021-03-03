@@ -13,3 +13,5 @@ IziAlert
 ####Form Validation with lenght input 
 https://bootstrap-vue.org/docs/components/form-input#formatter-support 
 - di taruh samping kanan bawah form, dengan dibungkus badge
+
+border color-costum #c8c9cc :focus #AE5A2C

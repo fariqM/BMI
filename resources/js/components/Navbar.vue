@@ -299,12 +299,12 @@
 						aria-haspopup="true"
 						aria-expanded="false"
 					>
-						<img :src="'assets/images/faces/face2.jpg'" alt="profile" />
+						<img :src="'/assets/images/faces/face2.jpg'" alt="profile" />
 					</a>
 					<div class="dropdown-menu" aria-labelledby="profileDropdown">
 						<div class="dropdown-header d-flex flex-column align-items-center">
 							<div class="figure mb-3">
-								<img :src="'assets/images/faces/face2.jpg'"  />
+								<img :src="'/assets/images/faces/face2.jpg'"  />
 							</div>
 							<div class="info text-center">
 								<p class="name font-weight-bold mb-0">Fariq</p>

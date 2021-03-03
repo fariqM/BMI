@@ -3,9 +3,24 @@ import About from '../views/About'
 import Tes from '../views/Tes'
 import AddFruit from '../views/AddFruit'
 import UpdateFruit from '../views/UpdateFruit'
+import Tabel from '../views/Tabel'
+import Dashboard from '../views/Dashboard'
+import BahanBaku from '../views/BahanBaku/Index'
+import OutputBB from '../views/BahanBaku/Output'
+import FormBB from '../views/BahanBaku/Input'
+import FormInvoice from '../views/Invoice/FormInv'
+import FormStructure from '../views/Structure/StrForm'
+import FormWarehouse from '../views/Warehouse/WrhForm'
+import FormSupplier from '../views/Supplier/SplForm'
+
+
+
+
+
 
 export default{
     mode: 'history',
+
 
     routes: [
         {
@@ -35,5 +50,59 @@ export default{
             name: 'edit.fruit',
             component: UpdateFruit
         },
+
+        {
+            path: '/tabel',
+            name: 'tabel',
+            component: Tabel
+        },
+
+        {
+            path: '/',
+            name: 'dashboard',
+            component: Dashboard
+        },
+
+        {
+            path: '/bahan-baku/index',
+            name: 'bb.index',
+            component: BahanBaku
+        },
+        {
+            path: '/bahan-baku/output-index',
+            name: 'bb.output.index',
+            component: OutputBB
+        },
+        
+        {
+            path: '/bahan-baku/form',
+            name: 'bb.form',
+            component: FormBB
+        },
+
+        {
+            path: '/invoice/form',
+            name: 'inv.form',
+            component: FormInvoice
+        },
+
+        {
+            path: '/structure/form',
+            name: 'str.form',
+            component: FormStructure
+        },
+
+        {
+            path: '/warehouse/form',
+            name: 'wrh.form',
+            component: FormWarehouse
+        },
+
+        {
+            path: '/supplier/form',
+            name: 'spl.form',
+            component: FormSupplier
+        },
+
     ]
 }

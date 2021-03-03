@@ -26,12 +26,15 @@ class FruitController extends Controller
             'origin' => 'required',
             'year_found' => 'required',
         ]);
-        Fruit::create($fruit);
 
-        return response()->json([
-            'message' => 'Succes',
-            // 'fruit' => $fruit,
-        ]);
+
+        Fruit::create($fruit);
+        
+        $asw = new Fruit();
+
+        $asw = latestid('fruits');
+
+        return response($asw);
     }
 
     public function update(Fruit $fruit){     

@@ -26,6 +26,7 @@ export default {
 					this.HapusAksi();
 				}
 			});
+			
 		},
 
 		async HapusAksi() {

@@ -24,8 +24,10 @@
 
     {{-- metismenu --}}
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/metismenu/dist/metisMenu.min.css">
-    <link rel="stylesheet" href="{{ asset('assets/css/demo_1/costume.css') }}">
+    
     <link rel="stylesheet" href="{{ asset('assets/css/demo_1/style.css') }}">
+    
+    <link rel="stylesheet" href="{{ asset('assets/css/demo_1/costume.css') }}">
 </head>
 
 <body>

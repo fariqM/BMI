@@ -11,6 +11,10 @@ class User extends Authenticatable
 {
     use HasFactory, Notifiable;
 
+    public function warehouse(){
+        return $this->belongsTo(Warehouse::class);
+    }
+
     /**
      * The attributes that are mass assignable.
      *

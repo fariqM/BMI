@@ -12,7 +12,8 @@
 							v-model="form.name"
 							class="form-control costum-validation-input"
 							id="name"
-							placeholder="Email"
+							placeholder="Nama Buah"
+							
 						/>
 						<div v-if="theErrors.name" class="mt-2 text-danger">
 							{{ theErrors.name[0] }}
@@ -130,6 +131,7 @@ export default {
 		async store() {
 			try {
 				let response = await axios.post("/api/fruits/add-fruit", this.form);
+				console.log(response);
 				if (response.status == 200) {
 					this.form.name = "";
 					this.form.varian = "";
