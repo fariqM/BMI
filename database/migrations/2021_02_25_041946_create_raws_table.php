@@ -21,8 +21,6 @@ class CreateRawsTable extends Migration
             $table->double('size', 15)->unsigned()->autoIncrement(false);
             $table->string('uom', 10);
             $table->string('nop',32);
-            $table->foreignId('warehouse_id');
-            $table->foreign('warehouse_id')->references('id')->on('warehouses')->onDelete('restrict');
             $table->foreignId('supplier_id');
             $table->foreign('supplier_id')->references('id')->on('suppliers')->onDelete('restrict');
             $table->foreignId('invoice_id')->nullable();

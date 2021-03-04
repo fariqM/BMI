@@ -11,9 +11,6 @@ class Warehouse extends Model
 
     protected $fillable = ['name' , 'shortname', 'capacity', 'address'];
 
-    public function raws(){
-       return $this->hasMany(Raw::class);
-    }
 
     public function users(){
         return $this->hasMany(User::class);

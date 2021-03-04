@@ -12,7 +12,7 @@ class RawController extends Controller
 {
     public function index()
     {
-        $raws = Raw::with('structure_category', 'supplier', 'warehouse', 'invoice')->get();
+        $raws = Raw::with('structure_category', 'supplier', 'invoice')->latest()->get();
         return RawResource::collection($raws);
     }
 
@@ -29,7 +29,6 @@ class RawController extends Controller
             'size' => 'required',
             'uom' => 'required',
             'nop' => 'required',
-            'warehouse_id' => 'required',
             'supplier_id' => 'required',
             'invoice_id' => 'required',
         ]);

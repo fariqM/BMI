@@ -9,7 +9,7 @@ class Raw extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['series', 'structure_category_id', 'size', 'uom', 'nop', 'warehouse_id', 'supplier_id', 'invoice_id'];
+    protected $fillable = ['series', 'structure_category_id', 'size', 'uom', 'nop',  'supplier_id', 'invoice_id'];
 
     public function invoice(){
         return $this->belongsTo(Invoice::class);
@@ -19,9 +19,6 @@ class Raw extends Model
         return $this->belongsTo(Supplier::class);
     }
 
-    public function warehouse(){
-        return $this->belongsTo(Warehouse::class);
-    }
 
     public function structure_category(){
         return $this->belongsTo(StructureCategory::class);

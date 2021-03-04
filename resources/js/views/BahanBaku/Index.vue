@@ -356,9 +356,9 @@ export default {
 			},
 			nop_before: 1,
 			theErrors: [],
-			warehouse_option: [],
+			
 			isBusy: false,
-			warehouse_option: [],
+			
 			raws: [],
 			kolom: [
 				{ key: "series", label: "Series", sortable: true },
@@ -367,12 +367,11 @@ export default {
 				{ key: "periode", label: "Periode", sortable: true },
 				"nop",
 				"periode",
-				"warehouse",
 				"supplier",
 				"invoice",
 				"action",
 			],
-			sortBy: "periode",
+			sortBy: "",
 			sortDesc: false,
 			filter: null,
 			filterOn: [],

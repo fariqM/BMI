@@ -6032,8 +6032,6 @@ function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
 //
 //
 //
@@ -6382,9 +6380,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
-    var _ref;
-
-    return _ref = {
+    return {
       form: {
         id: 0,
         uom: "m3",
@@ -6393,33 +6389,43 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       },
       nop_before: 1,
       theErrors: [],
-      warehouse_option: [],
-      isBusy: false
-    }, _defineProperty(_ref, "warehouse_option", []), _defineProperty(_ref, "raws", []), _defineProperty(_ref, "kolom", [{
-      key: "series",
-      label: "Series",
-      sortable: true
-    }, "type", {
-      key: "size",
-      label: "Size",
-      sortable: true
-    }, {
-      key: "periode",
-      label: "Periode",
-      sortable: true
-    }, "nop", "periode", "warehouse", "supplier", "invoice", "action"]), _defineProperty(_ref, "sortBy", "periode"), _defineProperty(_ref, "sortDesc", false), _defineProperty(_ref, "filter", null), _defineProperty(_ref, "filterOn", []), _defineProperty(_ref, "perPage", 5), _defineProperty(_ref, "pageOptions", [{
-      value: 5,
-      text: "5"
-    }, {
-      value: 10,
-      text: "10"
-    }, {
-      value: 15,
-      text: "15"
-    }, {
-      value: 100,
-      text: "Show a lot"
-    }]), _defineProperty(_ref, "totalRows", 1), _defineProperty(_ref, "currentPage", 1), _defineProperty(_ref, "btnLoading", false), _ref;
+      isBusy: false,
+      raws: [],
+      kolom: [{
+        key: "series",
+        label: "Series",
+        sortable: true
+      }, "type", {
+        key: "size",
+        label: "Size",
+        sortable: true
+      }, {
+        key: "periode",
+        label: "Periode",
+        sortable: true
+      }, "nop", "periode", "supplier", "invoice", "action"],
+      sortBy: "",
+      sortDesc: false,
+      filter: null,
+      filterOn: [],
+      perPage: 5,
+      pageOptions: [{
+        value: 5,
+        text: "5"
+      }, {
+        value: 10,
+        text: "10"
+      }, {
+        value: 15,
+        text: "15"
+      }, {
+        value: 100,
+        text: "Show a lot"
+      }],
+      totalRows: 1,
+      currentPage: 1,
+      btnLoading: false
+    };
   },
   computed: {
     sortOptions: function sortOptions() {
@@ -6747,37 +6753,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
@@ -6788,7 +6763,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         size: "",
         uom: "m3",
         nop: "",
-        warehouse_id: "",
         supplier_id: "",
         invoice_id: ""
       },
@@ -6796,7 +6770,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       invoice_option: [],
       invoice: [],
       category_option: [],
-      warehouse_option: [],
       supplier_option: [],
       placement: 'top'
     };
@@ -6804,7 +6777,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   mounted: function mounted() {
     this.getStructure();
     this.getInvoice();
-    this.getWarehouse();
     this.getSupplier();
     this.getInvoice();
   },
@@ -6878,10 +6850,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         }, _callee);
       }))();
     },
-    setWarehouse: function setWarehouse(value) {
-      this.form.warehouse_id = value.id;
+    setStructure: function setStructure(value) {
+      this.form.series = value.shortname;
+      this.form.structure_category_id = value.id;
     },
-    getWarehouse: function getWarehouse() {
+    getStructure: function getStructure() {
       var _this2 = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee2() {
@@ -6892,12 +6865,12 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
             switch (_context2.prev = _context2.next) {
               case 0:
                 _context2.next = 2;
-                return axios.get("/api/warehouse/index");
+                return axios.get("/api/structure-category/index");
 
               case 2:
                 _yield$axios$get2 = _context2.sent;
                 data = _yield$axios$get2.data;
-                _this2.warehouse_option = data.data;
+                _this2.category_option = data.data;
 
               case 5:
               case "end":
@@ -6907,110 +6880,80 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         }, _callee2);
       }))();
     },
-    setStructure: function setStructure(value) {
-      this.form.series = value.shortname;
-      this.form.structure_category_id = value.id;
-    },
-    getStructure: function getStructure() {
+    store: function store() {
       var _this3 = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee3() {
-        var _yield$axios$get3, data;
-
+        var response;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee3$(_context3) {
           while (1) {
             switch (_context3.prev = _context3.next) {
               case 0:
-                _context3.next = 2;
-                return axios.get("/api/structure-category/index");
-
-              case 2:
-                _yield$axios$get3 = _context3.sent;
-                data = _yield$axios$get3.data;
-                _this3.category_option = data.data;
-
-              case 5:
-              case "end":
-                return _context3.stop();
-            }
-          }
-        }, _callee3);
-      }))();
-    },
-    store: function store() {
-      var _this4 = this;
-
-      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee4() {
-        var response;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee4$(_context4) {
-          while (1) {
-            switch (_context4.prev = _context4.next) {
-              case 0:
-                _context4.prev = 0;
-                _context4.next = 3;
-                return axios.post("/api/gudang-bahanbaku/add-raw", _this4.form);
+                _context3.prev = 0;
+                _context3.next = 3;
+                return axios.post("/api/gudang-bahanbaku/add-raw", _this3.form);
 
               case 3:
-                response = _context4.sent;
+                response = _context3.sent;
 
                 if (response.status == 200) {
-                  _this4.$router.push({
+                  _this3.$router.push({
                     name: "bb.index"
                   });
 
-                  _this4.$toast.success("Mantap", "Berhasil Horee!", {
+                  _this3.$toast.success("Mantap", "Berhasil Horee!", {
                     position: "topRight"
                   }); //  console.log(response.status);
 
                 }
 
-                _context4.next = 11;
+                _context3.next = 11;
                 break;
 
               case 7:
-                _context4.prev = 7;
-                _context4.t0 = _context4["catch"](0);
-                _this4.theErrors = _context4.t0.response.data.errors;
+                _context3.prev = 7;
+                _context3.t0 = _context3["catch"](0);
+                _this3.theErrors = _context3.t0.response.data.errors;
 
-                _this4.$toast.error("Ada yang error!", "Oops,", {
+                _this3.$toast.error("Ada yang error!", "Oops,", {
                   position: "topRight"
                 });
 
               case 11:
               case "end":
-                return _context4.stop();
+                return _context3.stop();
             }
           }
-        }, _callee4, null, [[0, 7]]);
+        }, _callee3, null, [[0, 7]]);
       }))();
     },
     setInvoice: function setInvoice(value) {
       this.form.invoice_id = value.id;
     },
     getInvoice: function getInvoice() {
-      var _this5 = this;
+      var _this4 = this;
 
-      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee5() {
-        var _yield$axios$get4, data;
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee4() {
+        var _yield$axios$get3, data;
 
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee5$(_context5) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee4$(_context4) {
           while (1) {
-            switch (_context5.prev = _context5.next) {
+            switch (_context4.prev = _context4.next) {
               case 0:
-                _context5.next = 2;
+                _context4.next = 2;
                 return axios.get("/api/invoice/index");
 
               case 2:
-                _yield$axios$get4 = _context5.sent;
-                data = _yield$axios$get4.data;
-                _this5.invoice_option = data.data;
+                _yield$axios$get3 = _context4.sent;
+                data = _yield$axios$get3.data;
+                _this4.invoice_option = data.data;
 
               case 5:
               case "end":
-                return _context5.stop();
+                return _context4.stop();
             }
           }
-        }, _callee5);
+        }, _callee4);
       }))();
     }
   }
@@ -7283,7 +7226,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         label: "Confirm at",
         sortable: true
       }],
-      sortBy: "series",
+      sortBy: "",
       sortDesc: false,
       filter: null,
       filterOn: [],
@@ -8564,7 +8507,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         label: "Confirm at",
         sortable: true
       }, "action"],
-      sortBy: "series",
+      sortBy: "",
       sortDesc: false,
       filter: null,
       filterOn: [],
@@ -38271,91 +38214,6 @@ var render = function() {
                 staticClass: "col-sm-3 col-form-label",
                 attrs: { for: "name" }
               },
-              [_vm._v("WAREHOUSE ")]
-            ),
-            _vm._v(" "),
-            _c(
-              "div",
-              { staticClass: "col-sm-9" },
-              [
-                _c("v-select", {
-                  attrs: { options: _vm.warehouse_option, label: "title" },
-                  on: { input: _vm.setWarehouse },
-                  scopedSlots: _vm._u([
-                    {
-                      key: "list-footer",
-                      fn: function() {
-                        return [
-                          _c("div", {
-                            staticStyle: { background: "grey", height: "1px" }
-                          }),
-                          _vm._v(" "),
-                          _c("div", { staticClass: "costum-footer-dropdown" }, [
-                            _c("div", [
-                              _c(
-                                "li",
-                                {
-                                  staticStyle: {
-                                    "text-align": "center",
-                                    "text-justify": "center"
-                                  }
-                                },
-                                [
-                                  _c(
-                                    "b-button",
-                                    {
-                                      directives: [
-                                        {
-                                          name: "b-modal",
-                                          rawName: "v-b-modal.modal-1",
-                                          modifiers: { "modal-1": true }
-                                        }
-                                      ],
-                                      staticClass: "btn btn-xs",
-                                      attrs: { variant: "primary" },
-                                      on: {
-                                        click: function($event) {
-                                          return _vm.$router.push({
-                                            name: "wrh.form"
-                                          })
-                                        }
-                                      }
-                                    },
-                                    [_vm._v("Add warehouse")]
-                                  )
-                                ],
-                                1
-                              )
-                            ])
-                          ])
-                        ]
-                      },
-                      proxy: true
-                    }
-                  ])
-                }),
-                _vm._v(" "),
-                _vm.theErrors.name
-                  ? _c("div", { staticClass: "mt-2 text-danger" }, [
-                      _vm._v(
-                        "\n\t\t\t\t\t\t" +
-                          _vm._s(_vm.theErrors.name[0]) +
-                          "\n\t\t\t\t\t"
-                      )
-                    ])
-                  : _vm._e()
-              ],
-              1
-            )
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "form-group row" }, [
-            _c(
-              "label",
-              {
-                staticClass: "col-sm-3 col-form-label",
-                attrs: { for: "name" }
-              },
               [_vm._v("SUPPLIER ")]
             ),
             _vm._v(" "),
@@ -38779,34 +38637,6 @@ var render = function() {
                           }
                         }),
                         _vm._v("\n\t\t\t\t\t\t\t\t\tsegarkan\n\t\t\t\t\t\t\t\t")
-                      ],
-                      1
-                    )
-                  ],
-                  1
-                ),
-                _vm._v(" "),
-                _c(
-                  "div",
-                  [
-                    _c(
-                      "b-button",
-                      {
-                        staticStyle: { "justify-content": "end" },
-                        attrs: { variant: "primary" },
-                        on: {
-                          click: function($event) {
-                            return _vm.$router.push({ name: "bb.form" })
-                          }
-                        }
-                      },
-                      [
-                        _c("b-icon", {
-                          attrs: { icon: "plus-square", "aria-hidden": "true" }
-                        }),
-                        _vm._v(
-                          "\n\t\t\t\t\t\t\t\t\tTambahkan\n\t\t\t\t\t\t\t\t"
-                        )
                       ],
                       1
                     )
@@ -40439,34 +40269,6 @@ var render = function() {
                         }),
                         _vm._v(
                           "\n\t\t\t\t\t\t\t\t\t\tsegarkan\n\t\t\t\t\t\t\t\t\t"
-                        )
-                      ],
-                      1
-                    )
-                  ],
-                  1
-                ),
-                _vm._v(" "),
-                _c(
-                  "div",
-                  [
-                    _c(
-                      "b-button",
-                      {
-                        staticStyle: { "justify-content": "end" },
-                        attrs: { variant: "primary" },
-                        on: {
-                          click: function($event) {
-                            return _vm.$router.push({ name: "bb.form" })
-                          }
-                        }
-                      },
-                      [
-                        _c("b-icon", {
-                          attrs: { icon: "plus-square", "aria-hidden": "true" }
-                        }),
-                        _vm._v(
-                          "\n\t\t\t\t\t\t\t\t\t\tTambahkan\n\t\t\t\t\t\t\t\t\t"
                         )
                       ],
                       1

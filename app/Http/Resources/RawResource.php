@@ -24,8 +24,6 @@ class RawResource extends JsonResource
             'size' => $this->size." ".$this->uom ,
             'nop' => $this->nop,
             'periode' => $diff->format("%r%a days"),
-            'warehouse' => $this->warehouse->name,
-            'warehouse_id' => $this->warehouse->id,
             'supplier' => $this->supplier->name,
             'supplier_id' => $this->supplier->id,
             'invoice' => $this->invoice->reference,

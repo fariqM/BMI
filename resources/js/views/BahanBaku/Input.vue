@@ -73,37 +73,6 @@
 				</div>
 
 				<div class="form-group row">
-					<label for="name" class="col-sm-3 col-form-label">WAREHOUSE </label>
-					<div class="col-sm-9">
-						<v-select
-							@input="setWarehouse"
-							:options="warehouse_option"
-							label="title"
-						>
-							<template #list-footer>
-								<div style="background: grey; height: 1px"></div>
-								<div class="costum-footer-dropdown">
-									<div>
-										<li style="text-align: center; text-justify: center">
-											<b-button
-												@click="$router.push({ name: 'wrh.form' })"
-												variant="primary"
-												class="btn btn-xs"
-												v-b-modal.modal-1
-												>Add warehouse</b-button
-											>
-										</li>
-									</div>
-								</div>
-							</template>
-						</v-select>
-						<div v-if="theErrors.name" class="mt-2 text-danger">
-							{{ theErrors.name[0] }}
-						</div>
-					</div>
-				</div>
-
-				<div class="form-group row">
 					<label for="name" class="col-sm-3 col-form-label">SUPPLIER </label>
 					<div class="col-sm-9">
 						<v-select
@@ -197,7 +166,6 @@ export default {
 				size: "",
 				uom: "m3",
 				nop: "",
-				warehouse_id: "",
 				supplier_id: "",
 				invoice_id: "",
 			},
@@ -205,7 +173,6 @@ export default {
 			invoice_option: [],
 			invoice: [],
 			category_option: [],
-			warehouse_option: [],
 			supplier_option: [],
 			placement: 'top',
 		};
@@ -214,7 +181,6 @@ export default {
 	mounted() {
 		this.getStructure();
 		this.getInvoice();
-		this.getWarehouse();
 		this.getSupplier();
 		this.getInvoice();
 	},
@@ -268,14 +234,6 @@ export default {
 		async getSupplier() {
 			let { data } = await axios.get("/api/supplier/index");
 			this.supplier_option = data.data;
-		},
-
-		setWarehouse(value) {
-			this.form.warehouse_id = value.id;
-		},
-		async getWarehouse() {
-			let { data } = await axios.get("/api/warehouse/index");
-			this.warehouse_option = data.data;
 		},
 
 		setStructure(value) {

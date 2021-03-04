@@ -2,14 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Resources\RawResource;
 use App\Http\Resources\RecordResource;
-use App\Http\Resources\WarehouseResource;
 use App\Models\Raw;
 use App\Models\Record;
-use App\Models\Warehouse;
-use Illuminate\Http\Request;
-use PhpParser\Node\Expr\FuncCall;
 
 class RecordController extends Controller
 {
@@ -51,7 +46,7 @@ class RecordController extends Controller
     }
 
     public function recordBB(){
-        $records = Record::where('origin','1')->with('warehouse')->get();
+        $records = Record::where('origin','1')->with('warehouse')->latest()->get();
         return RecordResource::collection($records);
     }
 
@@ -88,6 +83,16 @@ class RecordController extends Controller
         $record->update([
             'confirm_status' => 'mismatch',
             'status' => 'on queue',
+            'confirm_at' => date("Y-m-d H:i:s"),
+        ]);
+
+        // $raw = Raw::where('series', request('series'))->firstOrFail();
+        // $raw->update([
+
+        // ]);
+
+        return response()->json([
+            'message' => 'success',
         ]);
     }
 }

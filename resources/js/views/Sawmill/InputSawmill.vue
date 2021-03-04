@@ -67,7 +67,7 @@
 										segarkan
 									</b-button>
 								</div>
-								<div>
+								<!-- <div>
 									<b-button
 										style="justify-content: end; justify-content: end"
 										@click="$router.push({ name: 'bb.form' })"
@@ -76,7 +76,7 @@
 										<b-icon icon="plus-square" aria-hidden="true"></b-icon>
 										Tambahkan
 									</b-button>
-								</div>
+								</div> -->
 							</div>
 						</div>
 						<div class="table-responsive">
@@ -263,7 +263,7 @@ export default {
 				{ key: "confirm_at", label: "Confirm at", sortable: true },
 				"action",
 			],
-			sortBy: "series",
+			sortBy: "",
 			sortDesc: false,
 			filter: null,
 			filterOn: [],
