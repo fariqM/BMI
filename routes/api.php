@@ -34,6 +34,11 @@ Route::namespace('App\Http\Controllers')->group(function(){
         Route::get('output-index', 'RecordController@recordBB');
     });
 
+    Route::prefix('gudang-sawmill')->group(function(){
+        Route::patch('confirm-raw/{record:id}', 'RecordController@confirmraw');
+        Route::get('checkconfirm/{record:id}', 'RecordController@checkconfrim');
+    });
+
 
     Route::prefix('invoice')->group(function(){
         Route::get('index', 'InvoiceController@index');

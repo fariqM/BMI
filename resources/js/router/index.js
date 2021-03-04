@@ -12,8 +12,9 @@ import FormInvoice from '../views/Invoice/FormInv'
 import FormStructure from '../views/Structure/StrForm'
 import FormWarehouse from '../views/Warehouse/WrhForm'
 import FormSupplier from '../views/Supplier/SplForm'
-
-
+import Sawmill from '../views/Sawmill/Index'
+import OutputSawmill from '../views/Sawmill/OutputSawmill'
+import inputSawmill from '../views/Sawmill/InputSawmill'
 
 
 
@@ -68,10 +69,29 @@ export default{
             name: 'bb.index',
             component: BahanBaku
         },
+
         {
             path: '/bahan-baku/output-index',
             name: 'bb.output.index',
             component: OutputBB
+        },
+
+        {
+            path: '/sawmill/index',
+            name: 'sawmil.index',
+            component: Sawmill
+        },
+
+        {
+            path: '/sawmill/input-index',
+            name: 'sawmil.input.index',
+            component: inputSawmill
+        },
+
+        {
+            path: '/sawmill/output-index',
+            name: 'sawmil.output.index',
+            component: OutputSawmill
         },
         
         {
@@ -103,6 +123,7 @@ export default{
             name: 'spl.form',
             component: FormSupplier
         },
+
 
     ]
 }

@@ -2,13 +2,11 @@
 	<div>
 		<nav class="page-breadcrumb">
 			<ol class="breadcrumb">
-				<li class="breadcrumb-item"><a href="#">Gudang</a></li>
+				<li class="breadcrumb-item"><a href="#">Gudang sawmill</a></li>
 				<li class="breadcrumb-item">
 					<router-link :to="{ name: 'bb.index' }">Index</router-link>
 				</li>
-				<li class="breadcrumb-item active" aria-current="page">
-					Output record
-				</li>
+				<li class="breadcrumb-item active" aria-current="page">Input record</li>
 			</ol>
 		</nav>
 
@@ -17,7 +15,7 @@
 				<div class="card">
 					<div class="card-body">
 						<h6 class="card-title">
-							Index of output records in <b>Gudang Bahan Baku</b>
+							Index of input records in <b>Gudang Sawmill</b>
 						</h6>
 						<p class="card-description">
 							Read the
@@ -48,7 +46,9 @@
 										id="kolomID"
 										type="checkbox"
 									/>
-									<label class="costum-checkbox" for="kolomID">Destination</label>
+									<label class="costum-checkbox" for="kolomID"
+										>Destination</label
+									>
 
 									<input
 										class="costum-checkbox"
@@ -143,17 +143,33 @@
 
 								<template #cell(status)="data">
 									<template v-if="data.item.status == 'moving'">
-										<span class="badge badge-info">
-											<b-icon class="costum-badge" icon="box-arrow-up-right"></b-icon>
+										<span class="badge badge-dark">
+											<b-icon
+												class="costum-badge"
+												icon="box-arrow-up-right"
+											></b-icon>
 											moving
 										</span>
 									</template>
+                                    <template v-if="data.item.status == 'on queue'">
+                                        <span class="badge badge-light">
+											<b-icon
+												class="costum-badge"
+												icon="box-arrow-up-right"
+											></b-icon>
+											{{ data.item.status }}
+										</span>
+                                    </template>
 								</template>
 
 								<template #cell(confirm_status)="data">
 									<template v-if="data.item.confirm_status == 'unconfirmed'">
 										<span class="badge badge-warning">
-											<b-icon class="costum-badge" icon="exclamation-triangle-fill" variant="danger"></b-icon>
+											<b-icon
+												class="costum-badge"
+												icon="exclamation-triangle-fill"
+												variant="danger"
+											></b-icon>
 											{{ data.item.confirm_status }}
 										</span>
 									</template>
@@ -164,18 +180,24 @@
 									</template>
 								</template>
 
-								<template #cell(action)="">
-									<div class="justify-content-between">
-										<router-link :to="{ name: 'home' }" class="badge badge-info"
-											><b-icon icon="search"></b-icon
-										></router-link>
+								<template class="justify-content-between" #cell(action)="data">
+									<router-link
+										:to="{ name: 'home' }"
+										class="badge badge-secondary"
+										><b-icon icon="search"></b-icon
+									></router-link>
 
-										<router-link
-											:to="{ name: 'home' }"
-											class="badge badge-primary"
-											>Edit</router-link
+									<template v-if="data.item.confirm_status == 'unconfirmed'">
+										<a
+											@click="confirm(data.item)"
+											class="badge badge-success del-btn"
+											>confirm</a
 										>
-									</div>
+									</template>
+
+									<template v-if="data.item.confirm_status == 'confirmed'">
+										<a class="badge badge-primary del-btn">proceed</a>
+									</template>
 								</template>
 							</b-table>
 						</div>
@@ -218,6 +240,9 @@
 export default {
 	data() {
 		return {
+            form:{
+                id:""
+            },
 			isBusy: false,
 			raws: [],
 			kolom: [
@@ -227,6 +252,7 @@ export default {
 				{ key: "status", label: "Raw status", sortable: true },
 				{ key: "confirm_status", label: "Confirmed status", sortable: true },
 				{ key: "confirm_at", label: "Confirm at", sortable: true },
+				"action",
 			],
 			sortBy: "series",
 			sortDesc: false,
@@ -259,6 +285,43 @@ export default {
 	},
 
 	methods: {
+		confirm(value) {
+			Vue.swal({
+				title: "Confirm alert!",
+				html: `are you sure the <b>${value.series}</b> series is correct ? <br>if you doubt please check manually the series.`,
+				icon: "question",
+				confirmButtonText: `Confirm`,
+				showCancelButton: true,
+				timerProgressBar: true,
+				showCloseButton: true,
+			}).then((result) => {
+				if (result.isConfirmed) {
+					console.log();
+					this.konfirmAksi(value.id);
+				}
+			});
+		},
+		async konfirmAksi(value) {
+			try {
+				let response = await axios.patch(
+					`/api/gudang-sawmill/confirm-raw/${value}`, this.form
+				);
+				if (response.status == 200) {
+					this.$toast.success("Confirmed", "Done!", {
+						position: "topRight",
+					});
+					let { data } = await axios.get("/api/gudang-bahanbaku/output-index");
+					this.raws = [];
+					this.raws = data.data;
+				}
+			} catch (e) {
+				this.$toast.error("Something wrong", "Oops!", {
+					position: "topRight",
+				});
+
+				console.log(e.response.data.errors);
+			}
+		},
 		onFiltered(filteredItems) {
 			// Trigger pagination to update the number of buttons/pages due to filtering
 			this.totalRows = filteredItems.length;
