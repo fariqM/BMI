@@ -148,16 +148,16 @@
 												class="costum-badge"
 												icon="box-arrow-up-right"
 											></b-icon>
-											moving
+											{{ data.item.status.toUpperCase() }}
 										</span>
 									</template>
                                     <template v-if="data.item.status == 'on queue'">
-                                        <span class="badge badge-light">
+                                        <span class="badge badge-info">
 											<b-icon
 												class="costum-badge"
-												icon="box-arrow-up-right"
+												icon="clock"
 											></b-icon>
-											{{ data.item.status }}
+											{{ data.item.status.toUpperCase() }}
 										</span>
                                     </template>
 								</template>
@@ -170,12 +170,16 @@
 												icon="exclamation-triangle-fill"
 												variant="danger"
 											></b-icon>
-											{{ data.item.confirm_status }}
+											{{ data.item.confirm_status.toUpperCase() }}
 										</span>
 									</template>
 									<template v-if="data.item.confirm_status == 'confirmed'">
 										<span class="badge badge-success">
-											{{ data.item.confirm_status }}
+                                            <b-icon
+												class="costum-badge"
+												icon="check2-square"
+											></b-icon>
+											{{ data.item.confirm_status.toUpperCase() }}
 										</span>
 									</template>
 								</template>
@@ -192,6 +196,11 @@
 											@click="confirm(data.item)"
 											class="badge badge-success del-btn"
 											>confirm</a
+										>
+                                        <a  
+                                            @click="mismatch(data.item)"
+											class="badge badge-danger del-btn"
+											>mismatch</a
 										>
 									</template>
 
@@ -285,6 +294,31 @@ export default {
 	},
 
 	methods: {
+        mismatch(value){
+            Vue.swal({
+				title: "Confirm alert!",
+				html: `are you sure the <b>${value.series}</b> series is correct ? <br>if you doubt please check manually the series.`,
+				icon: "warning",
+				confirmButtonText: `Store here`,
+                showDenyButton: true,
+                denyButtonText:'Return',
+                denyButtonColor: '#FBBC06',
+				showCancelButton: true,
+				timerProgressBar: true,
+				showCloseButton: true,
+			}).then((result) => {
+				if (result.isConfirmed) {
+                    this.stored()
+					// console.log("stored");
+					// this.konfirmAksi(value.id);
+				} else if (result.isDenied){
+                    // console.log("denied");
+                }                
+			});
+        },
+        stored(){
+            
+        },
 		confirm(value) {
 			Vue.swal({
 				title: "Confirm alert!",

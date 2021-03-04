@@ -8522,6 +8522,15 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
@@ -8593,8 +8602,32 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     this.toggleBusy();
   },
   methods: {
-    confirm: function confirm(value) {
+    mismatch: function mismatch(value) {
       var _this = this;
+
+      Vue.swal({
+        title: "Confirm alert!",
+        html: "are you sure the <b>".concat(value.series, "</b> series is correct ? <br>if you doubt please check manually the series."),
+        icon: "warning",
+        confirmButtonText: "Store here",
+        showDenyButton: true,
+        denyButtonText: 'Return',
+        denyButtonColor: '#FBBC06',
+        showCancelButton: true,
+        timerProgressBar: true,
+        showCloseButton: true
+      }).then(function (result) {
+        if (result.isConfirmed) {
+          _this.stored(); // console.log("stored");
+          // this.konfirmAksi(value.id);
+
+        } else if (result.isDenied) {// console.log("denied");
+        }
+      });
+    },
+    stored: function stored() {},
+    confirm: function confirm(value) {
+      var _this2 = this;
 
       Vue.swal({
         title: "Confirm alert!",
@@ -8608,12 +8641,12 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         if (result.isConfirmed) {
           console.log();
 
-          _this.konfirmAksi(value.id);
+          _this2.konfirmAksi(value.id);
         }
       });
     },
     konfirmAksi: function konfirmAksi(value) {
-      var _this2 = this;
+      var _this3 = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee() {
         var response, _yield$axios$get, data;
@@ -8624,7 +8657,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               case 0:
                 _context.prev = 0;
                 _context.next = 3;
-                return axios.patch("/api/gudang-sawmill/confirm-raw/".concat(value), _this2.form);
+                return axios.patch("/api/gudang-sawmill/confirm-raw/".concat(value), _this3.form);
 
               case 3:
                 response = _context.sent;
@@ -8634,7 +8667,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   break;
                 }
 
-                _this2.$toast.success("Confirmed", "Done!", {
+                _this3.$toast.success("Confirmed", "Done!", {
                   position: "topRight"
                 });
 
@@ -8644,8 +8677,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               case 8:
                 _yield$axios$get = _context.sent;
                 data = _yield$axios$get.data;
-                _this2.raws = [];
-                _this2.raws = data.data;
+                _this3.raws = [];
+                _this3.raws = data.data;
 
               case 12:
                 _context.next = 18;
@@ -8655,7 +8688,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 _context.prev = 14;
                 _context.t0 = _context["catch"](0);
 
-                _this2.$toast.error("Something wrong", "Oops!", {
+                _this3.$toast.error("Something wrong", "Oops!", {
                   position: "topRight"
                 });
 
@@ -8675,7 +8708,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       this.currentPage = 1;
     },
     toggleBusy: function toggleBusy() {
-      var _this3 = this;
+      var _this4 = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee2() {
         var _yield$axios$get2, data;
@@ -8684,18 +8717,18 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           while (1) {
             switch (_context2.prev = _context2.next) {
               case 0:
-                _this3.isBusy = !_this3.isBusy;
+                _this4.isBusy = !_this4.isBusy;
                 _context2.next = 3;
                 return axios.get("/api/gudang-bahanbaku/output-index");
 
               case 3:
                 _yield$axios$get2 = _context2.sent;
                 data = _yield$axios$get2.data;
-                _this3.raws = [];
-                _this3.raws = data.data;
-                _this3.totalRows = _this3.raws.length;
-                setTimeout(_this3.isBusy = !_this3.isBusy, 6000);
-                console.log(_this3.raws.length);
+                _this4.raws = [];
+                _this4.raws = data.data;
+                _this4.totalRows = _this4.raws.length;
+                setTimeout(_this4.isBusy = !_this4.isBusy, 6000);
+                console.log(_this4.raws.length);
 
               case 10:
               case "end":
@@ -40582,7 +40615,9 @@ var render = function() {
                                       attrs: { icon: "box-arrow-up-right" }
                                     }),
                                     _vm._v(
-                                      "\n\t\t\t\t\t\t\t\t\t\t\tmoving\n\t\t\t\t\t\t\t\t\t\t"
+                                      "\n\t\t\t\t\t\t\t\t\t\t\t" +
+                                        _vm._s(data.item.status.toUpperCase()) +
+                                        "\n\t\t\t\t\t\t\t\t\t\t"
                                     )
                                   ],
                                   1
@@ -40594,15 +40629,15 @@ var render = function() {
                             ? [
                                 _c(
                                   "span",
-                                  { staticClass: "badge badge-light" },
+                                  { staticClass: "badge badge-info" },
                                   [
                                     _c("b-icon", {
                                       staticClass: "costum-badge",
-                                      attrs: { icon: "box-arrow-up-right" }
+                                      attrs: { icon: "clock" }
                                     }),
                                     _vm._v(
                                       "\n\t\t\t\t\t\t\t\t\t\t\t" +
-                                        _vm._s(data.item.status) +
+                                        _vm._s(data.item.status.toUpperCase()) +
                                         "\n\t\t\t\t\t\t\t\t\t\t"
                                     )
                                   ],
@@ -40632,7 +40667,9 @@ var render = function() {
                                     }),
                                     _vm._v(
                                       "\n\t\t\t\t\t\t\t\t\t\t\t" +
-                                        _vm._s(data.item.confirm_status) +
+                                        _vm._s(
+                                          data.item.confirm_status.toUpperCase()
+                                        ) +
                                         "\n\t\t\t\t\t\t\t\t\t\t"
                                     )
                                   ],
@@ -40647,12 +40684,19 @@ var render = function() {
                                   "span",
                                   { staticClass: "badge badge-success" },
                                   [
+                                    _c("b-icon", {
+                                      staticClass: "costum-badge",
+                                      attrs: { icon: "check2-square" }
+                                    }),
                                     _vm._v(
                                       "\n\t\t\t\t\t\t\t\t\t\t\t" +
-                                        _vm._s(data.item.confirm_status) +
+                                        _vm._s(
+                                          data.item.confirm_status.toUpperCase()
+                                        ) +
                                         "\n\t\t\t\t\t\t\t\t\t\t"
                                     )
-                                  ]
+                                  ],
+                                  1
                                 )
                               ]
                             : _vm._e()
@@ -40686,6 +40730,19 @@ var render = function() {
                                     }
                                   },
                                   [_vm._v("confirm")]
+                                ),
+                                _vm._v(" "),
+                                _c(
+                                  "a",
+                                  {
+                                    staticClass: "badge badge-danger del-btn",
+                                    on: {
+                                      click: function($event) {
+                                        return _vm.mismatch(data.item)
+                                      }
+                                    }
+                                  },
+                                  [_vm._v("mismatch")]
                                 )
                               ]
                             : _vm._e(),

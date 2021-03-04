@@ -32,3 +32,8 @@ function latestid($db)
     return $raw->id;
 }
 
+function datenow($date){
+    $tanggal = Carbon::parse($date)->diffForHumans();
+    return $tanggal;
+}
+

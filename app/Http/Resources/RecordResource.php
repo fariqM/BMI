@@ -14,6 +14,14 @@ class RecordResource extends JsonResource
      */
     public function toArray($request)
     {
+        $tgl = "ada";
+
+        if ($this->confirm_at === NULL){
+            $tgl = NULL;
+        } else{
+          $tgl =  datenow($this->confirm_at);
+        }
+
         return [
             'id' => $this->id,
             'series' => $this->series,
@@ -25,7 +33,7 @@ class RecordResource extends JsonResource
             'unit' => $this->unit,
             'status' => $this->status,
             'confirm_status' => $this->confirm_status,
-            'confirm_at' => $this->confirm_at,
+            'confirm_at' => $tgl,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
         ];

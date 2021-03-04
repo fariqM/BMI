@@ -9,6 +9,7 @@ use App\Models\Raw;
 use App\Models\Record;
 use App\Models\Warehouse;
 use Illuminate\Http\Request;
+use PhpParser\Node\Expr\FuncCall;
 
 class RecordController extends Controller
 {
@@ -70,11 +71,23 @@ class RecordController extends Controller
         $record->update([
             'confirm_status' => 'confirmed',
             'status' => 'on queue',
+            'confirm_at' => date("Y-m-d H:i:s"),
         ]);
 
         return response()->json([
             'message' => 'success'
         ]);
 
+    }
+
+    public function stored(Record $record){
+
+    }
+
+    public function returned(Record $record){
+        $record->update([
+            'confirm_status' => 'mismatch',
+            'status' => 'on queue',
+        ]);
     }
 }
