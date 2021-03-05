@@ -8474,11 +8474,27 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
       form: {
-        id: ""
+        id: "",
+        nop: "",
+        series: "",
+        raw_id: ""
       },
       isBusy: false,
       raws: [],
@@ -8526,6 +8542,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         text: "Show a lot"
       }],
       totalRows: 1,
+      theErrors: [],
       currentPage: 1
     };
   },
@@ -8545,32 +8562,80 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     this.toggleBusy();
   },
   methods: {
-    mismatch: function mismatch(value) {
+    stored: function stored() {
       var _this = this;
 
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee() {
+        var response;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                console.log(_this.form);
+                _context.prev = 1;
+                _context.next = 4;
+                return axios.patch("/api/gudang-sawmill/mismatch-stored/".concat(_this.form.id), _this.form);
+
+              case 4:
+                response = _context.sent;
+
+                if (response.status == 200) {
+                  _this.$toast.success("Confirmed", "Done!", {
+                    position: "topRight"
+                  });
+
+                  console.log(response);
+                }
+
+                _context.next = 12;
+                break;
+
+              case 8:
+                _context.prev = 8;
+                _context.t0 = _context["catch"](1);
+
+                _this.$toast.error("Something wrong", "Oops", {
+                  position: "topRight"
+                });
+
+                console.log(_context.t0.response.data.errors);
+
+              case 12:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee, null, [[1, 8]]);
+      }))();
+    },
+    mismatch: function mismatch(value) {
+      var _this2 = this;
+
+      this.form.id = value.id;
+      this.form.nop = value.nop;
+      this.form.series = value.series;
       Vue.swal({
         title: "Confirm alert!",
         html: "are you sure the <b>".concat(value.series, "</b> series is correct ? <br>if you doubt please check manually the series."),
         icon: "warning",
         confirmButtonText: "Store here",
         showDenyButton: true,
-        denyButtonText: 'Return',
-        denyButtonColor: '#FBBC06',
+        denyButtonText: "Return",
+        denyButtonColor: "#FBBC06",
         showCancelButton: true,
         timerProgressBar: true,
         showCloseButton: true
       }).then(function (result) {
         if (result.isConfirmed) {
-          _this.stored(); // console.log("stored");
+          _this2.stored(); // console.log("stored");
           // this.konfirmAksi(value.id);
 
         } else if (result.isDenied) {// console.log("denied");
         }
       });
     },
-    stored: function stored() {},
     confirm: function confirm(value) {
-      var _this2 = this;
+      var _this3 = this;
 
       Vue.swal({
         title: "Confirm alert!",
@@ -8584,65 +8649,65 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         if (result.isConfirmed) {
           console.log();
 
-          _this2.konfirmAksi(value.id);
+          _this3.konfirmAksi(value.id);
         }
       });
     },
     konfirmAksi: function konfirmAksi(value) {
-      var _this3 = this;
+      var _this4 = this;
 
-      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee() {
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee2() {
         var response, _yield$axios$get, data;
 
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee2$(_context2) {
           while (1) {
-            switch (_context.prev = _context.next) {
+            switch (_context2.prev = _context2.next) {
               case 0:
-                _context.prev = 0;
-                _context.next = 3;
-                return axios.patch("/api/gudang-sawmill/confirm-raw/".concat(value), _this3.form);
+                _context2.prev = 0;
+                _context2.next = 3;
+                return axios.patch("/api/gudang-sawmill/confirm-raw/".concat(value), _this4.form);
 
               case 3:
-                response = _context.sent;
+                response = _context2.sent;
 
                 if (!(response.status == 200)) {
-                  _context.next = 12;
+                  _context2.next = 12;
                   break;
                 }
 
-                _this3.$toast.success("Confirmed", "Done!", {
+                _this4.$toast.success("Confirmed", "Done!", {
                   position: "topRight"
                 });
 
-                _context.next = 8;
+                _context2.next = 8;
                 return axios.get("/api/gudang-bahanbaku/output-index");
 
               case 8:
-                _yield$axios$get = _context.sent;
+                _yield$axios$get = _context2.sent;
                 data = _yield$axios$get.data;
-                _this3.raws = [];
-                _this3.raws = data.data;
+                _this4.raws = [];
+                _this4.raws = data.data;
 
               case 12:
-                _context.next = 18;
+                _context2.next = 18;
                 break;
 
               case 14:
-                _context.prev = 14;
-                _context.t0 = _context["catch"](0);
+                _context2.prev = 14;
+                _context2.t0 = _context2["catch"](0);
 
-                _this3.$toast.error("Something wrong", "Oops!", {
+                _this4.$toast.error("Something wrong", "Oops!", {
                   position: "topRight"
                 });
 
-                console.log(_context.t0.response.data.errors);
+                console.log(_context2.t0.response.data.errors);
 
               case 18:
               case "end":
-                return _context.stop();
+                return _context2.stop();
             }
           }
-        }, _callee, null, [[0, 14]]);
+        }, _callee2, null, [[0, 14]]);
       }))();
     },
     onFiltered: function onFiltered(filteredItems) {
@@ -8651,34 +8716,34 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       this.currentPage = 1;
     },
     toggleBusy: function toggleBusy() {
-      var _this4 = this;
+      var _this5 = this;
 
-      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee2() {
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee3() {
         var _yield$axios$get2, data;
 
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee2$(_context2) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee3$(_context3) {
           while (1) {
-            switch (_context2.prev = _context2.next) {
+            switch (_context3.prev = _context3.next) {
               case 0:
-                _this4.isBusy = !_this4.isBusy;
-                _context2.next = 3;
+                _this5.isBusy = !_this5.isBusy;
+                _context3.next = 3;
                 return axios.get("/api/gudang-bahanbaku/output-index");
 
               case 3:
-                _yield$axios$get2 = _context2.sent;
+                _yield$axios$get2 = _context3.sent;
                 data = _yield$axios$get2.data;
-                _this4.raws = [];
-                _this4.raws = data.data;
-                _this4.totalRows = _this4.raws.length;
-                setTimeout(_this4.isBusy = !_this4.isBusy, 6000);
-                console.log(_this4.raws.length);
+                _this5.raws = [];
+                _this5.raws = data.data;
+                _this5.totalRows = _this5.raws.length;
+                setTimeout(_this5.isBusy = !_this5.isBusy, 6000);
+                console.log(_this5.raws.length);
 
               case 10:
               case "end":
-                return _context2.stop();
+                return _context3.stop();
             }
           }
-        }, _callee2);
+        }, _callee3);
       }))();
     }
   }
@@ -40267,9 +40332,7 @@ var render = function() {
                             "aria-hidden": "true"
                           }
                         }),
-                        _vm._v(
-                          "\n\t\t\t\t\t\t\t\t\t\tsegarkan\n\t\t\t\t\t\t\t\t\t"
-                        )
+                        _vm._v("\n\t\t\t\t\t\t\t\t\tsegarkan\n\t\t\t\t\t\t\t\t")
                       ],
                       1
                     )
@@ -40385,7 +40448,7 @@ var render = function() {
                           data.item.confirm_at == null
                             ? [
                                 _vm._v(
-                                  "\n\t\t\t\t\t\t\t\t\t\tNot set\n\t\t\t\t\t\t\t\t\t"
+                                  "\n\t\t\t\t\t\t\t\t\tNot set\n\t\t\t\t\t\t\t\t"
                                 )
                               ]
                             : _vm._e(),
@@ -40393,9 +40456,9 @@ var render = function() {
                           data.item.confirm_at != null
                             ? [
                                 _vm._v(
-                                  "\n\t\t\t\t\t\t\t\t\t\t" +
+                                  "\n\t\t\t\t\t\t\t\t\t" +
                                     _vm._s(data.item.confirm_at) +
-                                    "\n\t\t\t\t\t\t\t\t\t"
+                                    "\n\t\t\t\t\t\t\t\t"
                                 )
                               ]
                             : _vm._e()
@@ -40417,9 +40480,9 @@ var render = function() {
                                       attrs: { icon: "box-arrow-up-right" }
                                     }),
                                     _vm._v(
-                                      "\n\t\t\t\t\t\t\t\t\t\t\t" +
+                                      "\n\t\t\t\t\t\t\t\t\t\t" +
                                         _vm._s(data.item.status.toUpperCase()) +
-                                        "\n\t\t\t\t\t\t\t\t\t\t"
+                                        "\n\t\t\t\t\t\t\t\t\t"
                                     )
                                   ],
                                   1
@@ -40438,9 +40501,30 @@ var render = function() {
                                       attrs: { icon: "clock" }
                                     }),
                                     _vm._v(
-                                      "\n\t\t\t\t\t\t\t\t\t\t\t" +
+                                      "\n\t\t\t\t\t\t\t\t\t\t" +
                                         _vm._s(data.item.status.toUpperCase()) +
-                                        "\n\t\t\t\t\t\t\t\t\t\t"
+                                        "\n\t\t\t\t\t\t\t\t\t"
+                                    )
+                                  ],
+                                  1
+                                )
+                              ]
+                            : _vm._e(),
+                          _vm._v(" "),
+                          data.item.status == "stored"
+                            ? [
+                                _c(
+                                  "span",
+                                  { staticClass: "badge badge-info" },
+                                  [
+                                    _c("b-icon", {
+                                      staticClass: "costum-badge",
+                                      attrs: { icon: "clock" }
+                                    }),
+                                    _vm._v(
+                                      "\n\t\t\t\t\t\t\t\t\t\t" +
+                                        _vm._s(data.item.status.toUpperCase()) +
+                                        "\n\t\t\t\t\t\t\t\t\t"
                                     )
                                   ],
                                   1
@@ -40468,11 +40552,11 @@ var render = function() {
                                       }
                                     }),
                                     _vm._v(
-                                      "\n\t\t\t\t\t\t\t\t\t\t\t" +
+                                      "\n\t\t\t\t\t\t\t\t\t\t" +
                                         _vm._s(
                                           data.item.confirm_status.toUpperCase()
                                         ) +
-                                        "\n\t\t\t\t\t\t\t\t\t\t"
+                                        "\n\t\t\t\t\t\t\t\t\t"
                                     )
                                   ],
                                   1
@@ -40491,11 +40575,37 @@ var render = function() {
                                       attrs: { icon: "check2-square" }
                                     }),
                                     _vm._v(
-                                      "\n\t\t\t\t\t\t\t\t\t\t\t" +
+                                      "\n\t\t\t\t\t\t\t\t\t\t" +
                                         _vm._s(
                                           data.item.confirm_status.toUpperCase()
                                         ) +
-                                        "\n\t\t\t\t\t\t\t\t\t\t"
+                                        "\n\t\t\t\t\t\t\t\t\t"
+                                    )
+                                  ],
+                                  1
+                                )
+                              ]
+                            : _vm._e(),
+                          _vm._v(" "),
+                          data.item.confirm_status == "mismatch"
+                            ? [
+                                _c(
+                                  "span",
+                                  { staticClass: "badge badge-danger" },
+                                  [
+                                    _c("b-icon", {
+                                      staticClass: "costum-badge",
+                                      attrs: {
+                                        icon: "exclamation-triangle-fill",
+                                        variant: "waring"
+                                      }
+                                    }),
+                                    _vm._v(
+                                      "\n\t\t\t\t\t\t\t\t\t\t" +
+                                        _vm._s(
+                                          data.item.confirm_status.toUpperCase()
+                                        ) +
+                                        "\n\t\t\t\t\t\t\t\t\t"
                                     )
                                   ],
                                   1
@@ -40573,7 +40683,7 @@ var render = function() {
             _vm._v(" "),
             _c("div", { staticClass: "footer-table-container" }, [
               _c("div", { staticClass: "footer-table-container-item1" }, [
-                _vm._v("\n\t\t\t\t\t\t\t\tPagination :\n\t\t\t\t\t\t\t\t"),
+                _vm._v("\n\t\t\t\t\t\t\tPagination :\n\t\t\t\t\t\t\t"),
                 _c(
                   "select",
                   {
@@ -40614,9 +40724,9 @@ var render = function() {
                           },
                           [
                             _vm._v(
-                              "\n\t\t\t\t\t\t\t\t\t\t\t" +
+                              "\n\t\t\t\t\t\t\t\t\t\t" +
                                 _vm._s(pagess.text) +
-                                "\n\t\t\t\t\t\t\t\t\t\t"
+                                "\n\t\t\t\t\t\t\t\t\t"
                             )
                           ]
                         )
@@ -40670,7 +40780,7 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("h6", { staticClass: "card-title" }, [
-      _vm._v("\n\t\t\t\t\t\t\tIndex of input records in "),
+      _vm._v("\n\t\t\t\t\t\tIndex of input records in "),
       _c("b", [_vm._v("Gudang Sawmill")])
     ])
   },
@@ -40679,7 +40789,7 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("p", { staticClass: "card-description" }, [
-      _vm._v("\n\t\t\t\t\t\t\tRead the\n\t\t\t\t\t\t\t"),
+      _vm._v("\n\t\t\t\t\t\tRead the\n\t\t\t\t\t\t"),
       _c(
         "a",
         {
@@ -40688,9 +40798,9 @@ var staticRenderFns = [
             target: "_blank"
           }
         },
-        [_vm._v("\n\t\t\t\t\t\t\t\tUser Guide")]
+        [_vm._v("\n\t\t\t\t\t\t\tUser Guide")]
       ),
-      _vm._v("\n\t\t\t\t\t\t\tfor more info\n\t\t\t\t\t\t")
+      _vm._v("\n\t\t\t\t\t\tfor more info\n\t\t\t\t\t")
     ])
   }
 ]

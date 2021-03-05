@@ -37,6 +37,8 @@ Route::namespace('App\Http\Controllers')->group(function(){
     Route::prefix('gudang-sawmill')->group(function(){
         Route::patch('confirm-raw/{record:id}', 'RecordController@confirmraw');
         Route::get('checkconfirm/{record:id}', 'RecordController@checkconfrim');
+        Route::patch('mismatch-stored/{record:id}', 'RecordController@stored');
+        Route::patch('mismatch-returned/{record:id}', 'RecordController@returned');
     });
 
 

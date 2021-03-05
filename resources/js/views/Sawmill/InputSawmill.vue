@@ -151,15 +151,18 @@
 											{{ data.item.status.toUpperCase() }}
 										</span>
 									</template>
-                                    <template v-if="data.item.status == 'on queue'">
-                                        <span class="badge badge-info">
-											<b-icon
-												class="costum-badge"
-												icon="clock"
-											></b-icon>
+									<template v-if="data.item.status == 'on queue'">
+										<span class="badge badge-info">
+											<b-icon class="costum-badge" icon="clock"></b-icon>
 											{{ data.item.status.toUpperCase() }}
 										</span>
-                                    </template>
+									</template>
+									<template v-if="data.item.status == 'stored'">
+										<span class="badge badge-info">
+											<b-icon class="costum-badge" icon="clock"></b-icon>
+											{{ data.item.status.toUpperCase() }}
+										</span>
+									</template>
 								</template>
 
 								<template #cell(confirm_status)="data">
@@ -175,9 +178,19 @@
 									</template>
 									<template v-if="data.item.confirm_status == 'confirmed'">
 										<span class="badge badge-success">
-                                            <b-icon
+											<b-icon
 												class="costum-badge"
 												icon="check2-square"
+											></b-icon>
+											{{ data.item.confirm_status.toUpperCase() }}
+										</span>
+									</template>
+									<template v-if="data.item.confirm_status == 'mismatch'">
+										<span class="badge badge-danger">
+											<b-icon
+												class="costum-badge"
+												icon="exclamation-triangle-fill"
+												variant="waring"
 											></b-icon>
 											{{ data.item.confirm_status.toUpperCase() }}
 										</span>
@@ -197,8 +210,8 @@
 											class="badge badge-success del-btn"
 											>confirm</a
 										>
-                                        <a  
-                                            @click="mismatch(data.item)"
+										<a
+											@click="mismatch(data.item)"
 											class="badge badge-danger del-btn"
 											>mismatch</a
 										>
@@ -249,9 +262,12 @@
 export default {
 	data() {
 		return {
-            form:{
-                id:""
-            },
+			form: {
+				id: "",
+				nop: "",
+				series: "",
+				raw_id: "",
+			},
 			isBusy: false,
 			raws: [],
 			kolom: [
@@ -275,6 +291,7 @@ export default {
 				{ value: 100, text: "Show a lot" },
 			],
 			totalRows: 1,
+			theErrors: [],
 			currentPage: 1,
 		};
 	},
@@ -294,31 +311,52 @@ export default {
 	},
 
 	methods: {
-        mismatch(value){
-            Vue.swal({
+		async stored() {
+			console.log(this.form);
+
+			try {
+				let response = await axios.patch(
+					`/api/gudang-sawmill/mismatch-stored/${this.form.id}`,
+					this.form
+				);
+				if (response.status == 200) {
+					this.$toast.success("Confirmed", "Done!", {
+						position: "topRight",
+					});
+					console.log(response);
+				}
+			} catch (e) {
+				this.$toast.error("Something wrong", "Oops", {
+					position: "topRight",
+				});
+				console.log(e.response.data.errors);
+			}
+		},
+		mismatch(value) {
+			this.form.id = value.id;
+			this.form.nop = value.nop;
+			this.form.series = value.series;
+			Vue.swal({
 				title: "Confirm alert!",
 				html: `are you sure the <b>${value.series}</b> series is correct ? <br>if you doubt please check manually the series.`,
 				icon: "warning",
 				confirmButtonText: `Store here`,
-                showDenyButton: true,
-                denyButtonText:'Return',
-                denyButtonColor: '#FBBC06',
+				showDenyButton: true,
+				denyButtonText: "Return",
+				denyButtonColor: "#FBBC06",
 				showCancelButton: true,
 				timerProgressBar: true,
 				showCloseButton: true,
 			}).then((result) => {
 				if (result.isConfirmed) {
-                    this.stored()
+					this.stored();
 					// console.log("stored");
 					// this.konfirmAksi(value.id);
-				} else if (result.isDenied){
-                    // console.log("denied");
-                }                
+				} else if (result.isDenied) {
+					// console.log("denied");
+				}
 			});
-        },
-        stored(){
-            
-        },
+		},
 		confirm(value) {
 			Vue.swal({
 				title: "Confirm alert!",
@@ -338,7 +376,8 @@ export default {
 		async konfirmAksi(value) {
 			try {
 				let response = await axios.patch(
-					`/api/gudang-sawmill/confirm-raw/${value}`, this.form
+					`/api/gudang-sawmill/confirm-raw/${value}`,
+					this.form
 				);
 				if (response.status == 200) {
 					this.$toast.success("Confirmed", "Done!", {

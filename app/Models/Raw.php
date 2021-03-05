@@ -19,6 +19,10 @@ class Raw extends Model
         return $this->belongsTo(Supplier::class);
     }
 
+    public function sawmillstocks(){
+        return $this->hasMany(Sawmillstock::class);
+    }
+
 
     public function structure_category(){
         return $this->belongsTo(StructureCategory::class);
