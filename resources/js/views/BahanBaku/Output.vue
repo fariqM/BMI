@@ -48,7 +48,9 @@
 										id="kolomID"
 										type="checkbox"
 									/>
-									<label class="costum-checkbox" for="kolomID">Destination</label>
+									<label class="costum-checkbox" for="kolomID"
+										>Destination</label
+									>
 
 									<input
 										class="costum-checkbox"
@@ -144,8 +146,30 @@
 								<template #cell(status)="data">
 									<template v-if="data.item.status == 'moving'">
 										<span class="badge badge-info">
-											<b-icon class="costum-badge" icon="box-arrow-up-right"></b-icon>
+											<b-icon
+												class="costum-badge"
+												icon="box-arrow-up-right"
+											></b-icon>
 											moving
+										</span>
+									</template>
+
+									<template v-if="data.item.status == 'on queue'">
+										<span class="badge badge-info">
+											<b-icon class="costum-badge" icon="clock"></b-icon>
+											{{ data.item.status.toUpperCase() }}
+										</span>
+									</template>
+									<template v-if="data.item.status == 'stored'">
+										<span class="badge badge-info">
+											<b-icon class="costum-badge" icon="clock"></b-icon>
+											{{ data.item.status.toUpperCase() + " AT BMI-B" }}
+										</span>
+									</template>
+									<template v-if="data.item.status == 'returned'">
+										<span class="badge badge-warning">
+											<b-icon class="costum-badge" icon="clock"></b-icon>
+											{{ data.item.status.toUpperCase() + " to your data" }}
 										</span>
 									</template>
 								</template>
@@ -153,28 +177,50 @@
 								<template #cell(confirm_status)="data">
 									<template v-if="data.item.confirm_status == 'unconfirmed'">
 										<span class="badge badge-warning">
-											<b-icon class="costum-badge" icon="exclamation-triangle-fill" variant="danger"></b-icon>
-											{{ data.item.confirm_status }}
+											<b-icon
+												class="costum-badge"
+												icon="exclamation-triangle-fill"
+												variant="danger"
+											></b-icon>
+											{{ data.item.confirm_status.toUpperCase() }}
 										</span>
 									</template>
 									<template v-if="data.item.confirm_status == 'confirmed'">
 										<span class="badge badge-success">
-											{{ data.item.confirm_status }}
+											{{ data.item.confirm_status.toUpperCase() }}
+										</span>
+									</template>
+									<template v-if="data.item.confirm_status == 'mismatch'">
+										<span class="badge badge-danger">
+											<b-icon
+												class="costum-badge"
+												icon="exclamation-triangle-fill"
+												variant="waring"
+											></b-icon>
+											{{ data.item.confirm_status.toUpperCase() }}
 										</span>
 									</template>
 								</template>
 
-								<template #cell(action)="">
+								<template #cell(action)="data">
 									<div class="justify-content-between">
 										<router-link :to="{ name: 'home' }" class="badge badge-info"
 											><b-icon icon="search"></b-icon
 										></router-link>
-
-										<router-link
-											:to="{ name: 'home' }"
-											class="badge badge-primary"
-											>Edit</router-link
+										<template
+											v-if="
+												data.item.confirm_status != 'mismatch' &&
+												data.item.confirm_status != 'confirmed'
+											"
 										>
+											<a
+												ref="rollback_btn"
+												@click="rollback(data.item)"
+												class="badge badge-warning del-btn"
+											>
+												rollback
+											</a>
+										</template>
 									</div>
 								</template>
 							</b-table>
@@ -227,6 +273,7 @@ export default {
 				{ key: "status", label: "Raw status", sortable: true },
 				{ key: "confirm_status", label: "Confirmed status", sortable: true },
 				{ key: "confirm_at", label: "Confirm at", sortable: true },
+				"action",
 			],
 			sortBy: "",
 			sortDesc: false,
@@ -259,6 +306,43 @@ export default {
 	},
 
 	methods: {
+		rollback(value) {
+			Vue.swal({
+				title: "Are you sure to rollback this data ?",
+				html: `the amount of nop will return to your warehouse data.`,
+				icon: "question",
+				confirmButtonText: `Confirm`,
+				showCancelButton: true,
+				timerProgressBar: true,
+				showCloseButton: true,
+			}).then((result) => {
+				if (result.isConfirmed) {
+					// console.log("rollback!!");
+					// console.log(value);
+					this.rollbackActions(value);
+				}
+			});
+		},
+		async rollbackActions(value) {
+			// console.log(value);
+			try {
+				let response = await axios.delete(
+					`/api/gudang-bahanbaku/output-index/rollback/${value.id}`,
+					value
+				);
+				if (response.status == 200) {
+					this.$toast.success("data has been returned", "Done!", {
+						position: "topRight",
+					});
+					// console.log(response);
+					let { data } = await axios.get("/api/gudang-bahanbaku/output-index");
+					this.raws = [];
+					this.raws = data.data;
+				}
+			} catch (e) {
+				console.log(e.response.data.errors);
+			}
+		},
 		onFiltered(filteredItems) {
 			// Trigger pagination to update the number of buttons/pages due to filtering
 			this.totalRows = filteredItems.length;

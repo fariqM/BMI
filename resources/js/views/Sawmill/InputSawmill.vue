@@ -66,7 +66,10 @@
 										<b-icon icon="arrow-clockwise" aria-hidden="true"></b-icon>
 										segarkan
 									</b-button>
+								
+									
 								</div>
+								
 								<!-- <div>
 									<b-button
 										style="justify-content: end; justify-content: end"
@@ -160,7 +163,13 @@
 									<template v-if="data.item.status == 'stored'">
 										<span class="badge badge-info">
 											<b-icon class="costum-badge" icon="clock"></b-icon>
-											{{ data.item.status.toUpperCase() }}
+											{{ data.item.status.toUpperCase() + " AT BMI-B" }}
+										</span>
+									</template>
+									<template v-if="data.item.status == 'returned'">
+										<span class="badge badge-info">
+											<b-icon class="costum-badge" icon="clock"></b-icon>
+											{{ data.item.status.toUpperCase() + " AT BMI-A" }}
 										</span>
 									</template>
 								</template>
@@ -311,27 +320,6 @@ export default {
 	},
 
 	methods: {
-		async stored() {
-			console.log(this.form);
-
-			try {
-				let response = await axios.patch(
-					`/api/gudang-sawmill/mismatch-stored/${this.form.id}`,
-					this.form
-				);
-				if (response.status == 200) {
-					this.$toast.success("Confirmed", "Done!", {
-						position: "topRight",
-					});
-					console.log(response);
-				}
-			} catch (e) {
-				this.$toast.error("Something wrong", "Oops", {
-					position: "topRight",
-				});
-				console.log(e.response.data.errors);
-			}
-		},
 		mismatch(value) {
 			this.form.id = value.id;
 			this.form.nop = value.nop;
@@ -353,9 +341,50 @@ export default {
 					// console.log("stored");
 					// this.konfirmAksi(value.id);
 				} else if (result.isDenied) {
-					// console.log("denied");
+					this.returned();
 				}
 			});
+		},
+		async returned() {
+			try {
+				let response = await axios.patch(
+					`/api/gudang-sawmill/mismatch-returned/${this.form.id}`,
+					this.form
+				);
+				if (response.status == 200) {
+					this.$toast.success("Raws has been returned to BMI-A", "Done!", {
+						position: "topRight",
+					});
+					this.refreshData();
+				}
+			} catch (e) {
+				console.log(e.response.data.errors);
+			}
+		},
+		async stored() {
+			console.log(this.form);
+
+			try {
+				let response = await axios.patch(
+					`/api/gudang-sawmill/mismatch-stored/${this.form.id}`,
+					this.form
+				);
+				if (response.status == 200) {
+					this.$toast.success(
+						"Raws has been added at your warehouse data",
+						"Done!",
+						{
+							position: "topRight",
+						}
+					);
+					this.refreshData();
+				}
+			} catch (e) {
+				this.$toast.error("Something wrong", "Oops", {
+					position: "topRight",
+				});
+				console.log(e.response.data.errors);
+			}
 		},
 		confirm(value) {
 			Vue.swal({
@@ -383,9 +412,7 @@ export default {
 					this.$toast.success("Confirmed", "Done!", {
 						position: "topRight",
 					});
-					let { data } = await axios.get("/api/gudang-bahanbaku/output-index");
-					this.raws = [];
-					this.raws = data.data;
+					this.refreshData();
 				}
 			} catch (e) {
 				this.$toast.error("Something wrong", "Oops!", {
@@ -407,7 +434,13 @@ export default {
 			this.raws = data.data;
 			this.totalRows = this.raws.length;
 			setTimeout((this.isBusy = !this.isBusy), 6000);
-			console.log(this.raws.length);
+			// console.log(this.raws.length);
+		},
+		async refreshData() {
+			let { data } = await axios.get("/api/gudang-bahanbaku/output-index");
+			this.raws = [];
+			this.raws = data.data;
+			this.totalRows = this.raws.length;
 		},
 	},
 };

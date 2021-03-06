@@ -9,7 +9,7 @@ class Sawmillstock extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['series', 'raw_id', 'nop'];
+    protected $fillable = ['series', 'raw_id', 'nop', 'nop_virtual'];
 
     public function raw(){
         return $this->belongsTo(Raw::class);

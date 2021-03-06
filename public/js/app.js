@@ -7196,6 +7196,52 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
@@ -7225,7 +7271,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         key: "confirm_at",
         label: "Confirm at",
         sortable: true
-      }],
+      }, "action"],
       sortBy: "",
       sortDesc: false,
       filter: null,
@@ -7264,40 +7310,112 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     this.toggleBusy();
   },
   methods: {
+    rollback: function rollback(value) {
+      var _this = this;
+
+      Vue.swal({
+        title: "Are you sure to rollback this data ?",
+        html: "the amount of nop will return to your warehouse data.",
+        icon: "question",
+        confirmButtonText: "Confirm",
+        showCancelButton: true,
+        timerProgressBar: true,
+        showCloseButton: true
+      }).then(function (result) {
+        if (result.isConfirmed) {
+          // console.log("rollback!!");
+          // console.log(value);
+          _this.rollbackActions(value);
+        }
+      });
+    },
+    rollbackActions: function rollbackActions(value) {
+      var _this2 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee() {
+        var response, _yield$axios$get, data;
+
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                _context.prev = 0;
+                _context.next = 3;
+                return axios["delete"]("/api/gudang-bahanbaku/output-index/rollback/".concat(value.id), value);
+
+              case 3:
+                response = _context.sent;
+
+                if (!(response.status == 200)) {
+                  _context.next = 12;
+                  break;
+                }
+
+                _this2.$toast.success("data has been returned", "Done!", {
+                  position: "topRight"
+                }); // console.log(response);
+
+
+                _context.next = 8;
+                return axios.get("/api/gudang-bahanbaku/output-index");
+
+              case 8:
+                _yield$axios$get = _context.sent;
+                data = _yield$axios$get.data;
+                _this2.raws = [];
+                _this2.raws = data.data;
+
+              case 12:
+                _context.next = 17;
+                break;
+
+              case 14:
+                _context.prev = 14;
+                _context.t0 = _context["catch"](0);
+                console.log(_context.t0.response.data.errors);
+
+              case 17:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee, null, [[0, 14]]);
+      }))();
+    },
     onFiltered: function onFiltered(filteredItems) {
       // Trigger pagination to update the number of buttons/pages due to filtering
       this.totalRows = filteredItems.length;
       this.currentPage = 1;
     },
     toggleBusy: function toggleBusy() {
-      var _this = this;
+      var _this3 = this;
 
-      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee() {
-        var _yield$axios$get, data;
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee2() {
+        var _yield$axios$get2, data;
 
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee2$(_context2) {
           while (1) {
-            switch (_context.prev = _context.next) {
+            switch (_context2.prev = _context2.next) {
               case 0:
-                _this.isBusy = !_this.isBusy;
-                _context.next = 3;
+                _this3.isBusy = !_this3.isBusy;
+                _context2.next = 3;
                 return axios.get("/api/gudang-bahanbaku/output-index");
 
               case 3:
-                _yield$axios$get = _context.sent;
-                data = _yield$axios$get.data;
-                _this.raws = [];
-                _this.raws = data.data;
-                _this.totalRows = _this.raws.length;
-                setTimeout(_this.isBusy = !_this.isBusy, 6000);
-                console.log(_this.raws.length);
+                _yield$axios$get2 = _context2.sent;
+                data = _yield$axios$get2.data;
+                _this3.raws = [];
+                _this3.raws = data.data;
+                _this3.totalRows = _this3.raws.length;
+                setTimeout(_this3.isBusy = !_this3.isBusy, 6000);
+                console.log(_this3.raws.length);
 
               case 10:
               case "end":
-                return _context.stop();
+                return _context2.stop();
             }
           }
-        }, _callee);
+        }, _callee2);
       }))();
     }
   }
@@ -8487,6 +8605,15 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
@@ -8562,54 +8689,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     this.toggleBusy();
   },
   methods: {
-    stored: function stored() {
-      var _this = this;
-
-      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee() {
-        var response;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
-          while (1) {
-            switch (_context.prev = _context.next) {
-              case 0:
-                console.log(_this.form);
-                _context.prev = 1;
-                _context.next = 4;
-                return axios.patch("/api/gudang-sawmill/mismatch-stored/".concat(_this.form.id), _this.form);
-
-              case 4:
-                response = _context.sent;
-
-                if (response.status == 200) {
-                  _this.$toast.success("Confirmed", "Done!", {
-                    position: "topRight"
-                  });
-
-                  console.log(response);
-                }
-
-                _context.next = 12;
-                break;
-
-              case 8:
-                _context.prev = 8;
-                _context.t0 = _context["catch"](1);
-
-                _this.$toast.error("Something wrong", "Oops", {
-                  position: "topRight"
-                });
-
-                console.log(_context.t0.response.data.errors);
-
-              case 12:
-              case "end":
-                return _context.stop();
-            }
-          }
-        }, _callee, null, [[1, 8]]);
-      }))();
-    },
     mismatch: function mismatch(value) {
-      var _this2 = this;
+      var _this = this;
 
       this.form.id = value.id;
       this.form.nop = value.nop;
@@ -8627,15 +8708,102 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         showCloseButton: true
       }).then(function (result) {
         if (result.isConfirmed) {
-          _this2.stored(); // console.log("stored");
+          _this.stored(); // console.log("stored");
           // this.konfirmAksi(value.id);
 
-        } else if (result.isDenied) {// console.log("denied");
+        } else if (result.isDenied) {
+          _this.returned();
         }
       });
     },
-    confirm: function confirm(value) {
+    returned: function returned() {
+      var _this2 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee() {
+        var response;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                _context.prev = 0;
+                _context.next = 3;
+                return axios.patch("/api/gudang-sawmill/mismatch-returned/".concat(_this2.form.id), _this2.form);
+
+              case 3:
+                response = _context.sent;
+
+                if (response.status == 200) {
+                  _this2.$toast.success("Raws has been returned to BMI-A", "Done!", {
+                    position: "topRight"
+                  });
+
+                  _this2.refreshData();
+                }
+
+                _context.next = 10;
+                break;
+
+              case 7:
+                _context.prev = 7;
+                _context.t0 = _context["catch"](0);
+                console.log(_context.t0.response.data.errors);
+
+              case 10:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee, null, [[0, 7]]);
+      }))();
+    },
+    stored: function stored() {
       var _this3 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee2() {
+        var response;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                console.log(_this3.form);
+                _context2.prev = 1;
+                _context2.next = 4;
+                return axios.patch("/api/gudang-sawmill/mismatch-stored/".concat(_this3.form.id), _this3.form);
+
+              case 4:
+                response = _context2.sent;
+
+                if (response.status == 200) {
+                  _this3.$toast.success("Raws has been added at your warehouse data", "Done!", {
+                    position: "topRight"
+                  });
+
+                  _this3.refreshData();
+                }
+
+                _context2.next = 12;
+                break;
+
+              case 8:
+                _context2.prev = 8;
+                _context2.t0 = _context2["catch"](1);
+
+                _this3.$toast.error("Something wrong", "Oops", {
+                  position: "topRight"
+                });
+
+                console.log(_context2.t0.response.data.errors);
+
+              case 12:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2, null, [[1, 8]]);
+      }))();
+    },
+    confirm: function confirm(value) {
+      var _this4 = this;
 
       Vue.swal({
         title: "Confirm alert!",
@@ -8649,65 +8817,53 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         if (result.isConfirmed) {
           console.log();
 
-          _this3.konfirmAksi(value.id);
+          _this4.konfirmAksi(value.id);
         }
       });
     },
     konfirmAksi: function konfirmAksi(value) {
-      var _this4 = this;
+      var _this5 = this;
 
-      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee2() {
-        var response, _yield$axios$get, data;
-
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee2$(_context2) {
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee3() {
+        var response;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee3$(_context3) {
           while (1) {
-            switch (_context2.prev = _context2.next) {
+            switch (_context3.prev = _context3.next) {
               case 0:
-                _context2.prev = 0;
-                _context2.next = 3;
-                return axios.patch("/api/gudang-sawmill/confirm-raw/".concat(value), _this4.form);
+                _context3.prev = 0;
+                _context3.next = 3;
+                return axios.patch("/api/gudang-sawmill/confirm-raw/".concat(value), _this5.form);
 
               case 3:
-                response = _context2.sent;
+                response = _context3.sent;
 
-                if (!(response.status == 200)) {
-                  _context2.next = 12;
-                  break;
+                if (response.status == 200) {
+                  _this5.$toast.success("Confirmed", "Done!", {
+                    position: "topRight"
+                  });
+
+                  _this5.refreshData();
                 }
 
-                _this4.$toast.success("Confirmed", "Done!", {
-                  position: "topRight"
-                });
-
-                _context2.next = 8;
-                return axios.get("/api/gudang-bahanbaku/output-index");
-
-              case 8:
-                _yield$axios$get = _context2.sent;
-                data = _yield$axios$get.data;
-                _this4.raws = [];
-                _this4.raws = data.data;
-
-              case 12:
-                _context2.next = 18;
+                _context3.next = 11;
                 break;
 
-              case 14:
-                _context2.prev = 14;
-                _context2.t0 = _context2["catch"](0);
+              case 7:
+                _context3.prev = 7;
+                _context3.t0 = _context3["catch"](0);
 
-                _this4.$toast.error("Something wrong", "Oops!", {
+                _this5.$toast.error("Something wrong", "Oops!", {
                   position: "topRight"
                 });
 
-                console.log(_context2.t0.response.data.errors);
+                console.log(_context3.t0.response.data.errors);
 
-              case 18:
+              case 11:
               case "end":
-                return _context2.stop();
+                return _context3.stop();
             }
           }
-        }, _callee2, null, [[0, 14]]);
+        }, _callee3, null, [[0, 7]]);
       }))();
     },
     onFiltered: function onFiltered(filteredItems) {
@@ -8716,34 +8872,61 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       this.currentPage = 1;
     },
     toggleBusy: function toggleBusy() {
-      var _this5 = this;
+      var _this6 = this;
 
-      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee3() {
-        var _yield$axios$get2, data;
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee4() {
+        var _yield$axios$get, data;
 
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee3$(_context3) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee4$(_context4) {
           while (1) {
-            switch (_context3.prev = _context3.next) {
+            switch (_context4.prev = _context4.next) {
               case 0:
-                _this5.isBusy = !_this5.isBusy;
-                _context3.next = 3;
+                _this6.isBusy = !_this6.isBusy;
+                _context4.next = 3;
                 return axios.get("/api/gudang-bahanbaku/output-index");
 
               case 3:
-                _yield$axios$get2 = _context3.sent;
-                data = _yield$axios$get2.data;
-                _this5.raws = [];
-                _this5.raws = data.data;
-                _this5.totalRows = _this5.raws.length;
-                setTimeout(_this5.isBusy = !_this5.isBusy, 6000);
-                console.log(_this5.raws.length);
+                _yield$axios$get = _context4.sent;
+                data = _yield$axios$get.data;
+                _this6.raws = [];
+                _this6.raws = data.data;
+                _this6.totalRows = _this6.raws.length;
+                setTimeout(_this6.isBusy = !_this6.isBusy, 6000); // console.log(this.raws.length);
 
-              case 10:
+              case 9:
               case "end":
-                return _context3.stop();
+                return _context4.stop();
             }
           }
-        }, _callee3);
+        }, _callee4);
+      }))();
+    },
+    refreshData: function refreshData() {
+      var _this7 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee5() {
+        var _yield$axios$get2, data;
+
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee5$(_context5) {
+          while (1) {
+            switch (_context5.prev = _context5.next) {
+              case 0:
+                _context5.next = 2;
+                return axios.get("/api/gudang-bahanbaku/output-index");
+
+              case 2:
+                _yield$axios$get2 = _context5.sent;
+                data = _yield$axios$get2.data;
+                _this7.raws = [];
+                _this7.raws = data.data;
+                _this7.totalRows = _this7.raws.length;
+
+              case 7:
+              case "end":
+                return _context5.stop();
+            }
+          }
+        }, _callee5);
       }))();
     }
   }
@@ -38855,6 +39038,75 @@ var render = function() {
                                   1
                                 )
                               ]
+                            : _vm._e(),
+                          _vm._v(" "),
+                          data.item.status == "on queue"
+                            ? [
+                                _c(
+                                  "span",
+                                  { staticClass: "badge badge-info" },
+                                  [
+                                    _c("b-icon", {
+                                      staticClass: "costum-badge",
+                                      attrs: { icon: "clock" }
+                                    }),
+                                    _vm._v(
+                                      "\n\t\t\t\t\t\t\t\t\t\t" +
+                                        _vm._s(data.item.status.toUpperCase()) +
+                                        "\n\t\t\t\t\t\t\t\t\t"
+                                    )
+                                  ],
+                                  1
+                                )
+                              ]
+                            : _vm._e(),
+                          _vm._v(" "),
+                          data.item.status == "stored"
+                            ? [
+                                _c(
+                                  "span",
+                                  { staticClass: "badge badge-info" },
+                                  [
+                                    _c("b-icon", {
+                                      staticClass: "costum-badge",
+                                      attrs: { icon: "clock" }
+                                    }),
+                                    _vm._v(
+                                      "\n\t\t\t\t\t\t\t\t\t\t" +
+                                        _vm._s(
+                                          data.item.status.toUpperCase() +
+                                            " AT BMI-B"
+                                        ) +
+                                        "\n\t\t\t\t\t\t\t\t\t"
+                                    )
+                                  ],
+                                  1
+                                )
+                              ]
+                            : _vm._e(),
+                          _vm._v(" "),
+                          data.item.status == "returned"
+                            ? [
+                                _c(
+                                  "span",
+                                  { staticClass: "badge badge-warning" },
+                                  [
+                                    _c("b-icon", {
+                                      staticClass: "costum-badge",
+                                      attrs: { icon: "clock" }
+                                    }),
+                                    _vm._v(
+                                      "\n\t\t\t\t\t\t\t\t\t\t" +
+                                        _vm._s(
+                                          data.item.status.toUpperCase() +
+                                            " to your data"
+                                        ) +
+                                        "\n\t\t\t\t\t\t\t\t\t"
+                                    )
+                                  ],
+                                  1
+                                )
+                              ]
                             : _vm._e()
                         ]
                       }
@@ -38878,7 +39130,9 @@ var render = function() {
                                     }),
                                     _vm._v(
                                       "\n\t\t\t\t\t\t\t\t\t\t" +
-                                        _vm._s(data.item.confirm_status) +
+                                        _vm._s(
+                                          data.item.confirm_status.toUpperCase()
+                                        ) +
                                         "\n\t\t\t\t\t\t\t\t\t"
                                     )
                                   ],
@@ -38895,10 +39149,38 @@ var render = function() {
                                   [
                                     _vm._v(
                                       "\n\t\t\t\t\t\t\t\t\t\t" +
-                                        _vm._s(data.item.confirm_status) +
+                                        _vm._s(
+                                          data.item.confirm_status.toUpperCase()
+                                        ) +
                                         "\n\t\t\t\t\t\t\t\t\t"
                                     )
                                   ]
+                                )
+                              ]
+                            : _vm._e(),
+                          _vm._v(" "),
+                          data.item.confirm_status == "mismatch"
+                            ? [
+                                _c(
+                                  "span",
+                                  { staticClass: "badge badge-danger" },
+                                  [
+                                    _c("b-icon", {
+                                      staticClass: "costum-badge",
+                                      attrs: {
+                                        icon: "exclamation-triangle-fill",
+                                        variant: "waring"
+                                      }
+                                    }),
+                                    _vm._v(
+                                      "\n\t\t\t\t\t\t\t\t\t\t" +
+                                        _vm._s(
+                                          data.item.confirm_status.toUpperCase()
+                                        ) +
+                                        "\n\t\t\t\t\t\t\t\t\t"
+                                    )
+                                  ],
+                                  1
                                 )
                               ]
                             : _vm._e()
@@ -38907,7 +39189,7 @@ var render = function() {
                     },
                     {
                       key: "cell(action)",
-                      fn: function() {
+                      fn: function(data) {
                         return [
                           _c(
                             "div",
@@ -38923,20 +39205,34 @@ var render = function() {
                                 1
                               ),
                               _vm._v(" "),
-                              _c(
-                                "router-link",
-                                {
-                                  staticClass: "badge badge-primary",
-                                  attrs: { to: { name: "home" } }
-                                },
-                                [_vm._v("Edit")]
-                              )
+                              data.item.confirm_status != "mismatch" &&
+                              data.item.confirm_status != "confirmed"
+                                ? [
+                                    _c(
+                                      "a",
+                                      {
+                                        ref: "rollback_btn",
+                                        staticClass:
+                                          "badge badge-warning del-btn",
+                                        on: {
+                                          click: function($event) {
+                                            return _vm.rollback(data.item)
+                                          }
+                                        }
+                                      },
+                                      [
+                                        _vm._v(
+                                          "\n\t\t\t\t\t\t\t\t\t\t\trollback\n\t\t\t\t\t\t\t\t\t\t"
+                                        )
+                                      ]
+                                    )
+                                  ]
+                                : _vm._e()
                             ],
-                            1
+                            2
                           )
                         ]
-                      },
-                      proxy: true
+                      }
                     }
                   ])
                 })
@@ -40523,7 +40819,34 @@ var render = function() {
                                     }),
                                     _vm._v(
                                       "\n\t\t\t\t\t\t\t\t\t\t" +
-                                        _vm._s(data.item.status.toUpperCase()) +
+                                        _vm._s(
+                                          data.item.status.toUpperCase() +
+                                            " AT BMI-B"
+                                        ) +
+                                        "\n\t\t\t\t\t\t\t\t\t"
+                                    )
+                                  ],
+                                  1
+                                )
+                              ]
+                            : _vm._e(),
+                          _vm._v(" "),
+                          data.item.status == "returned"
+                            ? [
+                                _c(
+                                  "span",
+                                  { staticClass: "badge badge-info" },
+                                  [
+                                    _c("b-icon", {
+                                      staticClass: "costum-badge",
+                                      attrs: { icon: "clock" }
+                                    }),
+                                    _vm._v(
+                                      "\n\t\t\t\t\t\t\t\t\t\t" +
+                                        _vm._s(
+                                          data.item.status.toUpperCase() +
+                                            " AT BMI-A"
+                                        ) +
                                         "\n\t\t\t\t\t\t\t\t\t"
                                     )
                                   ],

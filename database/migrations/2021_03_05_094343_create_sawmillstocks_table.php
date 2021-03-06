@@ -18,7 +18,7 @@ class CreateSawmillstocksTable extends Migration
             $table->string('series', 64)->unique();
             $table->foreignId('raw_id');
             $table->foreign('raw_id')->references('id')->on('raws')->onDelete('restrict');
-            $table->string('nop');
+            $table->string('nop',32);
             $table->timestamps();
         });
     }

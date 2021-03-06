@@ -32,6 +32,7 @@ Route::namespace('App\Http\Controllers')->group(function(){
         Route::get('lastrecord', 'RawController@lastrecord');
         Route::patch('{raw:id}/move', 'RawController@move');
         Route::get('output-index', 'RecordController@recordBB');
+        Route::delete('output-index/rollback/{record:id}', 'RecordController@rollbackBB');
     });
 
     Route::prefix('gudang-sawmill')->group(function(){

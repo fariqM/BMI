@@ -56,6 +56,17 @@ class RecordController extends Controller
         return RecordResource::collection($records);
     }
 
+    public function rollbackBB(Record $record){
+        Raw::where('series', $record->series)->increment('nop', $record->nop);
+        $record->delete();
+
+        return response()->json([
+            'message' => 'success',
+            'response' => 200,
+            'id' => $record->id,
+        ]);
+    }
+
     public function check(Raw $raw)
     {
 
@@ -98,11 +109,10 @@ class RecordController extends Controller
         if(count($sawmillstock) == 0){
                 Sawmillstock::create([
                 'series' => $series,
-                'nop' => $nop,
-                'raw_id' => 1,
+                'nop_virtual' => $nop,
             ]);
         } else{
-            DB::table('sawmillstocks')->where('series','=', $series)->increment('nop', $nop);
+            DB::table('sawmillstocks')->where('series','=', $series)->increment('nop_virtual', $nop);
         }
         return response()->json([
             'message' => 'success',
@@ -111,15 +121,15 @@ class RecordController extends Controller
 
     public function returned(Record $record)
     {
+        $series = request('series');
+        $nop = request('nop');
         $record->update([
             'confirm_status' => 'mismatch',
             'status' => 'returned',
             'confirm_at' => date("Y-m-d H:i:s"),
         ]);
 
-        $raw = Raw::where('series', request('series'))->firstOrFail();
-
-        $raw->increment('nop', request('nop'));
+        Raw::where('series','=', $series)->increment('nop', $nop);
 
         return response()->json([
             'message' => 'success',
