@@ -14,4 +14,8 @@ class Record extends Model
     public function warehouse(){
         return $this->belongsTo(Warehouse::class);
     }
+
+    public function raw(){
+        return $this->belongsTo(Raw::class, 'series', 'series');
+    }
 }

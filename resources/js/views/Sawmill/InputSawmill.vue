@@ -61,15 +61,19 @@
 								</div>
 							</div>
 							<div class="grid-item-container-2 grid-item-2">
+								<div class="form-check">
+									<label class="form-check-label">
+										<input v-model="stock" type="checkbox" checked class="form-check-input" />
+										Stock
+									</label>
+								</div>
 								<div class="justify-content-between">
 									<b-button @click="toggleBusy" variant="success">
 										<b-icon icon="arrow-clockwise" aria-hidden="true"></b-icon>
 										segarkan
 									</b-button>
-								
-									
 								</div>
-								
+
 								<!-- <div>
 									<b-button
 										style="justify-content: end; justify-content: end"
@@ -271,6 +275,7 @@
 export default {
 	data() {
 		return {
+			stock: "",
 			form: {
 				id: "",
 				nop: "",
@@ -317,6 +322,33 @@ export default {
 
 	mounted() {
 		this.toggleBusy();
+	},
+	watch: {
+		stock: function () {
+			if (this.stock) {
+				this.kolom = [
+					{ key: "KK1", label: "Kolom1", sortable: true },
+					{ key: "KK2", label: "Kolom1", sortable: true },
+					{ key: "KK3", label: "Kolom1", sortable: true },
+					{ key: "KK4", label: "Kolom1", sortable: true },
+					{ key: "KK5", label: "Kolom1", sortable: true },
+					{ key: "KK6", label: "Kolom1", sortable: true },
+					{ key: "stock_action", label: "Action"},
+				];
+				this.raws = [];
+			} else {
+				this.kolom = [
+					{ key: "series", label: "Series", sortable: true },
+					{ key: "destination_name", label: "Destination", sortable: true },
+					{ key: "nop", label: "NOP", sortable: true },
+					{ key: "status", label: "Raw status", sortable: true },
+					{ key: "confirm_status", label: "Confirmed status", sortable: true },
+					{ key: "confirm_at", label: "Confirm at", sortable: true },
+					"action",
+				];
+				this.toggleBusy();
+			}
+		},
 	},
 
 	methods: {

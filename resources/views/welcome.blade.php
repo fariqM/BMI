@@ -30,7 +30,7 @@
     <link rel="stylesheet" href="{{ asset('assets/css/demo_1/costume.css') }}">
 </head>
 
-<body>
+<body style="overflow: scroll">
     {{--class="not-remove sidebar-folded"--}}
     <div class="main-wrapper" id="app">
         {{-- @include('components.sidebar.mysidebar') --}}

@@ -8614,9 +8614,14 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
+      stock: "",
       form: {
         id: "",
         nop: "",
@@ -8687,6 +8692,68 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   },
   mounted: function mounted() {
     this.toggleBusy();
+  },
+  watch: {
+    stock: function stock() {
+      if (this.stock) {
+        this.kolom = [{
+          key: "KK1",
+          label: "Kolom1",
+          sortable: true
+        }, {
+          key: "KK2",
+          label: "Kolom1",
+          sortable: true
+        }, {
+          key: "KK3",
+          label: "Kolom1",
+          sortable: true
+        }, {
+          key: "KK4",
+          label: "Kolom1",
+          sortable: true
+        }, {
+          key: "KK5",
+          label: "Kolom1",
+          sortable: true
+        }, {
+          key: "KK6",
+          label: "Kolom1",
+          sortable: true
+        }, {
+          key: "stock_action",
+          label: "Action"
+        }];
+        this.raws = [];
+      } else {
+        this.kolom = [{
+          key: "series",
+          label: "Series",
+          sortable: true
+        }, {
+          key: "destination_name",
+          label: "Destination",
+          sortable: true
+        }, {
+          key: "nop",
+          label: "NOP",
+          sortable: true
+        }, {
+          key: "status",
+          label: "Raw status",
+          sortable: true
+        }, {
+          key: "confirm_status",
+          label: "Confirmed status",
+          sortable: true
+        }, {
+          key: "confirm_at",
+          label: "Confirm at",
+          sortable: true
+        }, "action"];
+        this.toggleBusy();
+      }
+    }
   },
   methods: {
     mismatch: function mismatch(value) {
@@ -36414,73 +36481,11 @@ var render = function() {
         ),
         _vm._v(" "),
         _c("li", { staticClass: "nav-item nav-category" }, [
-          _vm._v("Contoh Menu")
-        ]),
-        _vm._v(" "),
-        _c("li", { staticClass: "nav-item" }, [
-          _vm._m(1),
-          _vm._v(" "),
-          _c("ul", { staticClass: "costum-submenu" }, [
-            _c(
-              "li",
-              { staticClass: "nav-item costum-nav-item" },
-              [
-                _c(
-                  "router-link",
-                  {
-                    staticClass: "nav-link costum-nav-link",
-                    attrs: { to: { name: "home" } }
-                  },
-                  [_vm._v("Home\n\t\t\t\t\t\t")]
-                )
-              ],
-              1
-            ),
-            _vm._v(" "),
-            _c(
-              "li",
-              {
-                staticClass: "nav-item costum-nav-item costum-nav-item-active"
-              },
-              [
-                _c(
-                  "router-link",
-                  {
-                    staticClass: "nav-link costum-nav-link",
-                    attrs: { to: { name: "pages.about" } }
-                  },
-                  [_vm._v("About")]
-                )
-              ],
-              1
-            ),
-            _vm._v(" "),
-            _c(
-              "li",
-              {
-                staticClass: "nav-item costum-nav-item costum-nav-item-active"
-              },
-              [
-                _c(
-                  "router-link",
-                  {
-                    staticClass: "nav-link costum-nav-link",
-                    attrs: { to: { name: "pages.tes" } }
-                  },
-                  [_vm._v("tes")]
-                )
-              ],
-              1
-            )
-          ])
-        ]),
-        _vm._v(" "),
-        _c("li", { staticClass: "nav-item nav-category" }, [
           _vm._v("Inventory")
         ]),
         _vm._v(" "),
         _c("li", { staticClass: "nav-item" }, [
-          _vm._m(2),
+          _vm._m(1),
           _vm._v(" "),
           _c("ul", { staticClass: "costum-submenu" }, [
             _c(
@@ -36520,7 +36525,7 @@ var render = function() {
         ]),
         _vm._v(" "),
         _c("li", { staticClass: "nav-item" }, [
-          _vm._m(3),
+          _vm._m(2),
           _vm._v(" "),
           _c("ul", { staticClass: "costum-submenu" }, [
             _c(
@@ -36599,26 +36604,6 @@ var staticRenderFns = [
         _c("span")
       ])
     ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "a",
-      {
-        staticClass: "nav-link has-arrow",
-        attrs: { "aria-expanded": "false" }
-      },
-      [
-        _c("i", {
-          staticClass: "link-icon",
-          attrs: { "data-feather": "mail" }
-        }),
-        _vm._v(" "),
-        _c("span", { staticClass: "link-title" }, [_vm._v("Email")])
-      ]
-    )
   },
   function() {
     var _vm = this
@@ -37824,13 +37809,13 @@ var render = function() {
                     ],
                     staticClass: "costum-checkbox",
                     attrs: {
-                      value: "reference",
+                      value: "series",
                       id: "kolomRef",
                       type: "checkbox"
                     },
                     domProps: {
                       checked: Array.isArray(_vm.filterOn)
-                        ? _vm._i(_vm.filterOn, "reference") > -1
+                        ? _vm._i(_vm.filterOn, "series") > -1
                         : _vm.filterOn
                     },
                     on: {
@@ -37839,7 +37824,7 @@ var render = function() {
                           $$el = $event.target,
                           $$c = $$el.checked ? true : false
                         if (Array.isArray($$a)) {
-                          var $$v = "reference",
+                          var $$v = "series",
                             $$i = _vm._i($$a, $$v)
                           if ($$el.checked) {
                             $$i < 0 && (_vm.filterOn = $$a.concat([$$v]))
@@ -38645,7 +38630,7 @@ var render = function() {
                   "router-link",
                   {
                     staticClass: "btn btn-outline-secondary",
-                    attrs: { to: { name: "pages.tes" } }
+                    attrs: { to: { name: "bb.index" } }
                   },
                   [_vm._v("Kembali")]
                 )
@@ -40611,6 +40596,50 @@ var render = function() {
               ]),
               _vm._v(" "),
               _c("div", { staticClass: "grid-item-container-2 grid-item-2" }, [
+                _c("div", { staticClass: "form-check" }, [
+                  _c("label", { staticClass: "form-check-label" }, [
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.stock,
+                          expression: "stock"
+                        }
+                      ],
+                      staticClass: "form-check-input",
+                      attrs: { type: "checkbox", checked: "" },
+                      domProps: {
+                        checked: Array.isArray(_vm.stock)
+                          ? _vm._i(_vm.stock, null) > -1
+                          : _vm.stock
+                      },
+                      on: {
+                        change: function($event) {
+                          var $$a = _vm.stock,
+                            $$el = $event.target,
+                            $$c = $$el.checked ? true : false
+                          if (Array.isArray($$a)) {
+                            var $$v = null,
+                              $$i = _vm._i($$a, $$v)
+                            if ($$el.checked) {
+                              $$i < 0 && (_vm.stock = $$a.concat([$$v]))
+                            } else {
+                              $$i > -1 &&
+                                (_vm.stock = $$a
+                                  .slice(0, $$i)
+                                  .concat($$a.slice($$i + 1)))
+                            }
+                          } else {
+                            _vm.stock = $$c
+                          }
+                        }
+                      }
+                    }),
+                    _vm._v("\n\t\t\t\t\t\t\t\t\tStock\n\t\t\t\t\t\t\t\t")
+                  ])
+                ]),
+                _vm._v(" "),
                 _c(
                   "div",
                   { staticClass: "justify-content-between" },

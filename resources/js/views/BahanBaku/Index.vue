@@ -204,7 +204,7 @@
 									<input
 										class="costum-checkbox"
 										v-model="filterOn"
-										value="reference"
+										value="series"
 										id="kolomRef"
 										type="checkbox"
 									/>

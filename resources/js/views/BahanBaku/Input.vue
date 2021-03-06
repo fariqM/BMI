@@ -145,7 +145,7 @@
 					<div>
 						<router-link
 							class="btn btn-outline-secondary"
-							:to="{ name: 'pages.tes' }"
+							:to="{ name: 'bb.index' }"
 							>Kembali</router-link
 						>
 					</div>

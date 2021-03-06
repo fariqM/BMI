@@ -27,4 +27,8 @@ class Raw extends Model
     public function structure_category(){
         return $this->belongsTo(StructureCategory::class);
     }
+
+    public function records(){
+        return $this->hasMany(Record::class);
+    }
 }

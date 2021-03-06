@@ -18,7 +18,7 @@
 					</router-link>
 				</li>
 
-				<li class="nav-item nav-category">Contoh Menu</li>
+				<!-- <li class="nav-item nav-category">Contoh Menu</li>
 				<li class="nav-item" style="">
 					<a class="nav-link has-arrow" aria-expanded="false">
 						<i class="link-icon" data-feather="mail"></i>
@@ -47,7 +47,7 @@
 							>
 						</li>
 					</ul>
-				</li>
+				</li> -->
 
 				<li class="nav-item nav-category">Inventory</li>
 
