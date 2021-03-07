@@ -1,3 +1,21 @@
+<p align="center">
+  <img width="320" src="https://cp5.sgp1.cdn.digitaloceanspaces.com/zoro/laravue-cdn/laravue-logo-line.png">
+</p>
+<p align="center">
+  <a href="https://laravel.com">
+    <img src="https://img.shields.io/badge/laravel-7.3-brightgreen.svg" alt="vue">
+  </a>
+  <a href="https://github.com/vuejs/vue">
+    <img src="https://img.shields.io/badge/vue-2.6.10-brightgreen.svg" alt="vue">
+  </a>
+  <a href="https://github.com/ElemeFE/element">
+    <img src="https://img.shields.io/badge/element--ui-2.13.0-brightgreen.svg" alt="element-ui">
+  </a>
+  <a href="https://github.com/tuandm/laravue/blob/master/LICENSE">
+    <img src="https://img.shields.io/badge/license-MIT-brightgreen.svg" alt="license">
+  </a>
+</p>
+
 <p align="center"><a href="https://vuejs.org" target="_blank" rel="noopener noreferrer"><img width="100" src="https://vuejs.org/images/logo.png" alt="Vue logo"></a></p>
 
 <p align="center">
