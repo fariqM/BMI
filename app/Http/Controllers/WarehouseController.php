@@ -39,9 +39,7 @@ class WarehouseController extends Controller
     }
 
     public function bb(){
-        $costum = Warehouse::where('name', 'GUDANG P BASAH')->orWhere(function($query){
-            $query->where('name', 'GUDANG SAWMILL');
-        })->get();
+        $costum = Warehouse::where('name', 'GUDANG P BASAH')->orWhere('name', 'GUDANG JOINT')->get();
 
         return WarehouseResource::collection($costum);
     }

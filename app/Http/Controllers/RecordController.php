@@ -14,7 +14,7 @@ class RecordController extends Controller
 
     public function index()
     {
-        $records = Record::get();
+        $records = Record::with('warehouse', 'raw')->latest()->get();
         return RecordResource::collection($records);
     }
 
@@ -38,7 +38,7 @@ class RecordController extends Controller
 
         $record = Record::create([
             'series' => $series,
-            'origin' => 1,
+            'origin' => 5,
             'warehouse_id' => 1,
             'nop' => $nop,
             'status' => 'moving',
@@ -52,7 +52,12 @@ class RecordController extends Controller
 
     public function recordBB()
     {
-        $records = Record::where('origin', '1')->with('warehouse')->latest()->get();
+        $records = Record::where('origin', '5')->orWhere('warehouse_id', '5')->with('warehouse')->latest()->get();
+        return RecordResource::collection($records);
+    }
+
+    public function inputrecordsawmill(){
+        $records = Record::where('origin', '1')->orWhere('warehouse_id', '1')->with('warehouse')->latest()->get();
         return RecordResource::collection($records);
     }
 
@@ -81,12 +86,24 @@ class RecordController extends Controller
 
     public function confirmraw(Record $record)
     {
+        $series = request('series');
+        $nop = request('nop');
 
         $record->update([
             'confirm_status' => 'confirmed',
             'status' => 'on queue',
             'confirm_at' => date("Y-m-d H:i:s"),
         ]);
+
+        $sawmillstock =  Sawmillstock::where('series','=', $series)->get();
+        if(count($sawmillstock) == 0){
+                Sawmillstock::create([
+                'series' => $series,
+                'nop' => $nop,
+            ]);
+        } else{
+            DB::table('sawmillstocks')->where('series','=', $series)->increment('nop', $nop);
+        }
 
         return response()->json([
             'message' => 'success'
@@ -127,6 +144,8 @@ class RecordController extends Controller
             'confirm_status' => 'mismatch',
             'status' => 'returned',
             'confirm_at' => date("Y-m-d H:i:s"),
+            'origin' => 1,
+            'warehouse_id' => 5, 
         ]);
 
         Raw::where('series','=', $series)->increment('nop', $nop);

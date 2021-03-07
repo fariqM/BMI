@@ -27,63 +27,67 @@
 							>
 							for more info
 						</p>
-						<div class="grid-container">
-							<div class="grid-item-container grid-item-1">
-								<div class="grid-subitem-1">
-									<input
-										placeholder="Search"
-										class="costum-input"
-										v-model="filter"
-									/>
-								</div>
-								<div class="grid-subitem-2">
-									<label class="costum-label-filter">Filter Kolom :</label>
-
-									<input
-										class="costum-checkbox"
-										v-model="filterOn"
-										value="destination_name"
-										id="kolomID"
-										type="checkbox"
-									/>
-									<label class="costum-checkbox" for="kolomID"
-										>Destination</label
-									>
-
-									<input
-										class="costum-checkbox"
-										v-model="filterOn"
-										value="series"
-										id="kolomRef"
-										type="checkbox"
-									/>
-									<label class="costum-checkbox" for="kolomRef">Series</label>
-								</div>
+						<div class="header-controller-table">
+							<div class="header-controller-table-1">
+								<input
+									placeholder="Search"
+									class="costum-input"
+									v-model="filter"
+								/>
 							</div>
-							<div class="grid-item-container-2 grid-item-2">
-								<div class="form-check">
-									<label class="form-check-label">
-										<input v-model="stock" type="checkbox" checked class="form-check-input" />
-										Stock
-									</label>
-								</div>
-								<div class="justify-content-between">
-									<b-button @click="toggleBusy" variant="success">
-										<b-icon icon="arrow-clockwise" aria-hidden="true"></b-icon>
-										segarkan
-									</b-button>
-								</div>
+							<div class="header-controller-table-2">
+								<label class="costum-label-filter">Filter Kolom :</label>
 
-								<!-- <div>
-									<b-button
-										style="justify-content: end; justify-content: end"
-										@click="$router.push({ name: 'bb.form' })"
-										variant="primary"
-									>
-										<b-icon icon="plus-square" aria-hidden="true"></b-icon>
-										Tambahkan
-									</b-button>
-								</div> -->
+								<input
+									class="costum-checkbox"
+									v-model="filterOn"
+									value="nop"
+									id="kolomID"
+									type="checkbox"
+								/>
+								<label class="costum-checkbox" for="kolomID">Nop</label>
+
+								<input
+									class="costum-checkbox"
+									v-model="filterOn"
+									value="series"
+									id="kolomRef"
+									type="checkbox"
+								/>
+								<label class="costum-checkbox" for="kolomRef">Series</label>
+							</div>
+							<div class="header-controller-table-3">
+								<div class="header-controller-table-3-1">
+									<b-form-checkbox
+										v-model="stockTable"
+										switch
+										size="lg"
+									></b-form-checkbox>
+									<span class="label-table-controller">Stock Table</span>
+								</div>
+								<div class="header-controller-table-3-2">
+
+									<template v-if="stockTable == false">
+										<b-button @click="toggleBusy" variant="success">
+											<b-icon
+												icon="arrow-clockwise"
+												aria-hidden="true"
+											></b-icon>
+											Refresh Table
+										</b-button>
+									</template>
+
+									<template v-if="stockTable">
+										<b-button @click="getSawmillstock" variant="success">
+											<b-icon
+												icon="arrow-clockwise"
+												aria-hidden="true"
+											></b-icon>
+											Refresh Table
+										</b-button>
+									</template>
+
+								</div>
 							</div>
 						</div>
 						<div class="table-responsive">
@@ -91,10 +95,10 @@
 								head-variant="dark"
 								hover
 								show-empty
-								fixed
+								
 								bordered
 								striped
-								responsive="sm"
+								
 								:per-page="perPage"
 								:current-page="currentPage"
 								:busy="isBusy"
@@ -275,12 +279,11 @@
 export default {
 	data() {
 		return {
-			stock: "",
+			stockTable: false,
 			form: {
 				id: "",
 				nop: "",
 				series: "",
-				raw_id: "",
 			},
 			isBusy: false,
 			raws: [],
@@ -324,18 +327,21 @@ export default {
 		this.toggleBusy();
 	},
 	watch: {
-		stock: function () {
-			if (this.stock) {
-				this.kolom = [
-					{ key: "KK1", label: "Kolom1", sortable: true },
-					{ key: "KK2", label: "Kolom1", sortable: true },
-					{ key: "KK3", label: "Kolom1", sortable: true },
-					{ key: "KK4", label: "Kolom1", sortable: true },
-					{ key: "KK5", label: "Kolom1", sortable: true },
-					{ key: "KK6", label: "Kolom1", sortable: true },
-					{ key: "stock_action", label: "Action"},
-				];
+		stockTable: function () {
+			if (this.stockTable) {
 				this.raws = [];
+				this.kolom = [
+					{ key: "series", label: "Series", sortable: true },
+					{ key: "nop", label: "nop", sortable: true },
+					{
+						key: "structure_category",
+						label: "Structure Category",
+						sortable: true,
+					},
+					{ key: "periode", label: "Periode", sortable: true },
+					{ key: "stock_action", label: "Action" },
+				];
+				this.getSawmillstock();
 			} else {
 				this.kolom = [
 					{ key: "series", label: "Series", sortable: true },
@@ -419,6 +425,8 @@ export default {
 			}
 		},
 		confirm(value) {
+			this.form.nop = value.nop;
+			this.form.series = value.series;
 			Vue.swal({
 				title: "Confirm alert!",
 				html: `are you sure the <b>${value.series}</b> series is correct ? <br>if you doubt please check manually the series.`,
@@ -430,14 +438,15 @@ export default {
 			}).then((result) => {
 				if (result.isConfirmed) {
 					console.log();
-					this.konfirmAksi(value.id);
+					this.konfirmAksi(value);
 				}
 			});
 		},
 		async konfirmAksi(value) {
+			// console.log(value);
 			try {
 				let response = await axios.patch(
-					`/api/gudang-sawmill/confirm-raw/${value}`,
+					`/api/gudang-sawmill/confirm-raw/${value.id}`,
 					this.form
 				);
 				if (response.status == 200) {
@@ -461,18 +470,26 @@ export default {
 		},
 		async toggleBusy() {
 			this.isBusy = !this.isBusy;
-			let { data } = await axios.get("/api/gudang-bahanbaku/output-index");
 			this.raws = [];
+			let { data } = await axios.get("/api/gudang-sawmill/input-index");
 			this.raws = data.data;
 			this.totalRows = this.raws.length;
 			setTimeout((this.isBusy = !this.isBusy), 6000);
 			// console.log(this.raws.length);
 		},
 		async refreshData() {
-			let { data } = await axios.get("/api/gudang-bahanbaku/output-index");
 			this.raws = [];
+			let { data } = await axios.get("/api/gudang-sawmill/input-index");
 			this.raws = data.data;
 			this.totalRows = this.raws.length;
+		},
+		async getSawmillstock() {
+			this.isBusy = !this.isBusy;
+			this.raws = [];
+			let { data } = await axios.get("/api/gudang-sawmill/stock-index");
+			this.raws = data.data;
+			this.totalRows = this.raws.length;
+			setTimeout((this.isBusy = !this.isBusy), 6000);
 		},
 	},
 };

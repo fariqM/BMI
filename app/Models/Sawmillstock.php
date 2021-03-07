@@ -12,6 +12,7 @@ class Sawmillstock extends Model
     protected $fillable = ['series', 'raw_id', 'nop', 'nop_virtual'];
 
     public function raw(){
-        return $this->belongsTo(Raw::class);
+        return $this->belongsTo(Raw::class, 'series', 'series');
     }
+
 }

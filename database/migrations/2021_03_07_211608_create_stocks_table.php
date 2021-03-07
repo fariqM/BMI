@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateSawmillstocksTable extends Migration
+class CreateStocksTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,8 @@ class CreateSawmillstocksTable extends Migration
      */
     public function up()
     {
-        Schema::create('sawmillstocks', function (Blueprint $table) {
+        Schema::create('stocks', function (Blueprint $table) {
             $table->id();
-            $table->string('series', 64)->unique();
-            $table->foreign('series')->references('series')->on('raws')->onDelete('restrict');
-            $table->string('nop',32);
             $table->timestamps();
         });
     }
@@ -29,6 +26,6 @@ class CreateSawmillstocksTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('sawmillstocks');
+        Schema::dropIfExists('stocks');
     }
 }

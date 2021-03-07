@@ -29,17 +29,18 @@ Route::namespace('App\Http\Controllers')->group(function(){
         Route::get('index', 'RawController@index');
         Route::post('add-raw', 'RawController@addraw');
         Route::get('index/{raw:id}', 'RawController@show');
-        Route::get('lastrecord', 'RawController@lastrecord');
         Route::patch('{raw:id}/move', 'RawController@move');
         Route::get('output-index', 'RecordController@recordBB');
         Route::delete('output-index/rollback/{record:id}', 'RecordController@rollbackBB');
     });
 
     Route::prefix('gudang-sawmill')->group(function(){
+        Route::get('input-index', 'RecordController@inputrecordsawmill');
         Route::patch('confirm-raw/{record:id}', 'RecordController@confirmraw');
         Route::get('checkconfirm/{record:id}', 'RecordController@checkconfrim');
         Route::patch('mismatch-stored/{record:id}', 'RecordController@stored');
         Route::patch('mismatch-returned/{record:id}', 'RecordController@returned');
+        Route::get('stock-index', 'SawmillstockController@stockindex');
     });
 
 
