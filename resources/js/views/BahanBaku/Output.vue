@@ -66,7 +66,7 @@
 								<div class="justify-content-between">
 									<b-button @click="toggleBusy" variant="success">
 										<b-icon icon="arrow-clockwise" aria-hidden="true"></b-icon>
-										segarkan
+										Refresh
 									</b-button>
 								</div>
 								<!-- <div>
@@ -144,6 +144,7 @@
 								</template>
 
 								<template #cell(status)="data">
+
 									<template v-if="data.item.status == 'moving'">
 										<span class="badge badge-info">
 											<b-icon
@@ -154,12 +155,20 @@
 										</span>
 									</template>
 
+									<template v-if="data.item.status == 'processing all'">
+										<span class="badge badge-success">
+											<b-icon class="costum-badge" icon="clock"></b-icon>
+											{{ data.item.status.toUpperCase() }}
+										</span>
+									</template>
+
 									<template v-if="data.item.status == 'on queue'">
 										<span class="badge badge-info">
 											<b-icon class="costum-badge" icon="clock"></b-icon>
 											{{ data.item.status.toUpperCase() }}
 										</span>
 									</template>
+
 									<template v-if="data.item.status == 'stored'">
 										<span class="badge badge-info">
 											<b-icon class="costum-badge" icon="clock"></b-icon>

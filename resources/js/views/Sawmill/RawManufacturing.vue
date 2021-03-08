@@ -1,6 +1,6 @@
 <template>
 	<div>
-		<div
+		<!-- <div
 			class="modal fade"
 			id="exampleModalCenter"
 			tabindex="-1"
@@ -12,7 +12,7 @@
 				<div class="modal-content">
 					<div class="modal-header">
 						<h5 class="modal-title" id="exampleModalCenterTitle">
-							Move raw to <b>Gudang Sawmill</b>
+							Raw Manufacturing at <b>Gudang Sawmill</b>
 						</h5>
 						<button
 							type="button"
@@ -131,12 +131,12 @@
 					</div>
 				</div>
 			</div>
-		</div>
+		</div> -->
 
 		<nav class="page-breadcrumb">
 			<ol class="breadcrumb">
 				<li class="breadcrumb-item"><a href="#">Gudang sawmill</a></li>
-				<li class="breadcrumb-item active" aria-current="page">index</li>
+				<li class="breadcrumb-item active" aria-current="page">Raw Manufacturing</li>
 			</ol>
 		</nav>
 
@@ -144,7 +144,7 @@
 			<div class="col-md-12 grid-margin stretch-card">
 				<div class="card">
 					<div class="card-body">
-						<h6 class="card-title">Index of input in <b>Gudang Bahan Baku</b> </h6>
+						<h6 class="card-title">Manufacturing Control In <b>Gudang Bahan Baku</b> </h6>
 						<p class="card-description">
 							Read the
 							<a href="https://dreamywaze--myukm.000webhostapp.com/" target="_blank">
@@ -186,7 +186,7 @@
 								<div class="justify-content-between">
 									<b-button @click="toggleBusy" variant="success">
 										<b-icon icon="arrow-clockwise" aria-hidden="true"></b-icon>
-										segarkan
+										Refresh
 									</b-button>
 								</div>
 								<div>
@@ -196,7 +196,7 @@
 										variant="primary"
 									>
 										<b-icon icon="plus-square" aria-hidden="true"></b-icon>
-										Tambahkan
+										Add
 									</b-button>
 								</div>
 							</div>
@@ -325,11 +325,10 @@ export default {
 				nop: 0,
 				nop_virtual: 0,
 			},
-			nop_before: 1,
 			theErrors: [],
-			warehouse_option: [],
+			
 			isBusy: false,
-			warehouse_option: [],
+			
 			raws: [],
 			kolom: [
 				{ key: "series", label: "Series", sortable: true },
@@ -343,7 +342,7 @@ export default {
 				"invoice",
 				"action",
 			],
-			sortBy: "periode",
+			sortBy: "",
 			sortDesc: false,
 			filter: null,
 			filterOn: [],
@@ -375,13 +374,6 @@ export default {
 	},
 
 	methods: {
-		setValue(value) {
-			this.form.id = value.id;
-			this.form.nop_virtual = value.nop;
-			this.form.nop = value.nop;
-			this.form.nop = value.nop;
-			this.nop_before = value.nop;
-		},
 		onFiltered(filteredItems) {
 			// Trigger pagination to update the number of buttons/pages due to filtering
 			this.totalRows = filteredItems.length;
@@ -395,54 +387,9 @@ export default {
 			this.totalRows = this.raws.length;
 			setTimeout((this.isBusy = !this.isBusy), 6000);
 		},
-		verify() {
-			this.btnLoading = true
-			if (this.nop_before == 0) {
-				this.$toast.warning("Stock is 0, please check afresh!", "Oops..", {
-					position: "topRight",
-				});
-				this.btnLoading = false
-			} else {
-				this.form.nop = this.form.nop - this.form.nop_virtual;
-				if (this.form.nop >= 0) {
-					this.store();
-					
-				} else if (this.form.nop < 0) {
-					this.$toast.error(
-						"Out of stock, please check nop stock.",
-						"Failed!,",
-						{
-							position: "topRight",
-						}
-					);
-					this.form.nop = this.nop_before
-					this.btnLoading = false
-				}
-			}
-			// console.log("nop  = "+ this.form.nop);
-			// console.log("nop before = "+ this.nop_before);
-			// console.log("nop virtual = "+ this.form.nop_virtual);
-
-		},
 		async store() {
 			try {
-				let response = await axios.post(
-					`/api/record/move/${this.form.id}`,
-					this.form
-				);
-				if (response.status == 200) {
-					
-					let { data } = await axios.get("/api/gudang-bahanbaku/index");
-					this.raws = [];
-					this.raws = data.data;
-					this.totalRows = this.raws.length;
-					console.log(this.form);
-					$("#exampleModalCenter").modal("hide");
-					this.btnLoading = false
-					this.$toast.success("Raw has been successfully moved", "Done!", {
-						position: "topRight",
-					});
-				}
+				
 			} catch (e) {
 				this.btnLoading = false
 				this.theErrors = e.response.data.errors;

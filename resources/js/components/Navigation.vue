@@ -89,9 +89,9 @@
 						</li>
 						<li class="nav-item costum-nav-item costum-nav-item-active">
 							<router-link
-								:to="{ name: 'sawmil.index' }"
+								:to="{ name: 'sawmil.raw.manufacturing' }"
 								class="nav-link costum-nav-link"
-								>Master / Index</router-link
+								>Raw Manufacturing</router-link
 							>
 						</li>
 						<li class="nav-item costum-nav-item costum-nav-item-active">

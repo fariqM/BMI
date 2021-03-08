@@ -215,7 +215,7 @@
 								<div class="justify-content-between">
 									<b-button @click="toggleBusy" variant="success">
 										<b-icon icon="arrow-clockwise" aria-hidden="true"></b-icon>
-										segarkan
+										Refresh
 									</b-button>
 								</div>
 								<div>
@@ -225,7 +225,7 @@
 										variant="primary"
 									>
 										<b-icon icon="plus-square" aria-hidden="true"></b-icon>
-										Tambahkan
+										Create Log
 									</b-button>
 								</div>
 							</div>

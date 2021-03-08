@@ -15,7 +15,7 @@ import FormSupplier from '../views/Supplier/SplForm'
 import Sawmill from '../views/Sawmill/Index'
 import OutputSawmill from '../views/Sawmill/OutputSawmill'
 import inputSawmill from '../views/Sawmill/InputSawmill'
-
+import RawManufacturing from '../views/Sawmill/RawManufacturing'
 
 
 
@@ -93,6 +93,13 @@ export default{
             name: 'sawmil.output.index',
             component: OutputSawmill
         },
+        
+        {
+            path: '/sawmill/raw-manufacturing',
+            name: 'sawmil.raw.manufacturing',
+            component: RawManufacturing
+        },
+
         
         {
             path: '/bahan-baku/form',

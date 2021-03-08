@@ -63,10 +63,9 @@
 										switch
 										size="lg"
 									></b-form-checkbox>
-									<span class="label-table-controller">Stock Table</span>
+									<span class="label-table-controller">Log Index</span>
 								</div>
 								<div class="header-controller-table-3-2">
-
 									<template v-if="stockTable == false">
 										<b-button @click="toggleBusy" variant="success">
 											<b-icon
@@ -86,7 +85,6 @@
 											Refresh Table
 										</b-button>
 									</template>
-
 								</div>
 							</div>
 						</div>
@@ -95,10 +93,8 @@
 								head-variant="dark"
 								hover
 								show-empty
-								
 								bordered
 								striped
-								
 								:per-page="perPage"
 								:current-page="currentPage"
 								:busy="isBusy"
@@ -153,6 +149,13 @@
 								</template>
 
 								<template #cell(status)="data">
+									<template v-if="data.item.status == 'processing all'">
+										<span class="badge badge-success">
+											<b-icon class="costum-badge" icon="clock"></b-icon>
+											{{ data.item.status.toUpperCase() }}
+										</span>
+									</template>
+
 									<template v-if="data.item.status == 'moving'">
 										<span class="badge badge-dark">
 											<b-icon
@@ -162,18 +165,21 @@
 											{{ data.item.status.toUpperCase() }}
 										</span>
 									</template>
+
 									<template v-if="data.item.status == 'on queue'">
 										<span class="badge badge-info">
 											<b-icon class="costum-badge" icon="clock"></b-icon>
 											{{ data.item.status.toUpperCase() }}
 										</span>
 									</template>
+
 									<template v-if="data.item.status == 'stored'">
 										<span class="badge badge-info">
 											<b-icon class="costum-badge" icon="clock"></b-icon>
 											{{ data.item.status.toUpperCase() + " AT BMI-B" }}
 										</span>
 									</template>
+
 									<template v-if="data.item.status == 'returned'">
 										<span class="badge badge-info">
 											<b-icon class="costum-badge" icon="clock"></b-icon>
@@ -234,9 +240,26 @@
 										>
 									</template>
 
-									<template v-if="data.item.confirm_status == 'confirmed'">
-										<a class="badge badge-primary del-btn">proceed</a>
+									<template
+										v-if="
+											data.item.confirm_status == 'confirmed' &&
+											data.item.status != 'processing all'
+										"
+									>
+										<a
+											@click="directProceed(data.item)"
+											class="badge badge-primary del-btn"
+											>proceed</a
+										>
 									</template>
+
+								</template>
+								<template #cell(stock_action)="data">
+									<a
+										@click="proceed(data.item)"
+										class="badge badge-primary del-btn"
+										>proceed</a
+									>
 								</template>
 							</b-table>
 						</div>
@@ -284,6 +307,8 @@ export default {
 				id: "",
 				nop: "",
 				series: "",
+				sawmillstock_id: "",
+				status: "",
 			},
 			isBusy: false,
 			raws: [],
@@ -358,6 +383,56 @@ export default {
 	},
 
 	methods: {
+		async proceed(value) {
+			console.log(value);
+		},
+		directProceed(value) {
+			this.form.id = value.id;
+			this.form.nop = value.nop;
+			this.form.series = value.series;
+			this.form.sawmillstock_id = value.sawmillstock_id.id;
+			this.form.status = "processed";
+			Vue.swal({
+				title: "Confirm processing",
+				html: `are you sure want to process the <b>${value.series}</b>`,
+				icon: "question",
+				confirmButtonText: `Preceed`,
+				showCancelButton: true,
+				timerProgressBar: true,
+				showCloseButton: true,
+			}).then((result) => {
+				if (result.isConfirmed) {
+					// console.log(value.sawmillstock_id.id);
+					// console.log(this.form);
+					this.proceedAction();
+				}
+			});
+		},
+		async proceedAction() {
+			// console.log(this.form);
+			try {
+				let response = await axios.patch(
+					`/api/gudang-sawmill/process/${this.form.id}`,
+					this.form
+				);
+				if (response.status == 200) {
+					this.form.id = "";
+					this.form.nop = "";
+					this.form.series = "";
+					this.form.sawmillstock_id = "";
+					this.form.status = "";
+					this.$toast.success("Successfully processing", "Done!", {
+						position: "topRight",
+					});
+					this.refreshData();
+				}
+			} catch (e) {
+				console.log(e.response.data.errors);
+				this.$toast.error("Something wrong", "Oops", {
+					position: "topRight",
+				});
+			}
+		},
 		mismatch(value) {
 			this.form.id = value.id;
 			this.form.nop = value.nop;
@@ -478,7 +553,6 @@ export default {
 			// console.log(this.raws.length);
 		},
 		async refreshData() {
-			this.raws = [];
 			let { data } = await axios.get("/api/gudang-sawmill/input-index");
 			this.raws = data.data;
 			this.totalRows = this.raws.length;

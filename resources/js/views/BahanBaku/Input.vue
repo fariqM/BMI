@@ -1,7 +1,7 @@
 <template>
 	<div class="card">
 		<div class="card-body">
-			<h6 class="card-title">Tambahkan Raw</h6>
+			<h6 class="card-title">Create Log Data</h6>
 			<form method="post" class="forms-sample" @submit.prevent="store">
 				<div class="form-group row">
 					<label for="name" class="col-sm-3 col-form-label"
@@ -146,7 +146,7 @@
 						<router-link
 							class="btn btn-outline-secondary"
 							:to="{ name: 'bb.index' }"
-							>Kembali</router-link
+							>Back</router-link
 						>
 					</div>
 				</div>

@@ -7242,6 +7242,15 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
@@ -8107,35 +8116,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     var _ref;
@@ -8622,6 +8602,29 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
@@ -8629,7 +8632,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       form: {
         id: "",
         nop: "",
-        series: ""
+        series: "",
+        sawmillstock_id: "",
+        status: ""
       },
       isBusy: false,
       raws: [],
@@ -8752,8 +8757,98 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     }
   },
   methods: {
-    mismatch: function mismatch(value) {
+    proceed: function proceed(value) {
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee() {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                console.log(value);
+
+              case 1:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee);
+      }))();
+    },
+    directProceed: function directProceed(value) {
       var _this = this;
+
+      this.form.id = value.id;
+      this.form.nop = value.nop;
+      this.form.series = value.series;
+      this.form.sawmillstock_id = value.sawmillstock_id.id;
+      this.form.status = "processed";
+      Vue.swal({
+        title: "Confirm processing",
+        html: "are you sure want to process the <b>".concat(value.series, "</b>"),
+        icon: "question",
+        confirmButtonText: "Preceed",
+        showCancelButton: true,
+        timerProgressBar: true,
+        showCloseButton: true
+      }).then(function (result) {
+        if (result.isConfirmed) {
+          // console.log(value.sawmillstock_id.id);
+          // console.log(this.form);
+          _this.proceedAction();
+        }
+      });
+    },
+    proceedAction: function proceedAction() {
+      var _this2 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee2() {
+        var response;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                _context2.prev = 0;
+                _context2.next = 3;
+                return axios.patch("/api/gudang-sawmill/process/".concat(_this2.form.id), _this2.form);
+
+              case 3:
+                response = _context2.sent;
+
+                if (response.status == 200) {
+                  _this2.form.id = "";
+                  _this2.form.nop = "";
+                  _this2.form.series = "";
+                  _this2.form.sawmillstock_id = "";
+                  _this2.form.status = "";
+
+                  _this2.$toast.success("Successfully processing", "Done!", {
+                    position: "topRight"
+                  });
+
+                  _this2.refreshData();
+                }
+
+                _context2.next = 11;
+                break;
+
+              case 7:
+                _context2.prev = 7;
+                _context2.t0 = _context2["catch"](0);
+                console.log(_context2.t0.response.data.errors);
+
+                _this2.$toast.error("Something wrong", "Oops", {
+                  position: "topRight"
+                });
+
+              case 11:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2, null, [[0, 7]]);
+      }))();
+    },
+    mismatch: function mismatch(value) {
+      var _this3 = this;
 
       this.form.id = value.id;
       this.form.nop = value.nop;
@@ -8771,102 +8866,102 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         showCloseButton: true
       }).then(function (result) {
         if (result.isConfirmed) {
-          _this.stored(); // console.log("stored");
+          _this3.stored(); // console.log("stored");
           // this.konfirmAksi(value.id);
 
         } else if (result.isDenied) {
-          _this.returned();
+          _this3.returned();
         }
       });
     },
     returned: function returned() {
-      var _this2 = this;
+      var _this4 = this;
 
-      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee() {
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee3() {
         var response;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee3$(_context3) {
           while (1) {
-            switch (_context.prev = _context.next) {
+            switch (_context3.prev = _context3.next) {
               case 0:
-                _context.prev = 0;
-                _context.next = 3;
-                return axios.patch("/api/gudang-sawmill/mismatch-returned/".concat(_this2.form.id), _this2.form);
+                _context3.prev = 0;
+                _context3.next = 3;
+                return axios.patch("/api/gudang-sawmill/mismatch-returned/".concat(_this4.form.id), _this4.form);
 
               case 3:
-                response = _context.sent;
+                response = _context3.sent;
 
                 if (response.status == 200) {
-                  _this2.$toast.success("Raws has been returned to BMI-A", "Done!", {
+                  _this4.$toast.success("Raws has been returned to BMI-A", "Done!", {
                     position: "topRight"
                   });
 
-                  _this2.refreshData();
+                  _this4.refreshData();
                 }
 
-                _context.next = 10;
+                _context3.next = 10;
                 break;
 
               case 7:
-                _context.prev = 7;
-                _context.t0 = _context["catch"](0);
-                console.log(_context.t0.response.data.errors);
+                _context3.prev = 7;
+                _context3.t0 = _context3["catch"](0);
+                console.log(_context3.t0.response.data.errors);
 
               case 10:
               case "end":
-                return _context.stop();
+                return _context3.stop();
             }
           }
-        }, _callee, null, [[0, 7]]);
+        }, _callee3, null, [[0, 7]]);
       }))();
     },
     stored: function stored() {
-      var _this3 = this;
+      var _this5 = this;
 
-      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee2() {
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee4() {
         var response;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee2$(_context2) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee4$(_context4) {
           while (1) {
-            switch (_context2.prev = _context2.next) {
+            switch (_context4.prev = _context4.next) {
               case 0:
-                console.log(_this3.form);
-                _context2.prev = 1;
-                _context2.next = 4;
-                return axios.patch("/api/gudang-sawmill/mismatch-stored/".concat(_this3.form.id), _this3.form);
+                console.log(_this5.form);
+                _context4.prev = 1;
+                _context4.next = 4;
+                return axios.patch("/api/gudang-sawmill/mismatch-stored/".concat(_this5.form.id), _this5.form);
 
               case 4:
-                response = _context2.sent;
+                response = _context4.sent;
 
                 if (response.status == 200) {
-                  _this3.$toast.success("Raws has been added at your warehouse data", "Done!", {
+                  _this5.$toast.success("Raws has been added at your warehouse data", "Done!", {
                     position: "topRight"
                   });
 
-                  _this3.refreshData();
+                  _this5.refreshData();
                 }
 
-                _context2.next = 12;
+                _context4.next = 12;
                 break;
 
               case 8:
-                _context2.prev = 8;
-                _context2.t0 = _context2["catch"](1);
+                _context4.prev = 8;
+                _context4.t0 = _context4["catch"](1);
 
-                _this3.$toast.error("Something wrong", "Oops", {
+                _this5.$toast.error("Something wrong", "Oops", {
                   position: "topRight"
                 });
 
-                console.log(_context2.t0.response.data.errors);
+                console.log(_context4.t0.response.data.errors);
 
               case 12:
               case "end":
-                return _context2.stop();
+                return _context4.stop();
             }
           }
-        }, _callee2, null, [[1, 8]]);
+        }, _callee4, null, [[1, 8]]);
       }))();
     },
     confirm: function confirm(value) {
-      var _this4 = this;
+      var _this6 = this;
 
       this.form.nop = value.nop;
       this.form.series = value.series;
@@ -8882,53 +8977,53 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         if (result.isConfirmed) {
           console.log();
 
-          _this4.konfirmAksi(value);
+          _this6.konfirmAksi(value);
         }
       });
     },
     konfirmAksi: function konfirmAksi(value) {
-      var _this5 = this;
+      var _this7 = this;
 
-      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee3() {
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee5() {
         var response;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee3$(_context3) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee5$(_context5) {
           while (1) {
-            switch (_context3.prev = _context3.next) {
+            switch (_context5.prev = _context5.next) {
               case 0:
-                _context3.prev = 0;
-                _context3.next = 3;
-                return axios.patch("/api/gudang-sawmill/confirm-raw/".concat(value.id), _this5.form);
+                _context5.prev = 0;
+                _context5.next = 3;
+                return axios.patch("/api/gudang-sawmill/confirm-raw/".concat(value.id), _this7.form);
 
               case 3:
-                response = _context3.sent;
+                response = _context5.sent;
 
                 if (response.status == 200) {
-                  _this5.$toast.success("Confirmed", "Done!", {
+                  _this7.$toast.success("Confirmed", "Done!", {
                     position: "topRight"
                   });
 
-                  _this5.refreshData();
+                  _this7.refreshData();
                 }
 
-                _context3.next = 11;
+                _context5.next = 11;
                 break;
 
               case 7:
-                _context3.prev = 7;
-                _context3.t0 = _context3["catch"](0);
+                _context5.prev = 7;
+                _context5.t0 = _context5["catch"](0);
 
-                _this5.$toast.error("Something wrong", "Oops!", {
+                _this7.$toast.error("Something wrong", "Oops!", {
                   position: "topRight"
                 });
 
-                console.log(_context3.t0.response.data.errors);
+                console.log(_context5.t0.response.data.errors);
 
               case 11:
               case "end":
-                return _context3.stop();
+                return _context5.stop();
             }
           }
-        }, _callee3, null, [[0, 7]]);
+        }, _callee5, null, [[0, 7]]);
       }))();
     },
     onFiltered: function onFiltered(filteredItems) {
@@ -8937,68 +9032,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       this.currentPage = 1;
     },
     toggleBusy: function toggleBusy() {
-      var _this6 = this;
-
-      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee4() {
-        var _yield$axios$get, data;
-
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee4$(_context4) {
-          while (1) {
-            switch (_context4.prev = _context4.next) {
-              case 0:
-                _this6.isBusy = !_this6.isBusy;
-                _this6.raws = [];
-                _context4.next = 4;
-                return axios.get("/api/gudang-sawmill/input-index");
-
-              case 4:
-                _yield$axios$get = _context4.sent;
-                data = _yield$axios$get.data;
-                _this6.raws = data.data;
-                _this6.totalRows = _this6.raws.length;
-                setTimeout(_this6.isBusy = !_this6.isBusy, 6000); // console.log(this.raws.length);
-
-              case 9:
-              case "end":
-                return _context4.stop();
-            }
-          }
-        }, _callee4);
-      }))();
-    },
-    refreshData: function refreshData() {
-      var _this7 = this;
-
-      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee5() {
-        var _yield$axios$get2, data;
-
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee5$(_context5) {
-          while (1) {
-            switch (_context5.prev = _context5.next) {
-              case 0:
-                _this7.raws = [];
-                _context5.next = 3;
-                return axios.get("/api/gudang-sawmill/input-index");
-
-              case 3:
-                _yield$axios$get2 = _context5.sent;
-                data = _yield$axios$get2.data;
-                _this7.raws = data.data;
-                _this7.totalRows = _this7.raws.length;
-
-              case 7:
-              case "end":
-                return _context5.stop();
-            }
-          }
-        }, _callee5);
-      }))();
-    },
-    getSawmillstock: function getSawmillstock() {
       var _this8 = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee6() {
-        var _yield$axios$get3, data;
+        var _yield$axios$get, data;
 
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee6$(_context6) {
           while (1) {
@@ -9007,14 +9044,14 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 _this8.isBusy = !_this8.isBusy;
                 _this8.raws = [];
                 _context6.next = 4;
-                return axios.get("/api/gudang-sawmill/stock-index");
+                return axios.get("/api/gudang-sawmill/input-index");
 
               case 4:
-                _yield$axios$get3 = _context6.sent;
-                data = _yield$axios$get3.data;
+                _yield$axios$get = _context6.sent;
+                data = _yield$axios$get.data;
                 _this8.raws = data.data;
                 _this8.totalRows = _this8.raws.length;
-                setTimeout(_this8.isBusy = !_this8.isBusy, 6000);
+                setTimeout(_this8.isBusy = !_this8.isBusy, 6000); // console.log(this.raws.length);
 
               case 9:
               case "end":
@@ -9022,6 +9059,528 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
             }
           }
         }, _callee6);
+      }))();
+    },
+    refreshData: function refreshData() {
+      var _this9 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee7() {
+        var _yield$axios$get2, data;
+
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee7$(_context7) {
+          while (1) {
+            switch (_context7.prev = _context7.next) {
+              case 0:
+                _context7.next = 2;
+                return axios.get("/api/gudang-sawmill/input-index");
+
+              case 2:
+                _yield$axios$get2 = _context7.sent;
+                data = _yield$axios$get2.data;
+                _this9.raws = data.data;
+                _this9.totalRows = _this9.raws.length;
+
+              case 6:
+              case "end":
+                return _context7.stop();
+            }
+          }
+        }, _callee7);
+      }))();
+    },
+    getSawmillstock: function getSawmillstock() {
+      var _this10 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee8() {
+        var _yield$axios$get3, data;
+
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee8$(_context8) {
+          while (1) {
+            switch (_context8.prev = _context8.next) {
+              case 0:
+                _this10.isBusy = !_this10.isBusy;
+                _this10.raws = [];
+                _context8.next = 4;
+                return axios.get("/api/gudang-sawmill/stock-index");
+
+              case 4:
+                _yield$axios$get3 = _context8.sent;
+                data = _yield$axios$get3.data;
+                _this10.raws = data.data;
+                _this10.totalRows = _this10.raws.length;
+                setTimeout(_this10.isBusy = !_this10.isBusy, 6000);
+
+              case 9:
+              case "end":
+                return _context8.stop();
+            }
+          }
+        }, _callee8);
+      }))();
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/views/Sawmill/RawManufacturing.vue?vue&type=script&lang=js&":
+/*!**************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/views/Sawmill/RawManufacturing.vue?vue&type=script&lang=js& ***!
+  \**************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  data: function data() {
+    return {
+      form: {
+        id: 0,
+        uom: "m3",
+        nop: 0,
+        nop_virtual: 0
+      },
+      theErrors: [],
+      isBusy: false,
+      raws: [],
+      kolom: [{
+        key: "series",
+        label: "Series",
+        sortable: true
+      }, "type", {
+        key: "size",
+        label: "Size",
+        sortable: true
+      }, {
+        key: "periode",
+        label: "Periode",
+        sortable: true
+      }, "nop", "periode", "warehouse", "supplier", "invoice", "action"],
+      sortBy: "",
+      sortDesc: false,
+      filter: null,
+      filterOn: [],
+      perPage: 5,
+      pageOptions: [{
+        value: 5,
+        text: "5"
+      }, {
+        value: 10,
+        text: "10"
+      }, {
+        value: 15,
+        text: "15"
+      }, {
+        value: 100,
+        text: "Show a lot"
+      }],
+      totalRows: 1,
+      currentPage: 1,
+      btnLoading: false
+    };
+  },
+  computed: {
+    sortOptions: function sortOptions() {
+      return this.fields.filter(function (f) {
+        return f.sortable;
+      }).map(function (f) {
+        return {
+          text: f.label,
+          value: f.key
+        };
+      });
+    }
+  },
+  mounted: function mounted() {
+    this.toggleBusy();
+  },
+  methods: {
+    onFiltered: function onFiltered(filteredItems) {
+      // Trigger pagination to update the number of buttons/pages due to filtering
+      this.totalRows = filteredItems.length;
+      this.currentPage = 1;
+    },
+    toggleBusy: function toggleBusy() {
+      var _this = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee() {
+        var _yield$axios$get, data;
+
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                _this.isBusy = !_this.isBusy;
+                _context.next = 3;
+                return axios.get("/api/gudang-bahanbaku/index");
+
+              case 3:
+                _yield$axios$get = _context.sent;
+                data = _yield$axios$get.data;
+                _this.raws = [];
+                _this.raws = data.data;
+                _this.totalRows = _this.raws.length;
+                setTimeout(_this.isBusy = !_this.isBusy, 6000);
+
+              case 9:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee);
+      }))();
+    },
+    store: function store() {
+      var _this2 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee2() {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                try {} catch (e) {
+                  _this2.btnLoading = false;
+                  _this2.theErrors = e.response.data.errors;
+
+                  _this2.$toast.error("Something wrong when updating data!", "Oops,", {
+                    position: "topRight"
+                  });
+                }
+
+              case 1:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2);
       }))();
     }
   }
@@ -10519,6 +11078,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _views_Sawmill_Index__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ../views/Sawmill/Index */ "./resources/js/views/Sawmill/Index.vue");
 /* harmony import */ var _views_Sawmill_OutputSawmill__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ../views/Sawmill/OutputSawmill */ "./resources/js/views/Sawmill/OutputSawmill.vue");
 /* harmony import */ var _views_Sawmill_InputSawmill__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ../views/Sawmill/InputSawmill */ "./resources/js/views/Sawmill/InputSawmill.vue");
+/* harmony import */ var _views_Sawmill_RawManufacturing__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ../views/Sawmill/RawManufacturing */ "./resources/js/views/Sawmill/RawManufacturing.vue");
+
 
 
 
@@ -10586,6 +11147,10 @@ __webpack_require__.r(__webpack_exports__);
     path: '/sawmill/output-index',
     name: 'sawmil.output.index',
     component: _views_Sawmill_OutputSawmill__WEBPACK_IMPORTED_MODULE_15__.default
+  }, {
+    path: '/sawmill/raw-manufacturing',
+    name: 'sawmil.raw.manufacturing',
+    component: _views_Sawmill_RawManufacturing__WEBPACK_IMPORTED_MODULE_17__.default
   }, {
     path: '/bahan-baku/form',
     name: 'bb.form',
@@ -35399,6 +35964,45 @@ component.options.__file = "resources/js/views/Sawmill/OutputSawmill.vue"
 
 /***/ }),
 
+/***/ "./resources/js/views/Sawmill/RawManufacturing.vue":
+/*!*********************************************************!*\
+  !*** ./resources/js/views/Sawmill/RawManufacturing.vue ***!
+  \*********************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _RawManufacturing_vue_vue_type_template_id_adb43d02___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./RawManufacturing.vue?vue&type=template&id=adb43d02& */ "./resources/js/views/Sawmill/RawManufacturing.vue?vue&type=template&id=adb43d02&");
+/* harmony import */ var _RawManufacturing_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./RawManufacturing.vue?vue&type=script&lang=js& */ "./resources/js/views/Sawmill/RawManufacturing.vue?vue&type=script&lang=js&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! !../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+;
+var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__.default)(
+  _RawManufacturing_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__.default,
+  _RawManufacturing_vue_vue_type_template_id_adb43d02___WEBPACK_IMPORTED_MODULE_0__.render,
+  _RawManufacturing_vue_vue_type_template_id_adb43d02___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/views/Sawmill/RawManufacturing.vue"
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (component.exports);
+
+/***/ }),
+
 /***/ "./resources/js/views/Structure/StrForm.vue":
 /*!**************************************************!*\
   !*** ./resources/js/views/Structure/StrForm.vue ***!
@@ -35865,6 +36469,22 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/views/Sawmill/RawManufacturing.vue?vue&type=script&lang=js&":
+/*!**********************************************************************************!*\
+  !*** ./resources/js/views/Sawmill/RawManufacturing.vue?vue&type=script&lang=js& ***!
+  \**********************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_RawManufacturing_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./RawManufacturing.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/views/Sawmill/RawManufacturing.vue?vue&type=script&lang=js&");
+ /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_RawManufacturing_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__.default); 
+
+/***/ }),
+
 /***/ "./resources/js/views/Structure/StrForm.vue?vue&type=script&lang=js&":
 /*!***************************************************************************!*\
   !*** ./resources/js/views/Structure/StrForm.vue?vue&type=script&lang=js& ***!
@@ -36286,6 +36906,23 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "staticRenderFns": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_InputSawmill_vue_vue_type_template_id_764af5e4___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
 /* harmony export */ });
 /* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_InputSawmill_vue_vue_type_template_id_764af5e4___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./InputSawmill.vue?vue&type=template&id=764af5e4& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/views/Sawmill/InputSawmill.vue?vue&type=template&id=764af5e4&");
+
+
+/***/ }),
+
+/***/ "./resources/js/views/Sawmill/RawManufacturing.vue?vue&type=template&id=adb43d02&":
+/*!****************************************************************************************!*\
+  !*** ./resources/js/views/Sawmill/RawManufacturing.vue?vue&type=template&id=adb43d02& ***!
+  \****************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_RawManufacturing_vue_vue_type_template_id_adb43d02___WEBPACK_IMPORTED_MODULE_0__.render),
+/* harmony export */   "staticRenderFns": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_RawManufacturing_vue_vue_type_template_id_adb43d02___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
+/* harmony export */ });
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_RawManufacturing_vue_vue_type_template_id_adb43d02___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./RawManufacturing.vue?vue&type=template&id=adb43d02& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/views/Sawmill/RawManufacturing.vue?vue&type=template&id=adb43d02&");
 
 
 /***/ }),
@@ -37392,9 +38029,9 @@ var render = function() {
                   "router-link",
                   {
                     staticClass: "nav-link costum-nav-link",
-                    attrs: { to: { name: "sawmil.index" } }
+                    attrs: { to: { name: "sawmil.raw.manufacturing" } }
                   },
-                  [_vm._v("Master / Index")]
+                  [_vm._v("Raw Manufacturing")]
                 )
               ],
               1
@@ -38708,7 +39345,7 @@ var render = function() {
                             "aria-hidden": "true"
                           }
                         }),
-                        _vm._v("\n\t\t\t\t\t\t\t\t\tsegarkan\n\t\t\t\t\t\t\t\t")
+                        _vm._v("\n\t\t\t\t\t\t\t\t\tRefresh\n\t\t\t\t\t\t\t\t")
                       ],
                       1
                     )
@@ -38735,7 +39372,7 @@ var render = function() {
                           attrs: { icon: "plus-square", "aria-hidden": "true" }
                         }),
                         _vm._v(
-                          "\n\t\t\t\t\t\t\t\t\tTambahkan\n\t\t\t\t\t\t\t\t"
+                          "\n\t\t\t\t\t\t\t\t\tCreate Log\n\t\t\t\t\t\t\t\t"
                         )
                       ],
                       1
@@ -39090,7 +39727,7 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "card" }, [
     _c("div", { staticClass: "card-body" }, [
-      _c("h6", { staticClass: "card-title" }, [_vm._v("Tambahkan Raw")]),
+      _c("h6", { staticClass: "card-title" }, [_vm._v("Create Log Data")]),
       _vm._v(" "),
       _c(
         "form",
@@ -39470,7 +40107,7 @@ var render = function() {
                     staticClass: "btn btn-outline-secondary",
                     attrs: { to: { name: "bb.index" } }
                   },
-                  [_vm._v("Kembali")]
+                  [_vm._v("Back")]
                 )
               ],
               1
@@ -39707,7 +40344,7 @@ var render = function() {
                             "aria-hidden": "true"
                           }
                         }),
-                        _vm._v("\n\t\t\t\t\t\t\t\t\tsegarkan\n\t\t\t\t\t\t\t\t")
+                        _vm._v("\n\t\t\t\t\t\t\t\t\tRefresh\n\t\t\t\t\t\t\t\t")
                       ],
                       1
                     )
@@ -39856,6 +40493,27 @@ var render = function() {
                                     }),
                                     _vm._v(
                                       "\n\t\t\t\t\t\t\t\t\t\tmoving\n\t\t\t\t\t\t\t\t\t"
+                                    )
+                                  ],
+                                  1
+                                )
+                              ]
+                            : _vm._e(),
+                          _vm._v(" "),
+                          data.item.status == "processing all"
+                            ? [
+                                _c(
+                                  "span",
+                                  { staticClass: "badge badge-success" },
+                                  [
+                                    _c("b-icon", {
+                                      staticClass: "costum-badge",
+                                      attrs: { icon: "clock" }
+                                    }),
+                                    _vm._v(
+                                      "\n\t\t\t\t\t\t\t\t\t\t" +
+                                        _vm._s(data.item.status.toUpperCase()) +
+                                        "\n\t\t\t\t\t\t\t\t\t"
                                     )
                                   ],
                                   1
@@ -41437,7 +42095,7 @@ var render = function() {
                     }),
                     _vm._v(" "),
                     _c("span", { staticClass: "label-table-controller" }, [
-                      _vm._v("Stock Table")
+                      _vm._v("Log Index")
                     ])
                   ],
                   1
@@ -41625,6 +42283,27 @@ var render = function() {
                       key: "cell(status)",
                       fn: function(data) {
                         return [
+                          data.item.status == "processing all"
+                            ? [
+                                _c(
+                                  "span",
+                                  { staticClass: "badge badge-success" },
+                                  [
+                                    _c("b-icon", {
+                                      staticClass: "costum-badge",
+                                      attrs: { icon: "clock" }
+                                    }),
+                                    _vm._v(
+                                      "\n\t\t\t\t\t\t\t\t\t\t" +
+                                        _vm._s(data.item.status.toUpperCase()) +
+                                        "\n\t\t\t\t\t\t\t\t\t"
+                                    )
+                                  ],
+                                  1
+                                )
+                              ]
+                            : _vm._e(),
+                          _vm._v(" "),
                           data.item.status == "moving"
                             ? [
                                 _c(
@@ -41842,17 +42521,42 @@ var render = function() {
                               ]
                             : _vm._e(),
                           _vm._v(" "),
-                          data.item.confirm_status == "confirmed"
+                          data.item.confirm_status == "confirmed" &&
+                          data.item.status != "processing all"
                             ? [
                                 _c(
                                   "a",
                                   {
-                                    staticClass: "badge badge-primary del-btn"
+                                    staticClass: "badge badge-primary del-btn",
+                                    on: {
+                                      click: function($event) {
+                                        return _vm.directProceed(data.item)
+                                      }
+                                    }
                                   },
                                   [_vm._v("proceed")]
                                 )
                               ]
                             : _vm._e()
+                        ]
+                      }
+                    },
+                    {
+                      key: "cell(stock_action)",
+                      fn: function(data) {
+                        return [
+                          _c(
+                            "a",
+                            {
+                              staticClass: "badge badge-primary del-btn",
+                              on: {
+                                click: function($event) {
+                                  return _vm.proceed(data.item)
+                                }
+                              }
+                            },
+                            [_vm._v("proceed")]
+                          )
                         ]
                       }
                     }
@@ -41984,6 +42688,515 @@ var staticRenderFns = [
         [_vm._v("\n\t\t\t\t\t\t\tUser Guide")]
       ),
       _vm._v("\n\t\t\t\t\t\tfor more info\n\t\t\t\t\t")
+    ])
+  }
+]
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/views/Sawmill/RawManufacturing.vue?vue&type=template&id=adb43d02&":
+/*!*******************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/views/Sawmill/RawManufacturing.vue?vue&type=template&id=adb43d02& ***!
+  \*******************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* binding */ render),
+/* harmony export */   "staticRenderFns": () => (/* binding */ staticRenderFns)
+/* harmony export */ });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", [
+    _vm._m(0),
+    _vm._v(" "),
+    _c("div", { staticClass: "row" }, [
+      _c("div", { staticClass: "col-md-12 grid-margin stretch-card" }, [
+        _c("div", { staticClass: "card" }, [
+          _c("div", { staticClass: "card-body" }, [
+            _vm._m(1),
+            _vm._v(" "),
+            _vm._m(2),
+            _vm._v(" "),
+            _c("div", { staticClass: "grid-container" }, [
+              _c("div", { staticClass: "grid-item-container grid-item-1" }, [
+                _c("div", { staticClass: "grid-subitem-1" }, [
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.filter,
+                        expression: "filter"
+                      }
+                    ],
+                    staticClass: "costum-input",
+                    attrs: { placeholder: "Search" },
+                    domProps: { value: _vm.filter },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.filter = $event.target.value
+                      }
+                    }
+                  })
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "grid-subitem-2" }, [
+                  _c("label", { staticClass: "costum-label-filter" }, [
+                    _vm._v("Filter Kolom :")
+                  ]),
+                  _vm._v(" "),
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.filterOn,
+                        expression: "filterOn"
+                      }
+                    ],
+                    staticClass: "costum-checkbox",
+                    attrs: { value: "size", id: "kolomID", type: "checkbox" },
+                    domProps: {
+                      checked: Array.isArray(_vm.filterOn)
+                        ? _vm._i(_vm.filterOn, "size") > -1
+                        : _vm.filterOn
+                    },
+                    on: {
+                      change: function($event) {
+                        var $$a = _vm.filterOn,
+                          $$el = $event.target,
+                          $$c = $$el.checked ? true : false
+                        if (Array.isArray($$a)) {
+                          var $$v = "size",
+                            $$i = _vm._i($$a, $$v)
+                          if ($$el.checked) {
+                            $$i < 0 && (_vm.filterOn = $$a.concat([$$v]))
+                          } else {
+                            $$i > -1 &&
+                              (_vm.filterOn = $$a
+                                .slice(0, $$i)
+                                .concat($$a.slice($$i + 1)))
+                          }
+                        } else {
+                          _vm.filterOn = $$c
+                        }
+                      }
+                    }
+                  }),
+                  _vm._v(" "),
+                  _c(
+                    "label",
+                    {
+                      staticClass: "costum-checkbox",
+                      attrs: { for: "kolomID" }
+                    },
+                    [_vm._v("Size")]
+                  ),
+                  _vm._v(" "),
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.filterOn,
+                        expression: "filterOn"
+                      }
+                    ],
+                    staticClass: "costum-checkbox",
+                    attrs: {
+                      value: "reference",
+                      id: "kolomRef",
+                      type: "checkbox"
+                    },
+                    domProps: {
+                      checked: Array.isArray(_vm.filterOn)
+                        ? _vm._i(_vm.filterOn, "reference") > -1
+                        : _vm.filterOn
+                    },
+                    on: {
+                      change: function($event) {
+                        var $$a = _vm.filterOn,
+                          $$el = $event.target,
+                          $$c = $$el.checked ? true : false
+                        if (Array.isArray($$a)) {
+                          var $$v = "reference",
+                            $$i = _vm._i($$a, $$v)
+                          if ($$el.checked) {
+                            $$i < 0 && (_vm.filterOn = $$a.concat([$$v]))
+                          } else {
+                            $$i > -1 &&
+                              (_vm.filterOn = $$a
+                                .slice(0, $$i)
+                                .concat($$a.slice($$i + 1)))
+                          }
+                        } else {
+                          _vm.filterOn = $$c
+                        }
+                      }
+                    }
+                  }),
+                  _vm._v(" "),
+                  _c(
+                    "label",
+                    {
+                      staticClass: "costum-checkbox",
+                      attrs: { for: "kolomRef" }
+                    },
+                    [_vm._v("Series")]
+                  )
+                ])
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "grid-item-container-2 grid-item-2" }, [
+                _c(
+                  "div",
+                  { staticClass: "justify-content-between" },
+                  [
+                    _c(
+                      "b-button",
+                      {
+                        attrs: { variant: "success" },
+                        on: { click: _vm.toggleBusy }
+                      },
+                      [
+                        _c("b-icon", {
+                          attrs: {
+                            icon: "arrow-clockwise",
+                            "aria-hidden": "true"
+                          }
+                        }),
+                        _vm._v("\n\t\t\t\t\t\t\t\t\tRefresh\n\t\t\t\t\t\t\t\t")
+                      ],
+                      1
+                    )
+                  ],
+                  1
+                ),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  [
+                    _c(
+                      "b-button",
+                      {
+                        staticStyle: { "justify-content": "end" },
+                        attrs: { variant: "primary" },
+                        on: {
+                          click: function($event) {
+                            return _vm.$router.push({ name: "bb.form" })
+                          }
+                        }
+                      },
+                      [
+                        _c("b-icon", {
+                          attrs: { icon: "plus-square", "aria-hidden": "true" }
+                        }),
+                        _vm._v("\n\t\t\t\t\t\t\t\t\tAdd\n\t\t\t\t\t\t\t\t")
+                      ],
+                      1
+                    )
+                  ],
+                  1
+                )
+              ])
+            ]),
+            _vm._v(" "),
+            _c(
+              "div",
+              { staticClass: "table-responsive" },
+              [
+                _c("b-table", {
+                  attrs: {
+                    "head-variant": "light",
+                    hover: "",
+                    "show-empty": "",
+                    responsive: "sm",
+                    "per-page": _vm.perPage,
+                    "current-page": _vm.currentPage,
+                    busy: _vm.isBusy,
+                    filter: _vm.filter,
+                    "filter-included-fields": _vm.filterOn,
+                    items: _vm.raws,
+                    fields: _vm.kolom,
+                    "sort-by": _vm.sortBy,
+                    "sort-desc": _vm.sortDesc
+                  },
+                  on: {
+                    filtered: _vm.onFiltered,
+                    "update:sortBy": function($event) {
+                      _vm.sortBy = $event
+                    },
+                    "update:sort-by": function($event) {
+                      _vm.sortBy = $event
+                    },
+                    "update:sortDesc": function($event) {
+                      _vm.sortDesc = $event
+                    },
+                    "update:sort-desc": function($event) {
+                      _vm.sortDesc = $event
+                    }
+                  },
+                  scopedSlots: _vm._u([
+                    {
+                      key: "table-busy",
+                      fn: function() {
+                        return [
+                          _c(
+                            "div",
+                            { staticClass: "text-center text-danger my-1" },
+                            [
+                              _c(
+                                "svg",
+                                {
+                                  staticStyle: {
+                                    margin: "auto",
+                                    background: "none",
+                                    display: "block",
+                                    "shape-rendering": "auto"
+                                  },
+                                  attrs: {
+                                    xmlns: "http://www.w3.org/2000/svg",
+                                    "xmlns:xlink":
+                                      "http://www.w3.org/1999/xlink",
+                                    width: "100px",
+                                    height: "100px",
+                                    viewBox: "0 0 100 100",
+                                    preserveAspectRatio: "xMidYMid"
+                                  }
+                                },
+                                [
+                                  _c(
+                                    "path",
+                                    {
+                                      attrs: {
+                                        d:
+                                          "M10 50A40 40 0 0 0 90 50A40 42 0 0 1 10 50",
+                                        fill: "#93dbe9",
+                                        stroke: "none"
+                                      }
+                                    },
+                                    [
+                                      _c("animateTransform", {
+                                        attrs: {
+                                          attributeName: "transform",
+                                          type: "rotate",
+                                          dur: "1s",
+                                          repeatCount: "indefinite",
+                                          keyTimes: "0;1",
+                                          values: "0 50 51;360 50 51"
+                                        }
+                                      })
+                                    ],
+                                    1
+                                  )
+                                ]
+                              )
+                            ]
+                          )
+                        ]
+                      },
+                      proxy: true
+                    },
+                    {
+                      key: "cell(action)",
+                      fn: function(info) {
+                        return [
+                          _c(
+                            "div",
+                            { staticClass: "grid-action-column" },
+                            [
+                              _c(
+                                "router-link",
+                                {
+                                  staticClass: "badge badge-info",
+                                  attrs: { to: { name: "home" } }
+                                },
+                                [_c("b-icon", { attrs: { icon: "search" } })],
+                                1
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "router-link",
+                                {
+                                  staticClass: "badge badge-primary",
+                                  attrs: { to: { name: "home" } }
+                                },
+                                [_vm._v("Edit")]
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "a",
+                                {
+                                  staticClass: "badge badge-danger del-btn",
+                                  attrs: {
+                                    "data-toggle": "modal",
+                                    "data-target": "#exampleModalCenter"
+                                  },
+                                  on: {
+                                    click: function($event) {
+                                      return _vm.setValue(info.item)
+                                    }
+                                  }
+                                },
+                                [_vm._v("Move\n\t\t\t\t\t\t\t\t\t")]
+                              )
+                            ],
+                            1
+                          )
+                        ]
+                      }
+                    }
+                  ])
+                })
+              ],
+              1
+            ),
+            _vm._v(" "),
+            _c("hr"),
+            _vm._v(" "),
+            _c("div", { staticClass: "footer-table-container" }, [
+              _c("div", { staticClass: "footer-table-container-item1" }, [
+                _vm._v("\n\t\t\t\t\t\t\tPagination :\n\t\t\t\t\t\t\t"),
+                _c(
+                  "select",
+                  {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.perPage,
+                        expression: "perPage"
+                      }
+                    ],
+                    staticClass: "custom-select custom-select-sm form-control",
+                    attrs: { id: "per-page-select", options: _vm.pageOptions },
+                    on: {
+                      change: function($event) {
+                        var $$selectedVal = Array.prototype.filter
+                          .call($event.target.options, function(o) {
+                            return o.selected
+                          })
+                          .map(function(o) {
+                            var val = "_value" in o ? o._value : o.value
+                            return val
+                          })
+                        _vm.perPage = $event.target.multiple
+                          ? $$selectedVal
+                          : $$selectedVal[0]
+                      }
+                    }
+                  },
+                  [
+                    _vm._l(_vm.pageOptions, function(pagess) {
+                      return [
+                        _c(
+                          "option",
+                          {
+                            key: pagess.value,
+                            domProps: { value: pagess.value }
+                          },
+                          [
+                            _vm._v(
+                              "\n\t\t\t\t\t\t\t\t\t\t" +
+                                _vm._s(pagess.text) +
+                                "\n\t\t\t\t\t\t\t\t\t"
+                            )
+                          ]
+                        )
+                      ]
+                    })
+                  ],
+                  2
+                )
+              ]),
+              _vm._v(" "),
+              _c(
+                "div",
+                { staticClass: "footer-table-container-item2" },
+                [
+                  _c("b-pagination", {
+                    staticClass: "my-0",
+                    attrs: {
+                      "total-rows": _vm.totalRows,
+                      "per-page": _vm.perPage,
+                      size: "sm"
+                    },
+                    model: {
+                      value: _vm.currentPage,
+                      callback: function($$v) {
+                        _vm.currentPage = $$v
+                      },
+                      expression: "currentPage"
+                    }
+                  })
+                ],
+                1
+              )
+            ])
+          ])
+        ])
+      ])
+    ])
+  ])
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("nav", { staticClass: "page-breadcrumb" }, [
+      _c("ol", { staticClass: "breadcrumb" }, [
+        _c("li", { staticClass: "breadcrumb-item" }, [
+          _c("a", { attrs: { href: "#" } }, [_vm._v("Gudang sawmill")])
+        ]),
+        _vm._v(" "),
+        _c(
+          "li",
+          {
+            staticClass: "breadcrumb-item active",
+            attrs: { "aria-current": "page" }
+          },
+          [_vm._v("Raw Manufacturing")]
+        )
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("h6", { staticClass: "card-title" }, [
+      _vm._v("Manufacturing Control In "),
+      _c("b", [_vm._v("Gudang Bahan Baku")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("p", { staticClass: "card-description" }, [
+      _vm._v("\n\t\t\t\t\t\tRead the\n\t\t\t\t\t\t"),
+      _c(
+        "a",
+        {
+          attrs: {
+            href: "https://dreamywaze--myukm.000webhostapp.com/",
+            target: "_blank"
+          }
+        },
+        [_vm._v("\n\t\t\t\t\t\t\tUser Guide")]
+      ),
+      _vm._v(" for more info\n\t\t\t\t\t")
     ])
   }
 ]

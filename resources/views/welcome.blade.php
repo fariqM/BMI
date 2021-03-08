@@ -17,7 +17,7 @@
     <link rel="stylesheet" href="{{ asset('assets/fonts/feather-font/css/iconfont.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/vendors/flag-icon-css/css/flag-icon.min.css') }}">
 
-    <link rel="shortcut icon" href="{{ asset('assets/images/favicon.png') }}" />
+    <link rel="shortcut icon" href="https://binamegah.com/wp-content/uploads/2020/09/cropped-favicon-logo-bmi1-32x32.png" />
 
     {{-- <link href="{{ asset('css/app.css') }}" rel="stylesheet"> --}}
 

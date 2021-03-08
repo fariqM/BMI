@@ -41,6 +41,10 @@ Route::namespace('App\Http\Controllers')->group(function(){
         Route::patch('mismatch-stored/{record:id}', 'RecordController@stored');
         Route::patch('mismatch-returned/{record:id}', 'RecordController@returned');
         Route::get('stock-index', 'SawmillstockController@stockindex');
+        Route::get('bb-stock', 'SawmillstockController@bbindex');
+        Route::post('add-bb-stock', 'SawmillstockController@add_bb_stock');
+        Route::patch('process/{record:id}', 'SawmillstockController@addprocess');
+        Route::get('process-index', 'SawmillstockController@processindex');
     });
 
 

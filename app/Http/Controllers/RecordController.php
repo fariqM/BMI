@@ -52,12 +52,12 @@ class RecordController extends Controller
 
     public function recordBB()
     {
-        $records = Record::where('origin', '5')->orWhere('warehouse_id', '5')->with('warehouse')->latest()->get();
+        $records = Record::where('origin', '5')->orWhere('warehouse_id', '5')->with('warehouse', 'sawmillstocks')->latest()->get();
         return RecordResource::collection($records);
     }
 
     public function inputrecordsawmill(){
-        $records = Record::where('origin', '1')->orWhere('warehouse_id', '1')->with('warehouse')->latest()->get();
+        $records = Record::where('origin', '1')->orWhere('warehouse_id', '1')->with('warehouse', 'sawmillstocks')->latest()->get();
         return RecordResource::collection($records);
     }
 
@@ -100,6 +100,8 @@ class RecordController extends Controller
                 Sawmillstock::create([
                 'series' => $series,
                 'nop' => $nop,
+                'nop_virtual' => 0,
+                'processed' => 0,
             ]);
         } else{
             DB::table('sawmillstocks')->where('series','=', $series)->increment('nop', $nop);
@@ -127,6 +129,8 @@ class RecordController extends Controller
                 Sawmillstock::create([
                 'series' => $series,
                 'nop_virtual' => $nop,
+                'processed' => 0,
+                'nop' => 0,
             ]);
         } else{
             DB::table('sawmillstocks')->where('series','=', $series)->increment('nop_virtual', $nop);

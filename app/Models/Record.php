@@ -18,4 +18,8 @@ class Record extends Model
     public function raw(){
         return $this->belongsTo(Raw::class, 'series', 'series');
     }
+
+    public function sawmillstocks(){
+        return $this->hasMany(Sawmillstock::class, 'series', 'series');
+    }
 }

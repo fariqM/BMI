@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources;
 
+use App\Models\Sawmillstock;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class RecordResource extends JsonResource
@@ -22,8 +23,18 @@ class RecordResource extends JsonResource
           $tgl =  datenow($this->confirm_at);
         }
 
+        $cond = "";
+
+        $sawmillstock = Sawmillstock::where('series', $this->series)->first();
+        if($sawmillstock === null){
+            $sawmillstock = ['id' => 'null gaes'];
+        } else {
+            $cond = "adaa";
+        }
+
         return [
             'id' => $this->id,
+            'sawmillstock_id' => $sawmillstock,
             'series' => $this->series,
             'tally' => $this->tally,
             'origin' => $this->origin,
