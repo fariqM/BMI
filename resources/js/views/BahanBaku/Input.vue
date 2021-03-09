@@ -56,7 +56,7 @@
 				</div>
 
 				<div class="form-group row">
-					<label for="nop" class="col-sm-3 col-form-label">NOP</label>
+					<label for="nop" class="col-sm-3 col-form-label">ON HAND</label>
 
 					<div class="col-sm-9">
 						<input
@@ -73,47 +73,13 @@
 				</div>
 
 				<div class="form-group row">
-					<label for="name" class="col-sm-3 col-form-label">SUPPLIER </label>
-					<div class="col-sm-9">
-						<v-select
-							@input="setSupplier"
-							:options="supplier_option"
-							label="title"
-							append-to-body
-							:calculate-position="withPopper"
-						>
-							<template #list-footer>
-								<div style="background: grey; height: 1px"></div>
-								<div class="costum-footer-dropdown">
-									<div>
-										<li style="text-align: center; text-justify: center">
-											<b-button
-												@click="$router.push({ name: 'spl.form' })"
-												variant="primary"
-												class="btn btn-xs"
-												v-b-modal.modal-1
-												>Add supplier</b-button
-											>
-										</li>
-									</div>
-								</div>
-							</template>
-						</v-select>
-						<div v-if="theErrors.supplier_id" class="mt-2 text-danger">
-							{{ theErrors.supplier_id[0] }}
-						</div>
-					</div>
-				</div>
-
-				<div class="form-group row">
 					<label for="name" class="col-sm-3 col-form-label">INVOICE </label>
 					<div class="col-sm-9">
 						<v-select
+							class="style-chooser"
 							@input="setInvoice"
 							:options="invoice_option"
 							label="title"
-							append-to-body
-							:calculate-position="withPopper"
 						>
 							<template #list-footer>
 								<div style="background: grey; height: 1px"></div>

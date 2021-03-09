@@ -15,7 +15,7 @@
 									<div>
 										<li style="text-align: center; text-justify: center">
 											<b-button
-												@click="$router.push({ name: 'inv.form' })"
+												@click="$router.push({ name: 'spl.form' })"
 												variant="primary"
 												class="btn btn-xs"
 												v-b-modal.modal-1

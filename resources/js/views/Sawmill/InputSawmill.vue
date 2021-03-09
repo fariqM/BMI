@@ -315,7 +315,7 @@ export default {
 			kolom: [
 				{ key: "series", label: "Series", sortable: true },
 				{ key: "destination_name", label: "Destination", sortable: true },
-				{ key: "nop", label: "NOP", sortable: true },
+				{ key: "nop", label: "On Hand", sortable: true },
 				{ key: "status", label: "Raw status", sortable: true },
 				{ key: "confirm_status", label: "Confirmed status", sortable: true },
 				{ key: "confirm_at", label: "Confirm at", sortable: true },
@@ -357,21 +357,22 @@ export default {
 				this.raws = [];
 				this.kolom = [
 					{ key: "series", label: "Series", sortable: true },
-					{ key: "nop", label: "nop", sortable: true },
+					{ key: "nop", label: "On Hand", sortable: true },
+					{ key: "processed", label: "Processed", sortable: true },
 					{
 						key: "structure_category",
 						label: "Structure Category",
 						sortable: true,
 					},
 					{ key: "periode", label: "Periode", sortable: true },
-					{ key: "stock_action", label: "Action" },
+					// { key: "stock_action", label: "Action" },
 				];
 				this.getSawmillstock();
 			} else {
 				this.kolom = [
 					{ key: "series", label: "Series", sortable: true },
 					{ key: "destination_name", label: "Destination", sortable: true },
-					{ key: "nop", label: "NOP", sortable: true },
+					{ key: "nop", label: "On Hand", sortable: true },
 					{ key: "status", label: "Raw status", sortable: true },
 					{ key: "confirm_status", label: "Confirmed status", sortable: true },
 					{ key: "confirm_at", label: "Confirm at", sortable: true },

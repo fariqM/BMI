@@ -11,9 +11,6 @@ class Supplier extends Model
 
     protected $fillable = ['name', 'shortname', 'address', 'owner', 'email', 'website', 'phone', 'mobile'];
     
-    public function raws(){
-       return $this->hasMany(Raw::class);
-    }
 
     public function invoices(){
         return $this->hasMany(Supplier::class);

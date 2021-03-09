@@ -164,7 +164,8 @@
 
 		<nav class="page-breadcrumb">
 			<ol class="breadcrumb">
-				<li class="breadcrumb-item"><a href="#">Gudang</a></li>
+				<li class="breadcrumb-item"><a href="#">Gudang Bahan Baku</a></li>
+
 				<li class="breadcrumb-item active" aria-current="page">index</li>
 			</ol>
 		</nav>
@@ -173,12 +174,16 @@
 			<div class="col-md-12 grid-margin stretch-card">
 				<div class="card">
 					<div class="card-body">
-						<h6 class="card-title">Index of raws in <b>Gudang Bahan Baku</b> </h6>
+						<h6 class="card-title">Index of Log in <b>Gudang Bahan Baku</b></h6>
 						<p class="card-description">
 							Read the
-							<a href="https://dreamywaze--myukm.000webhostapp.com/" target="_blank">
+							<a
+								href="https://dreamywaze--myukm.000webhostapp.com/"
+								target="_blank"
+							>
 								User Guide</a
-							> for more info
+							>
+							for more info
 						</p>
 						<div class="grid-container">
 							<div class="grid-item-container grid-item-1">
@@ -281,29 +286,26 @@
 								</template>
 								<template #cell(action)="info">
 									<div class="grid-action-column">
-										
-											<router-link
-												:to="{ name: 'home' }"
-												class="badge badge-info"
-												><b-icon icon="search"></b-icon
-											></router-link>
-										
-										
-											<router-link
-												:to="{ name: 'home' }"
-												class="badge badge-primary"
-												>EDIT</router-link
-											>
-										
-										
-											<a
+										<router-link :to="{
+												name: 'bb.show',
+												params: { RawId: info.item.id },
+											}" class="badge badge-info"
+											><b-icon icon="search"></b-icon
+										></router-link>
+
+										<router-link
+											:to="{name:'home'}"
+											class="badge badge-primary"
+											>EDIT</router-link
+										>
+
+										<a
 											@click="setValue(info.item)"
 											data-toggle="modal"
 											data-target="#exampleModalCenter"
 											class="badge badge-danger del-btn"
 											>MOVE
 										</a>
-										
 									</div>
 								</template>
 							</b-table>
@@ -356,16 +358,16 @@ export default {
 			},
 			nop_before: 1,
 			theErrors: [],
-			
+
 			isBusy: false,
-			
+
 			raws: [],
 			kolom: [
 				{ key: "series", label: "Series", sortable: true },
-				"type",
+				{ key: "type", label: "Category", sortable: true },
 				{ key: "size", label: "Size", sortable: true },
 				{ key: "periode", label: "Periode", sortable: true },
-				"nop",
+				{ key: "nop", label: "On Hand", sortable: true },
 				"periode",
 				"supplier",
 				"invoice",
@@ -384,7 +386,7 @@ export default {
 			],
 			totalRows: 1,
 			currentPage: 1,
-			btnLoading:false,
+			btnLoading: false,
 		};
 	},
 
@@ -424,17 +426,16 @@ export default {
 			setTimeout((this.isBusy = !this.isBusy), 6000);
 		},
 		verify() {
-			this.btnLoading = true
+			this.btnLoading = true;
 			if (this.nop_before == 0) {
 				this.$toast.warning("Stock is 0, please check afresh!", "Oops..", {
 					position: "topRight",
 				});
-				this.btnLoading = false
+				this.btnLoading = false;
 			} else {
 				this.form.nop = this.form.nop - this.form.nop_virtual;
 				if (this.form.nop >= 0) {
 					this.store();
-					
 				} else if (this.form.nop < 0) {
 					this.$toast.error(
 						"Out of stock, please check nop stock.",
@@ -443,14 +444,13 @@ export default {
 							position: "topRight",
 						}
 					);
-					this.form.nop = this.nop_before
-					this.btnLoading = false
+					this.form.nop = this.nop_before;
+					this.btnLoading = false;
 				}
 			}
 			// console.log("nop  = "+ this.form.nop);
 			// console.log("nop before = "+ this.nop_before);
 			// console.log("nop virtual = "+ this.form.nop_virtual);
-
 		},
 		async store() {
 			try {
@@ -459,22 +459,23 @@ export default {
 					this.form
 				);
 				if (response.status == 200) {
-					
 					let { data } = await axios.get("/api/gudang-bahanbaku/index");
 					this.raws = [];
 					this.raws = data.data;
 					this.totalRows = this.raws.length;
 					console.log(this.form);
 					$("#exampleModalCenter").modal("hide");
-					this.btnLoading = false
+					this.btnLoading = false;
 					this.$toast.success("Raw has been successfully moved", "Done!", {
 						position: "topRight",
 					});
 				}
 			} catch (e) {
-				this.btnLoading = false
+				this.btnLoading = false;
 				this.theErrors = e.response.data.errors;
-				this.$toast.error("Something wrong when updating data!", "Oops,", { position: "topRight" });
+				this.$toast.error("Something wrong when updating data!", "Oops,", {
+					position: "topRight",
+				});
 			}
 		},
 	},

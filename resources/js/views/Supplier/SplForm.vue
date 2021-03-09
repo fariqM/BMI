@@ -167,7 +167,7 @@ export default {
 					this.form.phone = "";
 					this.form.mobile = "";
 					this.theErrors = [];
-					this.$router.push({ name: "bb.form" });
+					this.$router.push({ name: "inv.form" });
 					this.$toast.success("1 record has been saved!", "Done, ", {
 						position: "topRight",
 					});

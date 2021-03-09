@@ -24,11 +24,17 @@ class RawResource extends JsonResource
             'size' => $this->size." ".$this->uom ,
             'nop' => $this->nop,
             'periode' => $diff->format("%r%a days"),
-            'supplier' => $this->supplier->name,
-            'supplier_id' => $this->supplier->id,
+            'supplier' => $this->invoice->supplier->name,
+            'supplier_id' => $this->invoice->supplier->id,
+            'supplier_address' => $this->invoice->supplier->address,
+            'supplier_alias' => $this->invoice->supplier->shortname,
+            'supplier_email' => $this->invoice->supplier->email,
+            'supplier_website' => $this->invoice->supplier->website,
+            'supplier_phone' => $this->invoice->supplier->phone,
             'invoice' => $this->invoice->reference,
-            'invoice_id' => $this->invoice->id,
+            'invoice_id' => $this->invoice_id,
             'link' =>'link',
+            'invoice_date' => date_format($this->invoice->created_at, 'd-F-Y'),
         ];
     }
 }

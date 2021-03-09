@@ -29,6 +29,7 @@ Route::namespace('App\Http\Controllers')->group(function(){
         Route::get('index', 'RawController@index');
         Route::post('add-raw', 'RawController@addraw');
         Route::get('index/{raw:id}', 'RawController@show');
+        Route::patch('index/{raw:id}', 'RawController@update');
         Route::patch('{raw:id}/move', 'RawController@move');
         Route::get('output-index', 'RecordController@recordBB');
         Route::delete('output-index/rollback/{record:id}', 'RecordController@rollbackBB');

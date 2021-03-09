@@ -30,7 +30,7 @@
 						<router-link
 							class="btn btn-outline-secondary"
 							:to="{ name: 'bb.form' }"
-							>Kembali</router-link
+							>Back</router-link
 						>
 					</div>
 				</div>

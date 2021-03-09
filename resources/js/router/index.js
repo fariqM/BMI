@@ -6,6 +6,7 @@ import UpdateFruit from '../views/UpdateFruit'
 import Tabel from '../views/Tabel'
 import Dashboard from '../views/Dashboard'
 import BahanBaku from '../views/BahanBaku/Index'
+import ShowLog from '../views/BahanBaku/ShowRaw'
 import OutputBB from '../views/BahanBaku/Output'
 import FormBB from '../views/BahanBaku/Input'
 import FormInvoice from '../views/Invoice/FormInv'
@@ -68,6 +69,12 @@ export default{
             path: '/bahan-baku/index',
             name: 'bb.index',
             component: BahanBaku
+        },
+
+        {
+            path: '/bahan-baku/index/:RawId',
+            name: 'bb.show',
+            component: ShowLog
         },
 
         {

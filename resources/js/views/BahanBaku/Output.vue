@@ -278,7 +278,7 @@ export default {
 			kolom: [
 				{ key: "series", label: "Series", sortable: true },
 				{ key: "destination_name", label: "Destination", sortable: true },
-				{ key: "nop", label: "NOP", sortable: true },
+				{ key: "nop", label: "On Hand", sortable: true },
 				{ key: "status", label: "Raw status", sortable: true },
 				{ key: "confirm_status", label: "Confirmed status", sortable: true },
 				{ key: "confirm_at", label: "Confirm at", sortable: true },

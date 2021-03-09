@@ -19,6 +19,7 @@ class SawmillResource extends JsonResource
             'series' => $this->series,
             'nop' => $this->nop,
             'nop_virtual' => $this->nop_virtual,
+            'processed' => $this->processed,
             'structure_category' => $this->raw->structure_category->name,
             'periode' => datenow($this->raw->created_at),
         ];
