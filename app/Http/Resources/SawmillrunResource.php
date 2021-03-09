@@ -20,6 +20,8 @@ class SawmillrunResource extends JsonResource
             'sawmillstock_id' => $this->sawmillstock_id,
             'series' => $this->sawmillstock->series,
             'structure_category' => $this->sawmillstock->raw->structure_category->name,
+            'supplier' => $this->sawmillstock->raw->supplier,
+            '_showDetails' => false,
             'status' => $this->status,
         ];
     }

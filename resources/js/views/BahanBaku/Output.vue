@@ -227,7 +227,7 @@
 												@click="rollback(data.item)"
 												class="badge badge-warning del-btn"
 											>
-												rollback
+												ROLLBACK
 											</a>
 										</template>
 									</div>

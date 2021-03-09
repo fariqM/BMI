@@ -45,6 +45,7 @@ Route::namespace('App\Http\Controllers')->group(function(){
         Route::post('add-bb-stock', 'SawmillstockController@add_bb_stock');
         Route::patch('process/{record:id}', 'SawmillstockController@addprocess');
         Route::get('process-index', 'SawmillstockController@processindex');
+        Route::patch('rollback-process/{sawmillrun:id}', 'SawmillstockController@rollbackprocess');
     });
 
 

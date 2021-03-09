@@ -292,7 +292,7 @@
 											<router-link
 												:to="{ name: 'home' }"
 												class="badge badge-primary"
-												>Edit</router-link
+												>EDIT</router-link
 											>
 										
 										
@@ -301,7 +301,7 @@
 											data-toggle="modal"
 											data-target="#exampleModalCenter"
 											class="badge badge-danger del-btn"
-											>Move
+											>MOVE
 										</a>
 										
 									</div>

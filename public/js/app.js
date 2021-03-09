@@ -9459,31 +9459,54 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
-      form: {
-        id: 0,
-        uom: "m3",
-        nop: 0,
-        nop_virtual: 0
-      },
+      form: {},
       theErrors: [],
       isBusy: false,
-      raws: [],
+      process: [],
+      extendable: [],
       kolom: [{
         key: "series",
         label: "Series",
         sortable: true
-      }, "type", {
-        key: "size",
-        label: "Size",
+      }, {
+        key: "nop",
+        label: "Amount",
         sortable: true
       }, {
-        key: "periode",
-        label: "Periode",
+        key: "structure_category",
+        label: "Category",
         sortable: true
-      }, "nop", "periode", "warehouse", "supplier", "invoice", "action"],
+      }, {
+        key: "status",
+        label: "Status",
+        sortable: true
+      }, "action"],
+      ExtenColumn: ["name", "shortname", "address", "owner", "email", "action"],
       sortBy: "",
       sortDesc: false,
       filter: null,
@@ -9523,64 +9546,170 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     this.toggleBusy();
   },
   methods: {
+    push: function push(value) {
+      return [].push(value.supplier);
+    },
+    cek: function cek(value) {
+      console.log(value);
+      value._showDetails = !value._showDetails; // this.extendable.push(value.supplier);
+    },
+    rollback: function rollback(value) {
+      var _this = this;
+
+      this.form = value; // console.log(this.form);
+
+      Vue.swal({
+        title: "Rollback Confirm",
+        html: "are you sure want cancel this process on <b>".concat(value.series, "</b>"),
+        icon: "warning",
+        confirmButtonText: "Yes",
+        cancelButtonText: "No",
+        showCancelButton: true,
+        timerProgressBar: true,
+        showCloseButton: true
+      }).then(function (result) {
+        if (result.isConfirmed) {
+          // console.log(value.sawmillstock_id.id);
+          // console.log(this.form);
+          _this.rollbackAction();
+        }
+      });
+    },
+    rollbackAction: function rollbackAction() {
+      var _this2 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee() {
+        var response;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                _context.prev = 0;
+                _context.next = 3;
+                return axios.patch("/api/gudang-sawmill/rollback-process/".concat(_this2.form.id), _this2.form);
+
+              case 3:
+                response = _context.sent;
+
+                if (response.status == 200) {
+                  _this2.refreshTable();
+
+                  _this2.$toast.success("Successfully processing", "Done!", {
+                    position: "topRight"
+                  });
+
+                  _this2.form = {};
+                }
+
+                _context.next = 11;
+                break;
+
+              case 7:
+                _context.prev = 7;
+                _context.t0 = _context["catch"](0);
+                console.log(_context.t0.response);
+
+                _this2.$toast.error("Something wrong", "Oops", {
+                  position: "topRight"
+                });
+
+              case 11:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee, null, [[0, 7]]);
+      }))();
+    },
     onFiltered: function onFiltered(filteredItems) {
       // Trigger pagination to update the number of buttons/pages due to filtering
       this.totalRows = filteredItems.length;
       this.currentPage = 1;
     },
     toggleBusy: function toggleBusy() {
-      var _this = this;
-
-      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee() {
-        var _yield$axios$get, data;
-
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
-          while (1) {
-            switch (_context.prev = _context.next) {
-              case 0:
-                _this.isBusy = !_this.isBusy;
-                _context.next = 3;
-                return axios.get("/api/gudang-bahanbaku/index");
-
-              case 3:
-                _yield$axios$get = _context.sent;
-                data = _yield$axios$get.data;
-                _this.raws = [];
-                _this.raws = data.data;
-                _this.totalRows = _this.raws.length;
-                setTimeout(_this.isBusy = !_this.isBusy, 6000);
-
-              case 9:
-              case "end":
-                return _context.stop();
-            }
-          }
-        }, _callee);
-      }))();
-    },
-    store: function store() {
-      var _this2 = this;
+      var _this3 = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee2() {
+        var _yield$axios$get, data;
+
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee2$(_context2) {
           while (1) {
             switch (_context2.prev = _context2.next) {
               case 0:
-                try {} catch (e) {
-                  _this2.btnLoading = false;
-                  _this2.theErrors = e.response.data.errors;
+                _this3.isBusy = !_this3.isBusy;
+                _context2.next = 3;
+                return axios.get("/api/gudang-sawmill/process-index");
 
-                  _this2.$toast.error("Something wrong when updating data!", "Oops,", {
+              case 3:
+                _yield$axios$get = _context2.sent;
+                data = _yield$axios$get.data;
+                _this3.process = [];
+                _this3.process = data.data; // this.process.forEach((element) => {
+                // 	this.extendable.push(element.supplier);
+                // });
+
+                _this3.totalRows = _this3.process.length;
+                setTimeout(_this3.isBusy = !_this3.isBusy, 6000);
+
+              case 9:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2);
+      }))();
+    },
+    store: function store() {
+      var _this4 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee3() {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee3$(_context3) {
+          while (1) {
+            switch (_context3.prev = _context3.next) {
+              case 0:
+                try {} catch (e) {
+                  _this4.btnLoading = false;
+                  _this4.theErrors = e.response.data.errors;
+
+                  _this4.$toast.error("Something wrong when updating data!", "Oops,", {
                     position: "topRight"
                   });
                 }
 
               case 1:
               case "end":
-                return _context2.stop();
+                return _context3.stop();
             }
           }
-        }, _callee2);
+        }, _callee3);
+      }))();
+    },
+    refreshTable: function refreshTable() {
+      var _this5 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee4() {
+        var _yield$axios$get2, data;
+
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee4$(_context4) {
+          while (1) {
+            switch (_context4.prev = _context4.next) {
+              case 0:
+                _context4.next = 2;
+                return axios.get("/api/gudang-sawmill/process-index");
+
+              case 2:
+                _yield$axios$get2 = _context4.sent;
+                data = _yield$axios$get2.data;
+                _this5.process = [];
+                _this5.process = data.data;
+                _this5.totalRows = _this5.process.length;
+
+              case 7:
+              case "end":
+                return _context4.stop();
+            }
+          }
+        }, _callee4);
       }))();
     }
   }
@@ -39503,7 +39632,7 @@ var render = function() {
                                   staticClass: "badge badge-primary",
                                   attrs: { to: { name: "home" } }
                                 },
-                                [_vm._v("Edit")]
+                                [_vm._v("EDIT")]
                               ),
                               _vm._v(" "),
                               _c(
@@ -39520,7 +39649,7 @@ var render = function() {
                                     }
                                   }
                                 },
-                                [_vm._v("Move\n\t\t\t\t\t\t\t\t\t")]
+                                [_vm._v("MOVE\n\t\t\t\t\t\t\t\t\t")]
                               )
                             ],
                             1
@@ -40703,7 +40832,7 @@ var render = function() {
                                       },
                                       [
                                         _vm._v(
-                                          "\n\t\t\t\t\t\t\t\t\t\t\trollback\n\t\t\t\t\t\t\t\t\t\t"
+                                          "\n\t\t\t\t\t\t\t\t\t\t\tROLLBACK\n\t\t\t\t\t\t\t\t\t\t"
                                         )
                                       ]
                                     )
@@ -42287,7 +42416,10 @@ var render = function() {
                             ? [
                                 _c(
                                   "span",
-                                  { staticClass: "badge badge-success" },
+                                  {
+                                    staticClass:
+                                      "badge badge-pill badge-success"
+                                  },
                                   [
                                     _c("b-icon", {
                                       staticClass: "costum-badge",
@@ -42308,7 +42440,9 @@ var render = function() {
                             ? [
                                 _c(
                                   "span",
-                                  { staticClass: "badge badge-dark" },
+                                  {
+                                    staticClass: "badge badge-pill badge-dark"
+                                  },
                                   [
                                     _c("b-icon", {
                                       staticClass: "costum-badge",
@@ -42329,7 +42463,9 @@ var render = function() {
                             ? [
                                 _c(
                                   "span",
-                                  { staticClass: "badge badge-info" },
+                                  {
+                                    staticClass: "badge badge-pill badge-info"
+                                  },
                                   [
                                     _c("b-icon", {
                                       staticClass: "costum-badge",
@@ -42350,7 +42486,9 @@ var render = function() {
                             ? [
                                 _c(
                                   "span",
-                                  { staticClass: "badge badge-info" },
+                                  {
+                                    staticClass: "badge badge-pill badge-info"
+                                  },
                                   [
                                     _c("b-icon", {
                                       staticClass: "costum-badge",
@@ -42374,7 +42512,9 @@ var render = function() {
                             ? [
                                 _c(
                                   "span",
-                                  { staticClass: "badge badge-info" },
+                                  {
+                                    staticClass: "badge badge-pill badge-info"
+                                  },
                                   [
                                     _c("b-icon", {
                                       staticClass: "costum-badge",
@@ -42404,7 +42544,10 @@ var render = function() {
                             ? [
                                 _c(
                                   "span",
-                                  { staticClass: "badge badge-warning" },
+                                  {
+                                    staticClass:
+                                      "badge badge-pill badge-warning"
+                                  },
                                   [
                                     _c("b-icon", {
                                       staticClass: "costum-badge",
@@ -42430,7 +42573,10 @@ var render = function() {
                             ? [
                                 _c(
                                   "span",
-                                  { staticClass: "badge badge-success" },
+                                  {
+                                    staticClass:
+                                      "badge badge-pill badge-success"
+                                  },
                                   [
                                     _c("b-icon", {
                                       staticClass: "costum-badge",
@@ -42453,7 +42599,9 @@ var render = function() {
                             ? [
                                 _c(
                                   "span",
-                                  { staticClass: "badge badge-danger" },
+                                  {
+                                    staticClass: "badge badge-pill badge-danger"
+                                  },
                                   [
                                     _c("b-icon", {
                                       staticClass: "costum-badge",
@@ -42503,7 +42651,7 @@ var render = function() {
                                       }
                                     }
                                   },
-                                  [_vm._v("confirm")]
+                                  [_vm._v("CONFIRM")]
                                 ),
                                 _vm._v(" "),
                                 _c(
@@ -42516,7 +42664,7 @@ var render = function() {
                                       }
                                     }
                                   },
-                                  [_vm._v("mismatch")]
+                                  [_vm._v("MISMATCH")]
                                 )
                               ]
                             : _vm._e(),
@@ -42534,7 +42682,7 @@ var render = function() {
                                       }
                                     }
                                   },
-                                  [_vm._v("proceed")]
+                                  [_vm._v("PROCEED")]
                                 )
                               ]
                             : _vm._e()
@@ -42555,7 +42703,7 @@ var render = function() {
                                 }
                               }
                             },
-                            [_vm._v("proceed")]
+                            [_vm._v("PROCEED")]
                           )
                         ]
                       }
@@ -42765,10 +42913,10 @@ var render = function() {
                       }
                     ],
                     staticClass: "costum-checkbox",
-                    attrs: { value: "size", id: "kolomID", type: "checkbox" },
+                    attrs: { value: "series", id: "kolomID", type: "checkbox" },
                     domProps: {
                       checked: Array.isArray(_vm.filterOn)
-                        ? _vm._i(_vm.filterOn, "size") > -1
+                        ? _vm._i(_vm.filterOn, "series") > -1
                         : _vm.filterOn
                     },
                     on: {
@@ -42777,7 +42925,7 @@ var render = function() {
                           $$el = $event.target,
                           $$c = $$el.checked ? true : false
                         if (Array.isArray($$a)) {
-                          var $$v = "size",
+                          var $$v = "series",
                             $$i = _vm._i($$a, $$v)
                           if ($$el.checked) {
                             $$i < 0 && (_vm.filterOn = $$a.concat([$$v]))
@@ -42800,7 +42948,7 @@ var render = function() {
                       staticClass: "costum-checkbox",
                       attrs: { for: "kolomID" }
                     },
-                    [_vm._v("Size")]
+                    [_vm._v("Series")]
                   ),
                   _vm._v(" "),
                   _c("input", {
@@ -42813,14 +42961,10 @@ var render = function() {
                       }
                     ],
                     staticClass: "costum-checkbox",
-                    attrs: {
-                      value: "reference",
-                      id: "kolomRef",
-                      type: "checkbox"
-                    },
+                    attrs: { value: "nop", id: "kolomRef", type: "checkbox" },
                     domProps: {
                       checked: Array.isArray(_vm.filterOn)
-                        ? _vm._i(_vm.filterOn, "reference") > -1
+                        ? _vm._i(_vm.filterOn, "nop") > -1
                         : _vm.filterOn
                     },
                     on: {
@@ -42829,7 +42973,7 @@ var render = function() {
                           $$el = $event.target,
                           $$c = $$el.checked ? true : false
                         if (Array.isArray($$a)) {
-                          var $$v = "reference",
+                          var $$v = "nop",
                             $$i = _vm._i($$a, $$v)
                           if ($$el.checked) {
                             $$i < 0 && (_vm.filterOn = $$a.concat([$$v]))
@@ -42852,7 +42996,7 @@ var render = function() {
                       staticClass: "costum-checkbox",
                       attrs: { for: "kolomRef" }
                     },
-                    [_vm._v("Series")]
+                    [_vm._v("Amount")]
                   )
                 ])
               ]),
@@ -42881,32 +43025,6 @@ var render = function() {
                     )
                   ],
                   1
-                ),
-                _vm._v(" "),
-                _c(
-                  "div",
-                  [
-                    _c(
-                      "b-button",
-                      {
-                        staticStyle: { "justify-content": "end" },
-                        attrs: { variant: "primary" },
-                        on: {
-                          click: function($event) {
-                            return _vm.$router.push({ name: "bb.form" })
-                          }
-                        }
-                      },
-                      [
-                        _c("b-icon", {
-                          attrs: { icon: "plus-square", "aria-hidden": "true" }
-                        }),
-                        _vm._v("\n\t\t\t\t\t\t\t\t\tAdd\n\t\t\t\t\t\t\t\t")
-                      ],
-                      1
-                    )
-                  ],
-                  1
                 )
               ])
             ]),
@@ -42918,15 +43036,15 @@ var render = function() {
                 _c("b-table", {
                   attrs: {
                     "head-variant": "light",
-                    hover: "",
                     "show-empty": "",
-                    responsive: "sm",
+                    fixed: "",
+                    bordered: "",
                     "per-page": _vm.perPage,
                     "current-page": _vm.currentPage,
                     busy: _vm.isBusy,
                     filter: _vm.filter,
                     "filter-included-fields": _vm.filterOn,
-                    items: _vm.raws,
+                    items: _vm.process,
                     fields: _vm.kolom,
                     "sort-by": _vm.sortBy,
                     "sort-desc": _vm.sortDesc
@@ -43008,6 +43126,36 @@ var render = function() {
                       proxy: true
                     },
                     {
+                      key: "cell(status)",
+                      fn: function(data) {
+                        return [
+                          data.item.status == "processed"
+                            ? [
+                                _c(
+                                  "span",
+                                  {
+                                    staticClass:
+                                      "badge badge-pill badge-success"
+                                  },
+                                  [
+                                    _c("b-icon", {
+                                      staticClass: "costum-badge",
+                                      attrs: { icon: "clock" }
+                                    }),
+                                    _vm._v(
+                                      "\n\t\t\t\t\t\t\t\t\t\t" +
+                                        _vm._s(data.item.status.toUpperCase()) +
+                                        "\n\t\t\t\t\t\t\t\t\t"
+                                    )
+                                  ],
+                                  1
+                                )
+                              ]
+                            : _vm._e()
+                        ]
+                      }
+                    },
+                    {
                       key: "cell(action)",
                       fn: function(info) {
                         return [
@@ -43016,43 +43164,78 @@ var render = function() {
                             { staticClass: "grid-action-column" },
                             [
                               _c(
-                                "router-link",
+                                "a",
                                 {
-                                  staticClass: "badge badge-info",
-                                  attrs: { to: { name: "home" } }
+                                  staticClass: "badge badge-info del-btn",
+                                  on: {
+                                    click: function($event) {
+                                      return _vm.cek(info.item)
+                                    }
+                                  }
                                 },
                                 [_c("b-icon", { attrs: { icon: "search" } })],
                                 1
                               ),
                               _vm._v(" "),
-                              _c(
-                                "router-link",
-                                {
-                                  staticClass: "badge badge-primary",
-                                  attrs: { to: { name: "home" } }
-                                },
-                                [_vm._v("Edit")]
-                              ),
+                              info.item.status == "processed"
+                                ? [
+                                    _c(
+                                      "a",
+                                      {
+                                        staticClass:
+                                          "badge badge-success del-btn"
+                                      },
+                                      [_vm._v("FINISH")]
+                                    )
+                                  ]
+                                : _vm._e(),
                               _vm._v(" "),
-                              _c(
-                                "a",
-                                {
-                                  staticClass: "badge badge-danger del-btn",
-                                  attrs: {
-                                    "data-toggle": "modal",
-                                    "data-target": "#exampleModalCenter"
-                                  },
-                                  on: {
-                                    click: function($event) {
-                                      return _vm.setValue(info.item)
-                                    }
-                                  }
-                                },
-                                [_vm._v("Move\n\t\t\t\t\t\t\t\t\t")]
-                              )
+                              info.item.status == "processed"
+                                ? [
+                                    _c(
+                                      "a",
+                                      {
+                                        staticClass:
+                                          "badge badge-warning del-btn",
+                                        on: {
+                                          click: function($event) {
+                                            return _vm.rollback(info.item)
+                                          }
+                                        }
+                                      },
+                                      [_vm._v("ROLLBACK")]
+                                    )
+                                  ]
+                                : _vm._e()
                             ],
-                            1
+                            2
                           )
+                        ]
+                      }
+                    },
+                    {
+                      key: "row-details",
+                      fn: function(data) {
+                        return [
+                          _c("div", [
+                            _c(
+                              "div",
+                              { staticClass: "table-responsive" },
+                              [
+                                _c("b-table", {
+                                  attrs: {
+                                    fixed: "",
+                                    small: "",
+                                    "table-variant": "info",
+                                    "head-variant": "dark",
+                                    fields: _vm.ExtenColumn,
+                                    items: [data.item.supplier]
+                                  }
+                                })
+                              ],
+                              1
+                            )
+                          ])
                         ]
                       }
                     }
@@ -43166,7 +43349,7 @@ var staticRenderFns = [
             staticClass: "breadcrumb-item active",
             attrs: { "aria-current": "page" }
           },
-          [_vm._v("Raw Manufacturing")]
+          [_vm._v("\n\t\t\t\tRaw Manufacturing\n\t\t\t")]
         )
       ])
     ])
@@ -43176,7 +43359,7 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("h6", { staticClass: "card-title" }, [
-      _vm._v("Manufacturing Control In "),
+      _vm._v("\n\t\t\t\t\t\tManufacturing Control In "),
       _c("b", [_vm._v("Gudang Bahan Baku")])
     ])
   },
@@ -43196,7 +43379,7 @@ var staticRenderFns = [
         },
         [_vm._v("\n\t\t\t\t\t\t\tUser Guide")]
       ),
-      _vm._v(" for more info\n\t\t\t\t\t")
+      _vm._v("\n\t\t\t\t\t\tfor more info\n\t\t\t\t\t")
     ])
   }
 ]

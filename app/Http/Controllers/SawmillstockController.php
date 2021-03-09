@@ -10,6 +10,7 @@ use App\Models\Sawmillrun;
 use App\Models\Sawmillstock;
 use App\Models\Stock;
 use Illuminate\Http\Request;
+use Illuminate\Support\Optional;
 
 class SawmillstockController extends Controller
 {
@@ -26,6 +27,31 @@ class SawmillstockController extends Controller
     public function bbindex(){
         $stocks = Stock::where('origin', '1')->with('sawmillrun', 'type', 'warehouse', 'unit_measure')->get();
         return  StockResource::collection($stocks);
+    }
+
+    public function rollbackprocess(Sawmillrun $sawmillrun){
+        $nop = request('nop');
+        $series = request('series');
+        $sawmillstock_id = request('sawmillstock_id');
+        $message = "";
+
+        $sawmillstock = Sawmillstock::find($sawmillstock_id);
+        if($sawmillstock_id){
+            $sawmillrun->delete();
+            $sawmillstock->decrement('processed', $nop);
+            $sawmillstock->increment('nop', $nop);
+            optional(Record::where('series', $series)->where('nop', $nop))->update([
+                'status' => 'on queue'
+            ]);
+            $message = "Success";
+        } else {
+            $message = "Sawmillstock not found";
+        }
+        
+        return response()->json([
+            'message' => $message
+        ]);
+
     }
 
     public function addprocess(Record $record){

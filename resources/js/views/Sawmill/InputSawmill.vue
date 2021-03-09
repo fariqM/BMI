@@ -150,14 +150,14 @@
 
 								<template #cell(status)="data">
 									<template v-if="data.item.status == 'processing all'">
-										<span class="badge badge-success">
+										<span class="badge badge-pill badge-success">
 											<b-icon class="costum-badge" icon="clock"></b-icon>
 											{{ data.item.status.toUpperCase() }}
 										</span>
 									</template>
 
 									<template v-if="data.item.status == 'moving'">
-										<span class="badge badge-dark">
+										<span class="badge badge-pill badge-dark">
 											<b-icon
 												class="costum-badge"
 												icon="box-arrow-up-right"
@@ -167,21 +167,21 @@
 									</template>
 
 									<template v-if="data.item.status == 'on queue'">
-										<span class="badge badge-info">
+										<span class="badge badge-pill badge-info">
 											<b-icon class="costum-badge" icon="clock"></b-icon>
 											{{ data.item.status.toUpperCase() }}
 										</span>
 									</template>
 
 									<template v-if="data.item.status == 'stored'">
-										<span class="badge badge-info">
+										<span class="badge badge-pill badge-info">
 											<b-icon class="costum-badge" icon="clock"></b-icon>
 											{{ data.item.status.toUpperCase() + " AT BMI-B" }}
 										</span>
 									</template>
 
 									<template v-if="data.item.status == 'returned'">
-										<span class="badge badge-info">
+										<span class="badge badge-pill badge-info">
 											<b-icon class="costum-badge" icon="clock"></b-icon>
 											{{ data.item.status.toUpperCase() + " AT BMI-A" }}
 										</span>
@@ -190,7 +190,7 @@
 
 								<template #cell(confirm_status)="data">
 									<template v-if="data.item.confirm_status == 'unconfirmed'">
-										<span class="badge badge-warning">
+										<span class="badge badge-pill badge-warning">
 											<b-icon
 												class="costum-badge"
 												icon="exclamation-triangle-fill"
@@ -200,7 +200,7 @@
 										</span>
 									</template>
 									<template v-if="data.item.confirm_status == 'confirmed'">
-										<span class="badge badge-success">
+										<span class="badge badge-pill badge-success">
 											<b-icon
 												class="costum-badge"
 												icon="check2-square"
@@ -209,7 +209,7 @@
 										</span>
 									</template>
 									<template v-if="data.item.confirm_status == 'mismatch'">
-										<span class="badge badge-danger">
+										<span class="badge badge-pill badge-danger">
 											<b-icon
 												class="costum-badge"
 												icon="exclamation-triangle-fill"
@@ -231,12 +231,12 @@
 										<a
 											@click="confirm(data.item)"
 											class="badge badge-success del-btn"
-											>confirm</a
+											>CONFIRM</a
 										>
 										<a
 											@click="mismatch(data.item)"
 											class="badge badge-danger del-btn"
-											>mismatch</a
+											>MISMATCH</a
 										>
 									</template>
 
@@ -249,7 +249,7 @@
 										<a
 											@click="directProceed(data.item)"
 											class="badge badge-primary del-btn"
-											>proceed</a
+											>PROCEED</a
 										>
 									</template>
 
@@ -258,7 +258,7 @@
 									<a
 										@click="proceed(data.item)"
 										class="badge badge-primary del-btn"
-										>proceed</a
+										>PROCEED</a
 									>
 								</template>
 							</b-table>

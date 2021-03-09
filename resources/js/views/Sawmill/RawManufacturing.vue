@@ -136,7 +136,9 @@
 		<nav class="page-breadcrumb">
 			<ol class="breadcrumb">
 				<li class="breadcrumb-item"><a href="#">Gudang sawmill</a></li>
-				<li class="breadcrumb-item active" aria-current="page">Raw Manufacturing</li>
+				<li class="breadcrumb-item active" aria-current="page">
+					Raw Manufacturing
+				</li>
 			</ol>
 		</nav>
 
@@ -144,12 +146,18 @@
 			<div class="col-md-12 grid-margin stretch-card">
 				<div class="card">
 					<div class="card-body">
-						<h6 class="card-title">Manufacturing Control In <b>Gudang Bahan Baku</b> </h6>
+						<h6 class="card-title">
+							Manufacturing Control In <b>Gudang Bahan Baku</b>
+						</h6>
 						<p class="card-description">
 							Read the
-							<a href="https://dreamywaze--myukm.000webhostapp.com/" target="_blank">
+							<a
+								href="https://dreamywaze--myukm.000webhostapp.com/"
+								target="_blank"
+							>
 								User Guide</a
-							> for more info
+							>
+							for more info
 						</p>
 						<div class="grid-container">
 							<div class="grid-item-container grid-item-1">
@@ -166,20 +174,20 @@
 									<input
 										class="costum-checkbox"
 										v-model="filterOn"
-										value="size"
+										value="series"
 										id="kolomID"
 										type="checkbox"
 									/>
-									<label class="costum-checkbox" for="kolomID">Size</label>
+									<label class="costum-checkbox" for="kolomID">Series</label>
 
 									<input
 										class="costum-checkbox"
 										v-model="filterOn"
-										value="reference"
+										value="nop"
 										id="kolomRef"
 										type="checkbox"
 									/>
-									<label class="costum-checkbox" for="kolomRef">Series</label>
+									<label class="costum-checkbox" for="kolomRef">Amount</label>
 								</div>
 							</div>
 							<div class="grid-item-container-2 grid-item-2">
@@ -189,31 +197,21 @@
 										Refresh
 									</b-button>
 								</div>
-								<div>
-									<b-button
-										style="justify-content: end; justify-content: end"
-										@click="$router.push({ name: 'bb.form' })"
-										variant="primary"
-									>
-										<b-icon icon="plus-square" aria-hidden="true"></b-icon>
-										Add
-									</b-button>
-								</div>
 							</div>
 						</div>
 						<div class="table-responsive">
 							<b-table
 								head-variant="light"
-								hover
 								show-empty
-								responsive="sm"
+								fixed
+								bordered
 								:per-page="perPage"
 								:current-page="currentPage"
 								:busy="isBusy"
 								:filter="filter"
 								@filtered="onFiltered"
 								:filter-included-fields="filterOn"
-								:items="raws"
+								:items="process"
 								:fields="kolom"
 								:sort-by.sync="sortBy"
 								:sort-desc.sync="sortDesc"
@@ -250,31 +248,55 @@
 										</svg>
 									</div>
 								</template>
+
+								<template #cell(status)="data">
+									<template v-if="data.item.status == 'processed'">
+										<span class="badge badge-pill badge-success">
+											<b-icon class="costum-badge" icon="clock"></b-icon>
+											{{ data.item.status.toUpperCase() }}
+										</span>
+									</template>
+								</template>
+
 								<template #cell(action)="info">
 									<div class="grid-action-column">
-										
-											<router-link
-												:to="{ name: 'home' }"
-												class="badge badge-info"
-												><b-icon icon="search"></b-icon
-											></router-link>
-										
-										
-											<router-link
-												:to="{ name: 'home' }"
-												class="badge badge-primary"
-												>Edit</router-link
-											>
-										
-										
+										<a @click="cek(info.item)" class="badge badge-info del-btn"
+											><b-icon icon="search"></b-icon
+										></a>
+
+										<template @click="finish(info.item)" v-if="info.item.status == 'processed'">
+											<a class="badge badge-success del-btn">FINISH</a>
+										</template>
+
+										<template v-if="info.item.status == 'processed'">
 											<a
-											@click="setValue(info.item)"
-											data-toggle="modal"
-											data-target="#exampleModalCenter"
-											class="badge badge-danger del-btn"
-											>Move
-										</a>
-										
+												@click="rollback(info.item)"
+												class="badge badge-warning del-btn"
+												>ROLLBACK</a
+											>
+										</template>
+									</div>
+								</template>
+
+								<template #row-details="data">
+									<div>
+										<div class="table-responsive">
+											<b-table
+												fixed
+												small
+												table-variant="info"
+												head-variant="dark"
+												:fields="ExtenColumn"
+												:items="[data.item.supplier]"
+											></b-table>
+										</div>
+										<!-- <div class="col-md-12 grid-margin stretch-card">
+											<div class="card">
+												<div class="card-body">
+													
+												</div>
+											</div>
+										</div> -->
 									</div>
 								</template>
 							</b-table>
@@ -319,29 +341,19 @@
 export default {
 	data() {
 		return {
-			form: {
-				id: 0,
-				uom: "m3",
-				nop: 0,
-				nop_virtual: 0,
-			},
+			form: {},
 			theErrors: [],
-			
 			isBusy: false,
-			
-			raws: [],
+			process: [],
+			extendable: [],
 			kolom: [
 				{ key: "series", label: "Series", sortable: true },
-				"type",
-				{ key: "size", label: "Size", sortable: true },
-				{ key: "periode", label: "Periode", sortable: true },
-				"nop",
-				"periode",
-				"warehouse",
-				"supplier",
-				"invoice",
+				{ key: "nop", label: "Amount", sortable: true },
+				{ key: "structure_category", label: "Category", sortable: true },
+				{ key: "status", label: "Status", sortable: true },
 				"action",
 			],
+			ExtenColumn: ["name", "shortname", "address", "owner", "email", "action"],
 			sortBy: "",
 			sortDesc: false,
 			filter: null,
@@ -355,7 +367,7 @@ export default {
 			],
 			totalRows: 1,
 			currentPage: 1,
-			btnLoading:false,
+			btnLoading: false,
 		};
 	},
 
@@ -374,6 +386,57 @@ export default {
 	},
 
 	methods: {
+		finish(value){
+			console.log(value);
+		},
+		push(value) {
+			return [].push(value.supplier);
+		},
+		cek(value) {
+			console.log(value);
+			value._showDetails = !value._showDetails;
+			// this.extendable.push(value.supplier);
+		},
+		rollback(value) {
+			this.form = value;
+			// console.log(this.form);
+			Vue.swal({
+				title: "Rollback Confirm",
+				html: `are you sure want cancel this process on <b>${value.series}</b>`,
+				icon: "warning",
+				confirmButtonText: `Yes`,
+				cancelButtonText: "No",
+				showCancelButton: true,
+				timerProgressBar: true,
+				showCloseButton: true,
+			}).then((result) => {
+				if (result.isConfirmed) {
+					// console.log(value.sawmillstock_id.id);
+					// console.log(this.form);
+					this.rollbackAction();
+				}
+			});
+		},
+		async rollbackAction() {
+			try {
+				let response = await axios.patch(
+					`/api/gudang-sawmill/rollback-process/${this.form.id}`,
+					this.form
+				);
+				if (response.status == 200) {
+					this.refreshTable();
+					this.$toast.success("Successfully processing", "Done!", {
+						position: "topRight",
+					});
+					this.form = {};
+				}
+			} catch (e) {
+				console.log(e.response);
+				this.$toast.error("Something wrong", "Oops", {
+					position: "topRight",
+				});
+			}
+		},
 		onFiltered(filteredItems) {
 			// Trigger pagination to update the number of buttons/pages due to filtering
 			this.totalRows = filteredItems.length;
@@ -381,20 +444,30 @@ export default {
 		},
 		async toggleBusy() {
 			this.isBusy = !this.isBusy;
-			let { data } = await axios.get("/api/gudang-bahanbaku/index");
-			this.raws = [];
-			this.raws = data.data;
-			this.totalRows = this.raws.length;
+			let { data } = await axios.get("/api/gudang-sawmill/process-index");
+			this.process = [];
+			this.process = data.data;
+			// this.process.forEach((element) => {
+			// 	this.extendable.push(element.supplier);
+			// });
+			this.totalRows = this.process.length;
 			setTimeout((this.isBusy = !this.isBusy), 6000);
 		},
 		async store() {
 			try {
-				
 			} catch (e) {
-				this.btnLoading = false
+				this.btnLoading = false;
 				this.theErrors = e.response.data.errors;
-				this.$toast.error("Something wrong when updating data!", "Oops,", { position: "topRight" });
+				this.$toast.error("Something wrong when updating data!", "Oops,", {
+					position: "topRight",
+				});
 			}
+		},
+		async refreshTable() {
+			let { data } = await axios.get("/api/gudang-sawmill/process-index");
+			this.process = [];
+			this.process = data.data;
+			this.totalRows = this.process.length;
 		},
 	},
 };
