@@ -24,7 +24,7 @@
 								<p class="mt-1 mb-1"><b>PT. Bina Megah Indowood</b></p>
 								<p>
 									Jl. Raya Putat Lor No.16, Gantang,<br />
-									Boboh, Kec. Menganti,<br />Kabupaten Gresik, Jawa Timur 61174
+									Boboh, Kec. Menganti,<br />Kabupaten Gresik, Jawa Timur 61174.
 								</p>
 								<h5 class="mt-5 mb-2 text-muted">Invoice to :</h5>
 								<p>
@@ -71,7 +71,7 @@
 											<td class="text-left">{{ raws.series }}</td>
 											<td class="text-left">Log Wood</td>
 											<td>{{ raws.type }}</td>
-											<td>{{ raws.nop }}</td>
+											<td>{{ raws.amount }}</td>
 											<td>{{ raws.size }}</td>
 										</tr>
 									</tbody>

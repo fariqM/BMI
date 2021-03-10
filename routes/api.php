@@ -32,11 +32,13 @@ Route::namespace('App\Http\Controllers')->group(function(){
         Route::patch('index/{raw:id}', 'RawController@update');
         Route::patch('{raw:id}/move', 'RawController@move');
         Route::get('output-index', 'RecordController@recordBB');
+        Route::patch('confirm-mismatch', 'RecordController@confirmMismatch');
         Route::delete('output-index/rollback/{record:id}', 'RecordController@rollbackBB');
     });
 
     Route::prefix('gudang-sawmill')->group(function(){
         Route::get('input-index', 'RecordController@inputrecordsawmill');
+        Route::patch('edit-on-hand/{record:id}', 'RecordController@editOnHand');
         Route::patch('confirm-raw/{record:id}', 'RecordController@confirmraw');
         Route::get('checkconfirm/{record:id}', 'RecordController@checkconfrim');
         Route::patch('mismatch-stored/{record:id}', 'RecordController@stored');

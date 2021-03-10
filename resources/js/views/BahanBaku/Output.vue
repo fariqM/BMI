@@ -144,9 +144,8 @@
 								</template>
 
 								<template #cell(status)="data">
-
 									<template v-if="data.item.status == 'moving'">
-										<span class="badge badge-info">
+										<span class="badge badge-pill badge-info">
 											<b-icon
 												class="costum-badge"
 												icon="box-arrow-up-right"
@@ -156,27 +155,27 @@
 									</template>
 
 									<template v-if="data.item.status == 'processing all'">
-										<span class="badge badge-success">
+										<span class="badge badge-pill badge-success">
 											<b-icon class="costum-badge" icon="clock"></b-icon>
 											{{ data.item.status.toUpperCase() }}
 										</span>
 									</template>
 
 									<template v-if="data.item.status == 'on queue'">
-										<span class="badge badge-info">
+										<span class="badge badge-pill badge-info">
 											<b-icon class="costum-badge" icon="clock"></b-icon>
 											{{ data.item.status.toUpperCase() }}
 										</span>
 									</template>
 
 									<template v-if="data.item.status == 'stored'">
-										<span class="badge badge-info">
+										<span class="badge badge-pill badge-info">
 											<b-icon class="costum-badge" icon="clock"></b-icon>
 											{{ data.item.status.toUpperCase() + " AT BMI-B" }}
 										</span>
 									</template>
 									<template v-if="data.item.status == 'returned'">
-										<span class="badge badge-warning">
+										<span class="badge badge-pill badge-warning">
 											<b-icon class="costum-badge" icon="clock"></b-icon>
 											{{ data.item.status.toUpperCase() + " to your data" }}
 										</span>
@@ -184,8 +183,20 @@
 								</template>
 
 								<template #cell(confirm_status)="data">
+
+									<template v-if="data.item.confirm_status == 'revision'">
+										<span class="badge badge-pill badge-warning">
+											<b-icon
+												class="costum-badge"
+												icon="exclamation-triangle-fill"
+												variant="danger"
+											></b-icon>
+											{{ data.item.confirm_status.toUpperCase() }}
+										</span>
+									</template>
+
 									<template v-if="data.item.confirm_status == 'unconfirmed'">
-										<span class="badge badge-warning">
+										<span class="badge badge-pill badge-warning">
 											<b-icon
 												class="costum-badge"
 												icon="exclamation-triangle-fill"
@@ -195,12 +206,12 @@
 										</span>
 									</template>
 									<template v-if="data.item.confirm_status == 'confirmed'">
-										<span class="badge badge-success">
+										<span class="badge badge-pill badge-success">
 											{{ data.item.confirm_status.toUpperCase() }}
 										</span>
 									</template>
 									<template v-if="data.item.confirm_status == 'mismatch'">
-										<span class="badge badge-danger">
+										<span class="badge badge-pill badge-danger">
 											<b-icon
 												class="costum-badge"
 												icon="exclamation-triangle-fill"
@@ -213,13 +224,22 @@
 
 								<template #cell(action)="data">
 									<div class="justify-content-between">
-										<router-link :to="{ name: 'home' }" class="badge badge-info"
+										<!-- <router-link :to="{ name: 'home' }" class="badge badge-info"
 											><b-icon icon="search"></b-icon
-										></router-link>
+										></router-link> -->
+										<template v-if="data.item.confirm_status == 'revision'">
+											<a
+												@click="confirmRevision(data.item)"
+												class="badge badge-primary del-btn"
+											>
+												CONFIRM
+											</a>
+										</template>
 										<template
 											v-if="
 												data.item.confirm_status != 'mismatch' &&
-												data.item.confirm_status != 'confirmed'
+												data.item.confirm_status != 'confirmed' &&
+												data.item.confirm_status != 'revision'
 											"
 										>
 											<a
@@ -279,9 +299,11 @@ export default {
 				{ key: "series", label: "Series", sortable: true },
 				{ key: "destination_name", label: "Destination", sortable: true },
 				{ key: "nop", label: "On Hand", sortable: true },
+				{ key: "unit", label: "SAwmill", sortable: true },
 				{ key: "status", label: "Raw status", sortable: true },
 				{ key: "confirm_status", label: "Confirmed status", sortable: true },
 				{ key: "confirm_at", label: "Confirm at", sortable: true },
+				
 				"action",
 			],
 			sortBy: "",
@@ -315,6 +337,24 @@ export default {
 	},
 
 	methods: {
+		confirmRevision(value){
+			console.log(value);
+			Vue.swal({
+				title: `Are you sure to confirm this revision?`,
+				html: `the real stock of <b>${value.series}</b> on <b>Gudang Sawmill</b> is <b>${value.unit}</b> unit`,
+				icon: "question",
+				confirmButtonText: `Confirm`,
+				showCancelButton: true,
+				timerProgressBar: true,
+				showCloseButton: true,
+			}).then((result) => {
+				if (result.isConfirmed) {
+					// console.log("rollback!!");
+					// console.log(value);
+					// this.rollbackActions(value);
+				}
+			});
+		},
 		rollback(value) {
 			Vue.swal({
 				title: "Are you sure to rollback this data ?",

@@ -32,6 +32,14 @@ class RecordResource extends JsonResource
             $cond = "adaa";
         }
 
+        $unit = "";
+
+        if($this->unit === NULL){
+            $unit = 'NULL';
+        } else{
+            $unit = $this->unit;
+        }
+
         return [
             'id' => $this->id,
             'sawmillstock_id' => $sawmillstock,
@@ -41,7 +49,7 @@ class RecordResource extends JsonResource
             'destination_id' => $this->warehouse_id,
             'destination_name' => $this->warehouse->name,
             'nop' => $this->nop,
-            'unit' => $this->unit,
+            'unit' => $unit,
             'status' => $this->status,
             'confirm_status' => $this->confirm_status,
             'confirm_at' => $tgl,

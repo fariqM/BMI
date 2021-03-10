@@ -36,7 +36,12 @@ class RawController extends Controller
             'invoice_id' => 'required',
         ]);
 
-        Raw::create($raw);
+        $raw2 = [
+            'amount' => request('nop'),
+            'status' => 'unprocessed'
+        ];
+
+        Raw::create(array_merge($raw, $raw2));
 
         // Series Logics
         $lastid = latestid('raws');

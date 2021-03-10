@@ -10,6 +10,139 @@
 			</ol>
 		</nav>
 
+		<div
+			class="modal fade"
+			id="ModalEditLog"
+			tabindex="-1"
+			role="dialog"
+			aria-labelledby="exampleModalCenterTitle"
+			aria-hidden="true"
+		>
+			<div class="modal-dialog modal-dialog-centered">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="exampleModalCenterTitle">
+							Edit real stock
+						</h5>
+						<button
+							type="button"
+							class="close"
+							data-dismiss="modal"
+							aria-label="Close"
+						>
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div class="modal-body">
+						<form method="post" @submit.prevent="revisionAction">
+							<div class="form-group">
+								<label for="nop" class="col-form-label">ON HAND</label>
+								<input
+									type="number"
+									v-model="form.nop"
+									class="form-control"
+									placeholder="Stock in hand"
+								/>
+							</div>
+						</form>
+					</div>
+					<div class="modal-footer">
+						<button
+							@click="revisionAction"
+							type="submit"
+							class="btn btn-primary custom-button-animate"
+						>
+							<div class="custom-button-animate-item1">
+								<template v-if="btnLoading">
+									<svg
+										xmlns="http://www.w3.org/2000/svg"
+										xmlns:xlink="http://www.w3.org/1999/xlink"
+										style="
+											margin: auto;
+											background: none;
+											display: block;
+											shape-rendering: auto;
+										"
+										width="28px"
+										height="28px"
+										viewBox="0 0 100 100"
+										preserveAspectRatio="xMidYMid"
+									>
+										<circle
+											cx="50"
+											cy="50"
+											r="0"
+											fill="none"
+											stroke="#26232b"
+											stroke-width="8"
+										>
+											<animate
+												attributeName="r"
+												repeatCount="indefinite"
+												dur="0.6896551724137931s"
+												values="0;40"
+												keyTimes="0;1"
+												keySplines="0 0.2 0.8 1"
+												calcMode="spline"
+												begin="0s"
+											></animate>
+											<animate
+												attributeName="opacity"
+												repeatCount="indefinite"
+												dur="0.6896551724137931s"
+												values="1;0"
+												keyTimes="0;1"
+												keySplines="0.2 0 0.8 1"
+												calcMode="spline"
+												begin="0s"
+											></animate>
+										</circle>
+										<circle
+											cx="50"
+											cy="50"
+											r="0"
+											fill="none"
+											stroke="#6b3f20"
+											stroke-width="8"
+										>
+											<animate
+												attributeName="r"
+												repeatCount="indefinite"
+												dur="0.6896551724137931s"
+												values="0;40"
+												keyTimes="0;1"
+												keySplines="0 0.2 0.8 1"
+												calcMode="spline"
+												begin="-0.3448275862068966s"
+											></animate>
+											<animate
+												attributeName="opacity"
+												repeatCount="indefinite"
+												dur="0.6896551724137931s"
+												values="1;0"
+												keyTimes="0;1"
+												keySplines="0.2 0 0.8 1"
+												calcMode="spline"
+												begin="-0.3448275862068966s"
+											></animate>
+										</circle>
+									</svg>
+								</template>
+							</div>
+							<div class="custom-button-animate-item2">Save</div>
+						</button>
+						<button
+							type="button"
+							class="btn btn-secondary"
+							data-dismiss="modal"
+						>
+							Close
+						</button>
+					</div>
+				</div>
+			</div>
+		</div>
+
 		<div class="row">
 			<div class="col-md-12 grid-margin stretch-card">
 				<div class="card">
@@ -189,6 +322,17 @@
 								</template>
 
 								<template #cell(confirm_status)="data">
+									<template v-if="data.item.confirm_status == 'revision'">
+										<span class="badge badge-pill badge-warning">
+											<b-icon
+												class="costum-badge"
+												icon="exclamation-triangle-fill"
+												variant="danger"
+											></b-icon>
+											{{ data.item.confirm_status.toUpperCase() }}
+										</span>
+									</template>
+
 									<template v-if="data.item.confirm_status == 'unconfirmed'">
 										<span class="badge badge-pill badge-warning">
 											<b-icon
@@ -221,11 +365,27 @@
 								</template>
 
 								<template class="justify-content-between" #cell(action)="data">
-									<router-link
+									<!-- <router-link
 										:to="{ name: 'home' }"
 										class="badge badge-secondary"
 										><b-icon icon="search"></b-icon
-									></router-link>
+									></router-link> -->
+
+									<template
+										v-if="
+											data.item.status == 'stored' &&
+											data.item.confirm_status == 'mismatch'
+										"
+									>
+										<a
+											@click="setvalue(data.item)"
+											data-toggle="modal"
+											data-target="#ModalEditLog"
+											class="badge badge-primary del-btn"
+										>
+											EDIT
+										</a>
+									</template>
 
 									<template v-if="data.item.confirm_status == 'unconfirmed'">
 										<a
@@ -252,7 +412,6 @@
 											>PROCEED</a
 										>
 									</template>
-
 								</template>
 								<template #cell(stock_action)="data">
 									<a
@@ -302,10 +461,13 @@
 export default {
 	data() {
 		return {
+			btnLoading: false,
+			nop: 0,
 			stockTable: false,
 			form: {
 				id: "",
 				nop: "",
+				nop_before: 0,
 				series: "",
 				sawmillstock_id: "",
 				status: "",
@@ -384,6 +546,56 @@ export default {
 	},
 
 	methods: {
+		setvalue(value) {
+			this.form.nop = value.nop;
+			this.nop = value.nop;
+			this.form.id = value.id;
+			this.form.series = value.series;
+			this.form.nop_before = value.nop;
+			// this.revisionAction()
+			// console.log(value);
+		},
+		revisionAction() {
+			// console.log(this.form);
+			this.btnLoading = true;
+			if (this.form.nop < 0) {
+				this.$toast.error("The minimum number is 0", "Failed!,", {
+					position: "topRight",
+				});
+				this.btnLoading = false;
+			} else {
+				this.revisionAction2();
+			}
+		},
+		async revisionAction2() {
+			// console.log(this.form);
+			try {
+				let response = await axios.patch(
+					`/api/gudang-sawmill/edit-on-hand/${this.form.id}`,
+					this.form
+				);
+				if (response.status == 200) {
+					this.form.id = "";
+					this.form.nop = "";
+					this.form.series = "";
+					this.form.sawmillstock_id = "";
+					this.form.status = "";
+					this.form.nop_before = "";
+					$("#ModalEditLog").modal("hide");
+					this.$toast.success("Successfully Editing data", "Done!", {
+						position: "topRight",
+					});
+					this.refreshData();
+					this.btnLoading = false;
+				}
+			} catch (e) {
+				console.log(e.response.data.errors);
+				this.$toast.error("Something wrong", "Oops", {
+					position: "topRight",
+				});
+				this.btnLoading = false;
+			}
+		},
 		async proceed(value) {
 			console.log(value);
 		},

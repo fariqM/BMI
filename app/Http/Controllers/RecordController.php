@@ -33,7 +33,7 @@ class RecordController extends Controller
 
         $raw->update([
             'nop' => request('nop'),
-            'warehouse_id' => '1'
+            'status' => 'processed'
         ]);
 
         $record = Record::create([
@@ -56,12 +56,14 @@ class RecordController extends Controller
         return RecordResource::collection($records);
     }
 
-    public function inputrecordsawmill(){
+    public function inputrecordsawmill()
+    {
         $records = Record::where('origin', '1')->orWhere('warehouse_id', '1')->with('warehouse', 'sawmillstocks')->latest()->get();
         return RecordResource::collection($records);
     }
 
-    public function rollbackBB(Record $record){
+    public function rollbackBB(Record $record)
+    {
         Raw::where('series', $record->series)->increment('nop', $record->nop);
         $record->delete();
 
@@ -84,6 +86,45 @@ class RecordController extends Controller
         return RecordResource::make($record);
     }
 
+    public function editOnHand(Record $record){
+
+        $record->update([
+            'unit' => request('nop'),
+            'confirm_status' => 'revision'
+        ]);
+
+        return response()->json([
+            'message' => 'success'
+        ]);
+    }
+
+    public function confirmMismatch(Record $record)
+    {
+        $series = request('series');
+        $nop = request('nop');
+        $nop_virtual = request('nop_virtual');
+
+        $dev = $nop - $nop_virtual; 
+
+        $record->update([
+            'confirm_status' => 'revision confirmed',
+            'status' => 'on queue',
+            'nop' => $nop,
+        ]);
+
+        Raw::where('series', '=', $series)->increment('nop', $dev);
+
+        $stock = Sawmillstock::where('series', $series)->first();
+        $stock->update([
+            'nop' => $nop,
+            'nop_virtual' => 0,
+        ]);
+
+        return response()->json([
+            'message' => 'success'
+        ]);
+    }
+
     public function confirmraw(Record $record)
     {
         $series = request('series');
@@ -95,16 +136,16 @@ class RecordController extends Controller
             'confirm_at' => date("Y-m-d H:i:s"),
         ]);
 
-        $sawmillstock =  Sawmillstock::where('series','=', $series)->get();
-        if(count($sawmillstock) == 0){
-                Sawmillstock::create([
+        $sawmillstock =  Sawmillstock::where('series', '=', $series)->get();
+        if (count($sawmillstock) == 0) {
+            Sawmillstock::create([
                 'series' => $series,
                 'nop' => $nop,
                 'nop_virtual' => 0,
                 'processed' => 0,
             ]);
-        } else{
-            DB::table('sawmillstocks')->where('series','=', $series)->increment('nop', $nop);
+        } else {
+            DB::table('sawmillstocks')->where('series', '=', $series)->increment('nop', $nop);
         }
 
         return response()->json([
@@ -124,16 +165,16 @@ class RecordController extends Controller
             'confirm_at' => date("Y-m-d H:i:s"),
         ]);
 
-        $sawmillstock =  Sawmillstock::where('series','=', $series)->get();
-        if(count($sawmillstock) == 0){
-                Sawmillstock::create([
+        $sawmillstock =  Sawmillstock::where('series', '=', $series)->get();
+        if (count($sawmillstock) == 0) {
+            Sawmillstock::create([
                 'series' => $series,
                 'nop_virtual' => $nop,
                 'processed' => 0,
                 'nop' => 0,
             ]);
-        } else{
-            DB::table('sawmillstocks')->where('series','=', $series)->increment('nop_virtual', $nop);
+        } else {
+            DB::table('sawmillstocks')->where('series', '=', $series)->increment('nop_virtual', $nop);
         }
         return response()->json([
             'message' => 'success',
@@ -149,10 +190,10 @@ class RecordController extends Controller
             'status' => 'returned',
             'confirm_at' => date("Y-m-d H:i:s"),
             'origin' => 1,
-            'warehouse_id' => 5, 
+            'warehouse_id' => 5,
         ]);
 
-        Raw::where('series','=', $series)->increment('nop', $nop);
+        Raw::where('series', '=', $series)->increment('nop', $nop);
 
         return response()->json([
             'message' => 'success',

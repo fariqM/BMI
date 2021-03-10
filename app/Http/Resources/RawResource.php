@@ -23,6 +23,7 @@ class RawResource extends JsonResource
             'type_id' => $this->structure_category->id,
             'size' => $this->size." ".$this->uom ,
             'nop' => $this->nop,
+            'amount' => $this->amount,
             'periode' => $diff->format("%r%a days"),
             'supplier' => $this->invoice->supplier->name,
             'supplier_id' => $this->invoice->supplier->id,
