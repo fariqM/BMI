@@ -1,5 +1,6 @@
 <template>
 	<div>
+		<!-- Modal for Create Form -->
 		<div
 			class="modal fade"
 			id="StockFormModal"
@@ -56,7 +57,6 @@
 
 								<label for="nop" class="col-form-label">Height (meters)</label>
 								<input
-									
 									type="number"
 									step="0.001"
 									v-model="form.height"
@@ -69,7 +69,6 @@
 
 								<label for="nop" class="col-form-label">width (meters)</label>
 								<input
-									
 									type="number"
 									step="0.001"
 									v-model="form.width"
@@ -82,7 +81,6 @@
 
 								<label for="nop" class="col-form-label">length (meters)</label>
 								<input
-									
 									type="number"
 									step="0.001"
 									v-model="form.length"
@@ -179,6 +177,186 @@
 								</template>
 							</div>
 							<div class="custom-button-animate-item2">Submit</div>
+						</button>
+						<button
+							type="button"
+							class="btn btn-secondary"
+							data-dismiss="modal"
+						>
+							Close
+						</button>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- Modal for Edit Form -->
+		<div
+			class="modal fade"
+			id="EditFormModal"
+			tabindex="-1"
+			role="dialog"
+			aria-labelledby="exampleModalCenterTitle"
+			aria-hidden="true"
+		>
+			<div class="modal-dialog modal-dialog-centered">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="exampleModalCenterTitle">Edit stock</h5>
+						<button
+							type="button"
+							class="close"
+							data-dismiss="modal"
+							aria-label="Close"
+						>
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div class="modal-body">
+						<form method="post" @submit.prevent="EditStock">
+							<div class="form-group">
+								<label for="TypeProduct" class="col-form-label"
+									>Type Product</label
+								>
+								<select
+									v-model="Editform.type_id"
+									name="TypeProduct"
+									id="typeProduct"
+								>
+									<option
+										v-for="data in typeProduct"
+										:key="data.id"
+										:value="data.id"
+									>
+										{{ data.name }}
+									</option>
+								</select>
+								<div v-if="theErrors.type_id" class="mt-2 text-danger">
+									{{ theErrors.type_id[0] }}
+								</div>
+
+								<label for="nop" class="col-form-label">Height (meters)</label>
+								<input
+									type="number"
+									step="0.001"
+									v-model="Editform.height"
+									class="form-control form-control-danger"
+									placeholder="Height in meters"
+								/>
+								<div v-if="theErrors.height" class="mt-2 text-danger">
+									{{ theErrors.height[0] }}
+								</div>
+
+								<label for="nop" class="col-form-label">width (meters)</label>
+								<input
+									type="number"
+									step="0.001"
+									v-model="Editform.width"
+									class="form-control"
+									placeholder="Width in meters"
+								/>
+								<div v-if="theErrors.width" class="mt-2 text-danger">
+									{{ theErrors.width[0] }}
+								</div>
+
+								<label for="nop" class="col-form-label">length (meters)</label>
+								<input
+									type="number"
+									step="0.001"
+									v-model="Editform.length"
+									class="form-control"
+									placeholder="Length in meters"
+								/>
+								<div v-if="theErrors.length" class="mt-2 text-danger">
+									{{ theErrors.length[0] }}
+								</div>
+							</div>
+						</form>
+					</div>
+					<div class="modal-footer">
+						<button
+							@click="EditStock"
+							type="submit"
+							class="btn btn-primary custom-button-animate"
+						>
+							<div class="custom-button-animate-item1">
+								<template v-if="btnLoading">
+									<svg
+										xmlns="http://www.w3.org/2000/svg"
+										xmlns:xlink="http://www.w3.org/1999/xlink"
+										style="
+											margin: auto;
+											background: none;
+											display: block;
+											shape-rendering: auto;
+										"
+										width="28px"
+										height="28px"
+										viewBox="0 0 100 100"
+										preserveAspectRatio="xMidYMid"
+									>
+										<circle
+											cx="50"
+											cy="50"
+											r="0"
+											fill="none"
+											stroke="#26232b"
+											stroke-width="8"
+										>
+											<animate
+												attributeName="r"
+												repeatCount="indefinite"
+												dur="0.6896551724137931s"
+												values="0;40"
+												keyTimes="0;1"
+												keySplines="0 0.2 0.8 1"
+												calcMode="spline"
+												begin="0s"
+											></animate>
+											<animate
+												attributeName="opacity"
+												repeatCount="indefinite"
+												dur="0.6896551724137931s"
+												values="1;0"
+												keyTimes="0;1"
+												keySplines="0.2 0 0.8 1"
+												calcMode="spline"
+												begin="0s"
+											></animate>
+										</circle>
+										<circle
+											cx="50"
+											cy="50"
+											r="0"
+											fill="none"
+											stroke="#6b3f20"
+											stroke-width="8"
+										>
+											<animate
+												attributeName="r"
+												repeatCount="indefinite"
+												dur="0.6896551724137931s"
+												values="0;40"
+												keyTimes="0;1"
+												keySplines="0 0.2 0.8 1"
+												calcMode="spline"
+												begin="-0.3448275862068966s"
+											></animate>
+											<animate
+												attributeName="opacity"
+												repeatCount="indefinite"
+												dur="0.6896551724137931s"
+												values="1;0"
+												keyTimes="0;1"
+												keySplines="0.2 0 0.8 1"
+												calcMode="spline"
+												begin="-0.3448275862068966s"
+											></animate>
+										</circle>
+									</svg>
+								</template>
+							</div>
+							<div class="custom-button-animate-item2">Save</div>
 						</button>
 						<button
 							type="button"
@@ -365,15 +543,27 @@
 									<div>
 										<div class="table-responsive">
 											<b-table
-												responsive
 												small
+												fixed
+												show-empty
 												table-variant="info"
 												head-variant="dark"
 												:fields="ExtenColumn"
 												:items="data.item.stocks"
-											></b-table>
+											>
+												<template #cell(action)="data">
+													<a
+														data-toggle="modal"
+														data-target="#EditFormModal"
+														@click="setEditForm(data.item)"
+														class="badge badge-primary del-btn"
+														>EDIT</a
+													>
+												</template></b-table
+											>
 										</div>
-										<!-- <div class="col-md-12 grid-margin stretch-card">
+										<!-- <div class="col-md
+										12 grid-margin stretch-card">
 											<div class="card">
 												<div class="card-body">
 													
@@ -441,6 +631,14 @@ export default {
 				nop: "",
 				series: "",
 			},
+			Editform: {
+				id: 0,
+				height: 0.0,
+				length: 0.0,
+				width: 0.0,
+				type_id: 0,
+				type: "",
+			},
 			theErrors: [],
 			isBusy: false,
 			process: [],
@@ -452,7 +650,15 @@ export default {
 				{ key: "status", label: "Status", sortable: true },
 				"action",
 			],
-			ExtenColumn: ["name", "tally", "height", "width", "length", "action"],
+			ExtenColumn: [
+				{ key: "name", label: "Name", sortable: true },
+				{ key: "tally", label: "tally ", sortable: true },
+				{ key: "height", label: "height (m)", sortable: true },
+				{ key: "width", label: "width (m)", sortable: true },
+				{ key: "length", label: "length (m)", sortable: true },
+				{ key: "size", label: "volume (m3)", sortable: true },
+				"action",
+			],
 			sortBy: "",
 			sortDesc: false,
 			filter: null,
@@ -486,6 +692,40 @@ export default {
 	},
 
 	methods: {
+		setEditForm(value) {
+			this.Editform.id = value.id;
+			this.Editform.height = value.height;
+			this.Editform.length = value.length;
+			this.Editform.width = value.width;
+			this.Editform.type_id = value.type_id;
+		},
+		async EditStock() {
+			this.btnLoading = true;
+			// console.log(this.Editform);
+
+			try {
+				let response = await axios.patch(
+					`/api/stock/index/${this.Editform.id}/update`,
+					this.Editform
+				);
+				if(response.status == 200){
+					this.form = {};
+					this.theErrors = [];
+					this.btnLoading = false;
+					this.refreshTable();
+					this.$toast.success("Action success", "Done!", {
+						position: "topRight",
+					});
+					$("#EditFormModal").modal("hide");
+				}
+			} catch (e) {
+				this.btnLoading = false;
+				this.theErrors = e.response.data.errors;
+				this.$toast.error("Something wrong when updating data!", "Oops,", {
+					position: "topRight",
+				});
+			}
+		},
 		async getTypeProduct() {
 			let response = await axios.get("/api/type/index");
 			if (response.status === 200) {
@@ -502,19 +742,18 @@ export default {
 			this.form.id = value.id;
 			this.form.nop = value.nop;
 			this.form.series = value.series;
-			console.log(value);
 		},
 
 		async addstock() {
 			this.btnLoading = true;
-			// console.log(this.form);
+
 			try {
 				let response = await axios.post("/api/stock/addstock", this.form);
 				if (response.status == 200) {
 					this.form = {};
 					this.theErrors = [];
 					this.btnLoading = false;
-					this.refreshTable()
+					this.refreshTable();
 					this.$toast.success("Action success", "Done!", {
 						position: "topRight",
 					});
@@ -523,8 +762,6 @@ export default {
 			} catch (e) {
 				this.btnLoading = false;
 				this.theErrors = e.response.data.errors;
-				console.log(this.theErrors);
-				console.log(e.response.data);
 				this.$toast.error("Something wrong when updating data!", "Oops,", {
 					position: "topRight",
 				});
@@ -534,7 +771,7 @@ export default {
 			this.form.id = value.id;
 			this.form.nop = value.nop;
 			this.form.series = value.series;
-			// console.log(this.form);
+
 			Vue.swal({
 				title: "Are you sure to finish this process",
 				html: `Finish the  <b>${value.series}</b> series.`,
@@ -546,9 +783,6 @@ export default {
 				showCloseButton: true,
 			}).then((result) => {
 				if (result.isConfirmed) {
-					// console.log(value.sawmillstock_id.id);
-					// console.log(this.form);
-					// this.rollbackAction();
 					this.finishAction();
 				}
 			});
@@ -576,13 +810,10 @@ export default {
 			}
 		},
 		cek(value) {
-			console.log(value);
 			value._showDetails = !value._showDetails;
-			// this.extendable.push(value.supplier);
 		},
 		rollback(value) {
 			this.form = value;
-			// console.log(this.form);
 			Vue.swal({
 				title: "Rollback Confirm",
 				html: `are you sure want cancel this process on <b>${value.series}</b>`,
@@ -594,8 +825,6 @@ export default {
 				showCloseButton: true,
 			}).then((result) => {
 				if (result.isConfirmed) {
-					// console.log(value.sawmillstock_id.id);
-					// console.log(this.form);
 					this.rollbackAction();
 				}
 			});
@@ -621,7 +850,6 @@ export default {
 			}
 		},
 		onFiltered(filteredItems) {
-			// Trigger pagination to update the number of buttons/pages due to filtering
 			this.totalRows = filteredItems.length;
 			this.currentPage = 1;
 		},
@@ -630,9 +858,6 @@ export default {
 			let { data } = await axios.get("/api/gudang-sawmill/process-index");
 			this.process = [];
 			this.process = data.data;
-			// this.process.forEach((element) => {
-			// 	this.extendable.push(element.supplier);
-			// });
 			this.totalRows = this.process.length;
 			setTimeout((this.isBusy = !this.isBusy), 6000);
 		},

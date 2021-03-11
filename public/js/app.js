@@ -10099,6 +10099,196 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return _defineProperty({
@@ -10118,6 +10308,14 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         id: "",
         nop: "",
         series: ""
+      },
+      Editform: {
+        id: 0,
+        height: 0.0,
+        length: 0.0,
+        width: 0.0,
+        type_id: 0,
+        type: ""
       },
       theErrors: [],
       isBusy: false,
@@ -10140,7 +10338,31 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         label: "Status",
         sortable: true
       }, "action"],
-      ExtenColumn: ["name", "tally", "height", "width", "length", "action"],
+      ExtenColumn: [{
+        key: "name",
+        label: "Name",
+        sortable: true
+      }, {
+        key: "tally",
+        label: "tally ",
+        sortable: true
+      }, {
+        key: "height",
+        label: "height (m)",
+        sortable: true
+      }, {
+        key: "width",
+        label: "width (m)",
+        sortable: true
+      }, {
+        key: "length",
+        label: "length (m)",
+        sortable: true
+      }, {
+        key: "size",
+        label: "volume (m3)",
+        sortable: true
+      }, "action"],
       sortBy: "",
       sortDesc: false,
       filter: null,
@@ -10180,7 +10402,14 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     this.getTypeProduct();
   },
   methods: {
-    getTypeProduct: function getTypeProduct() {
+    setEditForm: function setEditForm(value) {
+      this.Editform.id = value.id;
+      this.Editform.height = value.height;
+      this.Editform.length = value.length;
+      this.Editform.width = value.width;
+      this.Editform.type_id = value.type_id;
+    },
+    EditStock: function EditStock() {
       var _this = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee() {
@@ -10189,37 +10418,51 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                _context.next = 2;
-                return axios.get("/api/type/index");
+                _this.btnLoading = true; // console.log(this.Editform);
 
-              case 2:
-                response = _context.sent;
-
-                if (response.status === 200) {
-                  _this.typeProduct = response.data.data;
-                } else {
-                  _this.$toast.error("Can't request TYPE PRODUCT", "Oops", {
-                    position: "topRight"
-                  });
-                }
+                _context.prev = 1;
+                _context.next = 4;
+                return axios.patch("/api/stock/index/".concat(_this.Editform.id, "/update"), _this.Editform);
 
               case 4:
+                response = _context.sent;
+
+                if (response.status == 200) {
+                  _this.form = {};
+                  _this.theErrors = [];
+                  _this.btnLoading = false;
+
+                  _this.refreshTable();
+
+                  _this.$toast.success("Action success", "Done!", {
+                    position: "topRight"
+                  });
+
+                  $("#EditFormModal").modal("hide");
+                }
+
+                _context.next = 13;
+                break;
+
+              case 8:
+                _context.prev = 8;
+                _context.t0 = _context["catch"](1);
+                _this.btnLoading = false;
+                _this.theErrors = _context.t0.response.data.errors;
+
+                _this.$toast.error("Something wrong when updating data!", "Oops,", {
+                  position: "topRight"
+                });
+
+              case 13:
               case "end":
                 return _context.stop();
             }
           }
-        }, _callee);
+        }, _callee, null, [[1, 8]]);
       }))();
     },
-    CreateModal: function CreateModal(value) {
-      this.form.sawmillrun_id = value.id;
-      this.form.structure_category = value.structure_category;
-      this.form.id = value.id;
-      this.form.nop = value.nop;
-      this.form.series = value.series;
-      console.log(value);
-    },
-    addstock: function addstock() {
+    getTypeProduct: function getTypeProduct() {
       var _this2 = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee2() {
@@ -10228,59 +10471,93 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           while (1) {
             switch (_context2.prev = _context2.next) {
               case 0:
-                _this2.btnLoading = true; // console.log(this.form);
+                _context2.next = 2;
+                return axios.get("/api/type/index");
 
-                _context2.prev = 1;
-                _context2.next = 4;
-                return axios.post("/api/stock/addstock", _this2.form);
-
-              case 4:
+              case 2:
                 response = _context2.sent;
 
+                if (response.status === 200) {
+                  _this2.typeProduct = response.data.data;
+                } else {
+                  _this2.$toast.error("Can't request TYPE PRODUCT", "Oops", {
+                    position: "topRight"
+                  });
+                }
+
+              case 4:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2);
+      }))();
+    },
+    CreateModal: function CreateModal(value) {
+      this.form.sawmillrun_id = value.id;
+      this.form.structure_category = value.structure_category;
+      this.form.id = value.id;
+      this.form.nop = value.nop;
+      this.form.series = value.series;
+    },
+    addstock: function addstock() {
+      var _this3 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee3() {
+        var response;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee3$(_context3) {
+          while (1) {
+            switch (_context3.prev = _context3.next) {
+              case 0:
+                _this3.btnLoading = true;
+                _context3.prev = 1;
+                _context3.next = 4;
+                return axios.post("/api/stock/addstock", _this3.form);
+
+              case 4:
+                response = _context3.sent;
+
                 if (response.status == 200) {
-                  _this2.form = {};
-                  _this2.theErrors = [];
-                  _this2.btnLoading = false;
+                  _this3.form = {};
+                  _this3.theErrors = [];
+                  _this3.btnLoading = false;
 
-                  _this2.refreshTable();
+                  _this3.refreshTable();
 
-                  _this2.$toast.success("Action success", "Done!", {
+                  _this3.$toast.success("Action success", "Done!", {
                     position: "topRight"
                   });
 
                   $("#StockFormModal").modal("hide");
                 }
 
-                _context2.next = 15;
+                _context3.next = 13;
                 break;
 
               case 8:
-                _context2.prev = 8;
-                _context2.t0 = _context2["catch"](1);
-                _this2.btnLoading = false;
-                _this2.theErrors = _context2.t0.response.data.errors;
-                console.log(_this2.theErrors);
-                console.log(_context2.t0.response.data);
+                _context3.prev = 8;
+                _context3.t0 = _context3["catch"](1);
+                _this3.btnLoading = false;
+                _this3.theErrors = _context3.t0.response.data.errors;
 
-                _this2.$toast.error("Something wrong when updating data!", "Oops,", {
+                _this3.$toast.error("Something wrong when updating data!", "Oops,", {
                   position: "topRight"
                 });
 
-              case 15:
+              case 13:
               case "end":
-                return _context2.stop();
+                return _context3.stop();
             }
           }
-        }, _callee2, null, [[1, 8]]);
+        }, _callee3, null, [[1, 8]]);
       }))();
     },
     finish: function finish(value) {
-      var _this3 = this;
+      var _this4 = this;
 
       this.form.id = value.id;
       this.form.nop = value.nop;
-      this.form.series = value.series; // console.log(this.form);
-
+      this.form.series = value.series;
       Vue.swal({
         title: "Are you sure to finish this process",
         html: "Finish the  <b>".concat(value.series, "</b> series."),
@@ -10292,89 +10569,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         showCloseButton: true
       }).then(function (result) {
         if (result.isConfirmed) {
-          // console.log(value.sawmillstock_id.id);
-          // console.log(this.form);
-          // this.rollbackAction();
-          _this3.finishAction();
+          _this4.finishAction();
         }
       });
     },
     finishAction: function finishAction() {
-      var _this4 = this;
-
-      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee3() {
-        var response;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee3$(_context3) {
-          while (1) {
-            switch (_context3.prev = _context3.next) {
-              case 0:
-                _context3.prev = 0;
-                _context3.next = 3;
-                return axios.patch("/api/gudang-sawmill/finish-process/".concat(_this4.form.id), _this4.form);
-
-              case 3:
-                response = _context3.sent;
-
-                if (response.status == 200) {
-                  _this4.form.id = "";
-                  _this4.form.nop = "";
-                  _this4.form.series = "";
-
-                  _this4.refreshTable();
-
-                  _this4.$toast.success("Action success", "Done!", {
-                    position: "topRight"
-                  });
-                }
-
-                _context3.next = 11;
-                break;
-
-              case 7:
-                _context3.prev = 7;
-                _context3.t0 = _context3["catch"](0);
-                console.log(_context3.t0.response);
-
-                _this4.$toast.error("Something wrong", "Oops", {
-                  position: "topRight"
-                });
-
-              case 11:
-              case "end":
-                return _context3.stop();
-            }
-          }
-        }, _callee3, null, [[0, 7]]);
-      }))();
-    },
-    cek: function cek(value) {
-      console.log(value);
-      value._showDetails = !value._showDetails; // this.extendable.push(value.supplier);
-    },
-    rollback: function rollback(value) {
       var _this5 = this;
-
-      this.form = value; // console.log(this.form);
-
-      Vue.swal({
-        title: "Rollback Confirm",
-        html: "are you sure want cancel this process on <b>".concat(value.series, "</b>"),
-        icon: "warning",
-        confirmButtonText: "Yes",
-        cancelButtonText: "No",
-        showCancelButton: true,
-        timerProgressBar: true,
-        showCloseButton: true
-      }).then(function (result) {
-        if (result.isConfirmed) {
-          // console.log(value.sawmillstock_id.id);
-          // console.log(this.form);
-          _this5.rollbackAction();
-        }
-      });
-    },
-    rollbackAction: function rollbackAction() {
-      var _this6 = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee4() {
         var response;
@@ -10384,19 +10584,21 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
               case 0:
                 _context4.prev = 0;
                 _context4.next = 3;
-                return axios.patch("/api/gudang-sawmill/rollback-process/".concat(_this6.form.id), _this6.form);
+                return axios.patch("/api/gudang-sawmill/finish-process/".concat(_this5.form.id), _this5.form);
 
               case 3:
                 response = _context4.sent;
 
                 if (response.status == 200) {
-                  _this6.refreshTable();
+                  _this5.form.id = "";
+                  _this5.form.nop = "";
+                  _this5.form.series = "";
 
-                  _this6.$toast.success("Successfully processing", "Done!", {
+                  _this5.refreshTable();
+
+                  _this5.$toast.success("Action success", "Done!", {
                     position: "topRight"
                   });
-
-                  _this6.form = {};
                 }
 
                 _context4.next = 11;
@@ -10407,7 +10609,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
                 _context4.t0 = _context4["catch"](0);
                 console.log(_context4.t0.response);
 
-                _this6.$toast.error("Something wrong", "Oops", {
+                _this5.$toast.error("Something wrong", "Oops", {
                   position: "topRight"
                 });
 
@@ -10419,70 +10621,134 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         }, _callee4, null, [[0, 7]]);
       }))();
     },
-    onFiltered: function onFiltered(filteredItems) {
-      // Trigger pagination to update the number of buttons/pages due to filtering
-      this.totalRows = filteredItems.length;
-      this.currentPage = 1;
+    cek: function cek(value) {
+      value._showDetails = !value._showDetails;
     },
-    toggleBusy: function toggleBusy() {
+    rollback: function rollback(value) {
+      var _this6 = this;
+
+      this.form = value;
+      Vue.swal({
+        title: "Rollback Confirm",
+        html: "are you sure want cancel this process on <b>".concat(value.series, "</b>"),
+        icon: "warning",
+        confirmButtonText: "Yes",
+        cancelButtonText: "No",
+        showCancelButton: true,
+        timerProgressBar: true,
+        showCloseButton: true
+      }).then(function (result) {
+        if (result.isConfirmed) {
+          _this6.rollbackAction();
+        }
+      });
+    },
+    rollbackAction: function rollbackAction() {
       var _this7 = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee5() {
-        var _yield$axios$get, data;
-
+        var response;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee5$(_context5) {
           while (1) {
             switch (_context5.prev = _context5.next) {
               case 0:
-                _this7.isBusy = !_this7.isBusy;
+                _context5.prev = 0;
                 _context5.next = 3;
-                return axios.get("/api/gudang-sawmill/process-index");
+                return axios.patch("/api/gudang-sawmill/rollback-process/".concat(_this7.form.id), _this7.form);
 
               case 3:
-                _yield$axios$get = _context5.sent;
-                data = _yield$axios$get.data;
-                _this7.process = [];
-                _this7.process = data.data; // this.process.forEach((element) => {
-                // 	this.extendable.push(element.supplier);
-                // });
+                response = _context5.sent;
 
-                _this7.totalRows = _this7.process.length;
-                setTimeout(_this7.isBusy = !_this7.isBusy, 6000);
+                if (response.status == 200) {
+                  _this7.refreshTable();
 
-              case 9:
+                  _this7.$toast.success("Successfully processing", "Done!", {
+                    position: "topRight"
+                  });
+
+                  _this7.form = {};
+                }
+
+                _context5.next = 11;
+                break;
+
+              case 7:
+                _context5.prev = 7;
+                _context5.t0 = _context5["catch"](0);
+                console.log(_context5.t0.response);
+
+                _this7.$toast.error("Something wrong", "Oops", {
+                  position: "topRight"
+                });
+
+              case 11:
               case "end":
                 return _context5.stop();
             }
           }
-        }, _callee5);
+        }, _callee5, null, [[0, 7]]);
       }))();
     },
-    refreshTable: function refreshTable() {
+    onFiltered: function onFiltered(filteredItems) {
+      this.totalRows = filteredItems.length;
+      this.currentPage = 1;
+    },
+    toggleBusy: function toggleBusy() {
       var _this8 = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee6() {
-        var _yield$axios$get2, data;
+        var _yield$axios$get, data;
 
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee6$(_context6) {
           while (1) {
             switch (_context6.prev = _context6.next) {
               case 0:
-                _context6.next = 2;
+                _this8.isBusy = !_this8.isBusy;
+                _context6.next = 3;
                 return axios.get("/api/gudang-sawmill/process-index");
 
-              case 2:
-                _yield$axios$get2 = _context6.sent;
-                data = _yield$axios$get2.data;
+              case 3:
+                _yield$axios$get = _context6.sent;
+                data = _yield$axios$get.data;
                 _this8.process = [];
                 _this8.process = data.data;
                 _this8.totalRows = _this8.process.length;
+                setTimeout(_this8.isBusy = !_this8.isBusy, 6000);
 
-              case 7:
+              case 9:
               case "end":
                 return _context6.stop();
             }
           }
         }, _callee6);
+      }))();
+    },
+    refreshTable: function refreshTable() {
+      var _this9 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee7() {
+        var _yield$axios$get2, data;
+
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee7$(_context7) {
+          while (1) {
+            switch (_context7.prev = _context7.next) {
+              case 0:
+                _context7.next = 2;
+                return axios.get("/api/gudang-sawmill/process-index");
+
+              case 2:
+                _yield$axios$get2 = _context7.sent;
+                data = _yield$axios$get2.data;
+                _this9.process = [];
+                _this9.process = data.data;
+                _this9.totalRows = _this9.process.length;
+
+              case 7:
+              case "end":
+                return _context7.stop();
+            }
+          }
+        }, _callee7);
       }))();
     }
   }
@@ -44730,15 +44996,386 @@ var render = function() {
       ]
     ),
     _vm._v(" "),
-    _vm._m(1),
+    _c(
+      "div",
+      {
+        staticClass: "modal fade",
+        attrs: {
+          id: "EditFormModal",
+          tabindex: "-1",
+          role: "dialog",
+          "aria-labelledby": "exampleModalCenterTitle",
+          "aria-hidden": "true"
+        }
+      },
+      [
+        _c("div", { staticClass: "modal-dialog modal-dialog-centered" }, [
+          _c("div", { staticClass: "modal-content" }, [
+            _vm._m(1),
+            _vm._v(" "),
+            _c("div", { staticClass: "modal-body" }, [
+              _c(
+                "form",
+                {
+                  attrs: { method: "post" },
+                  on: {
+                    submit: function($event) {
+                      $event.preventDefault()
+                      return _vm.EditStock($event)
+                    }
+                  }
+                },
+                [
+                  _c("div", { staticClass: "form-group" }, [
+                    _c(
+                      "label",
+                      {
+                        staticClass: "col-form-label",
+                        attrs: { for: "TypeProduct" }
+                      },
+                      [_vm._v("Type Product")]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "select",
+                      {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.Editform.type_id,
+                            expression: "Editform.type_id"
+                          }
+                        ],
+                        attrs: { name: "TypeProduct", id: "typeProduct" },
+                        on: {
+                          change: function($event) {
+                            var $$selectedVal = Array.prototype.filter
+                              .call($event.target.options, function(o) {
+                                return o.selected
+                              })
+                              .map(function(o) {
+                                var val = "_value" in o ? o._value : o.value
+                                return val
+                              })
+                            _vm.$set(
+                              _vm.Editform,
+                              "type_id",
+                              $event.target.multiple
+                                ? $$selectedVal
+                                : $$selectedVal[0]
+                            )
+                          }
+                        }
+                      },
+                      _vm._l(_vm.typeProduct, function(data) {
+                        return _c(
+                          "option",
+                          { key: data.id, domProps: { value: data.id } },
+                          [
+                            _vm._v(
+                              "\n\t\t\t\t\t\t\t\t\t" +
+                                _vm._s(data.name) +
+                                "\n\t\t\t\t\t\t\t\t"
+                            )
+                          ]
+                        )
+                      }),
+                      0
+                    ),
+                    _vm._v(" "),
+                    _vm.theErrors.type_id
+                      ? _c("div", { staticClass: "mt-2 text-danger" }, [
+                          _vm._v(
+                            "\n\t\t\t\t\t\t\t\t" +
+                              _vm._s(_vm.theErrors.type_id[0]) +
+                              "\n\t\t\t\t\t\t\t"
+                          )
+                        ])
+                      : _vm._e(),
+                    _vm._v(" "),
+                    _c(
+                      "label",
+                      { staticClass: "col-form-label", attrs: { for: "nop" } },
+                      [_vm._v("Height (meters)")]
+                    ),
+                    _vm._v(" "),
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.Editform.height,
+                          expression: "Editform.height"
+                        }
+                      ],
+                      staticClass: "form-control form-control-danger",
+                      attrs: {
+                        type: "number",
+                        step: "0.001",
+                        placeholder: "Height in meters"
+                      },
+                      domProps: { value: _vm.Editform.height },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.$set(_vm.Editform, "height", $event.target.value)
+                        }
+                      }
+                    }),
+                    _vm._v(" "),
+                    _vm.theErrors.height
+                      ? _c("div", { staticClass: "mt-2 text-danger" }, [
+                          _vm._v(
+                            "\n\t\t\t\t\t\t\t\t" +
+                              _vm._s(_vm.theErrors.height[0]) +
+                              "\n\t\t\t\t\t\t\t"
+                          )
+                        ])
+                      : _vm._e(),
+                    _vm._v(" "),
+                    _c(
+                      "label",
+                      { staticClass: "col-form-label", attrs: { for: "nop" } },
+                      [_vm._v("width (meters)")]
+                    ),
+                    _vm._v(" "),
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.Editform.width,
+                          expression: "Editform.width"
+                        }
+                      ],
+                      staticClass: "form-control",
+                      attrs: {
+                        type: "number",
+                        step: "0.001",
+                        placeholder: "Width in meters"
+                      },
+                      domProps: { value: _vm.Editform.width },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.$set(_vm.Editform, "width", $event.target.value)
+                        }
+                      }
+                    }),
+                    _vm._v(" "),
+                    _vm.theErrors.width
+                      ? _c("div", { staticClass: "mt-2 text-danger" }, [
+                          _vm._v(
+                            "\n\t\t\t\t\t\t\t\t" +
+                              _vm._s(_vm.theErrors.width[0]) +
+                              "\n\t\t\t\t\t\t\t"
+                          )
+                        ])
+                      : _vm._e(),
+                    _vm._v(" "),
+                    _c(
+                      "label",
+                      { staticClass: "col-form-label", attrs: { for: "nop" } },
+                      [_vm._v("length (meters)")]
+                    ),
+                    _vm._v(" "),
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.Editform.length,
+                          expression: "Editform.length"
+                        }
+                      ],
+                      staticClass: "form-control",
+                      attrs: {
+                        type: "number",
+                        step: "0.001",
+                        placeholder: "Length in meters"
+                      },
+                      domProps: { value: _vm.Editform.length },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.$set(_vm.Editform, "length", $event.target.value)
+                        }
+                      }
+                    }),
+                    _vm._v(" "),
+                    _vm.theErrors.length
+                      ? _c("div", { staticClass: "mt-2 text-danger" }, [
+                          _vm._v(
+                            "\n\t\t\t\t\t\t\t\t" +
+                              _vm._s(_vm.theErrors.length[0]) +
+                              "\n\t\t\t\t\t\t\t"
+                          )
+                        ])
+                      : _vm._e()
+                  ])
+                ]
+              )
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "modal-footer" }, [
+              _c(
+                "button",
+                {
+                  staticClass: "btn btn-primary custom-button-animate",
+                  attrs: { type: "submit" },
+                  on: { click: _vm.EditStock }
+                },
+                [
+                  _c(
+                    "div",
+                    { staticClass: "custom-button-animate-item1" },
+                    [
+                      _vm.btnLoading
+                        ? [
+                            _c(
+                              "svg",
+                              {
+                                staticStyle: {
+                                  margin: "auto",
+                                  background: "none",
+                                  display: "block",
+                                  "shape-rendering": "auto"
+                                },
+                                attrs: {
+                                  xmlns: "http://www.w3.org/2000/svg",
+                                  "xmlns:xlink": "http://www.w3.org/1999/xlink",
+                                  width: "28px",
+                                  height: "28px",
+                                  viewBox: "0 0 100 100",
+                                  preserveAspectRatio: "xMidYMid"
+                                }
+                              },
+                              [
+                                _c(
+                                  "circle",
+                                  {
+                                    attrs: {
+                                      cx: "50",
+                                      cy: "50",
+                                      r: "0",
+                                      fill: "none",
+                                      stroke: "#26232b",
+                                      "stroke-width": "8"
+                                    }
+                                  },
+                                  [
+                                    _c("animate", {
+                                      attrs: {
+                                        attributeName: "r",
+                                        repeatCount: "indefinite",
+                                        dur: "0.6896551724137931s",
+                                        values: "0;40",
+                                        keyTimes: "0;1",
+                                        keySplines: "0 0.2 0.8 1",
+                                        calcMode: "spline",
+                                        begin: "0s"
+                                      }
+                                    }),
+                                    _vm._v(" "),
+                                    _c("animate", {
+                                      attrs: {
+                                        attributeName: "opacity",
+                                        repeatCount: "indefinite",
+                                        dur: "0.6896551724137931s",
+                                        values: "1;0",
+                                        keyTimes: "0;1",
+                                        keySplines: "0.2 0 0.8 1",
+                                        calcMode: "spline",
+                                        begin: "0s"
+                                      }
+                                    })
+                                  ]
+                                ),
+                                _vm._v(" "),
+                                _c(
+                                  "circle",
+                                  {
+                                    attrs: {
+                                      cx: "50",
+                                      cy: "50",
+                                      r: "0",
+                                      fill: "none",
+                                      stroke: "#6b3f20",
+                                      "stroke-width": "8"
+                                    }
+                                  },
+                                  [
+                                    _c("animate", {
+                                      attrs: {
+                                        attributeName: "r",
+                                        repeatCount: "indefinite",
+                                        dur: "0.6896551724137931s",
+                                        values: "0;40",
+                                        keyTimes: "0;1",
+                                        keySplines: "0 0.2 0.8 1",
+                                        calcMode: "spline",
+                                        begin: "-0.3448275862068966s"
+                                      }
+                                    }),
+                                    _vm._v(" "),
+                                    _c("animate", {
+                                      attrs: {
+                                        attributeName: "opacity",
+                                        repeatCount: "indefinite",
+                                        dur: "0.6896551724137931s",
+                                        values: "1;0",
+                                        keyTimes: "0;1",
+                                        keySplines: "0.2 0 0.8 1",
+                                        calcMode: "spline",
+                                        begin: "-0.3448275862068966s"
+                                      }
+                                    })
+                                  ]
+                                )
+                              ]
+                            )
+                          ]
+                        : _vm._e()
+                    ],
+                    2
+                  ),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "custom-button-animate-item2" }, [
+                    _vm._v("Save")
+                  ])
+                ]
+              ),
+              _vm._v(" "),
+              _c(
+                "button",
+                {
+                  staticClass: "btn btn-secondary",
+                  attrs: { type: "button", "data-dismiss": "modal" }
+                },
+                [_vm._v("\n\t\t\t\t\t\tClose\n\t\t\t\t\t")]
+              )
+            ])
+          ])
+        ])
+      ]
+    ),
+    _vm._v(" "),
+    _vm._m(2),
     _vm._v(" "),
     _c("div", { staticClass: "row" }, [
       _c("div", { staticClass: "col-md-12 grid-margin stretch-card" }, [
         _c("div", { staticClass: "card" }, [
           _c("div", { staticClass: "card-body" }, [
-            _vm._m(2),
-            _vm._v(" "),
             _vm._m(3),
+            _vm._v(" "),
+            _vm._m(4),
             _vm._v(" "),
             _c("div", { staticClass: "grid-container" }, [
               _c("div", { staticClass: "grid-item-container grid-item-1" }, [
@@ -45143,13 +45780,47 @@ var render = function() {
                               [
                                 _c("b-table", {
                                   attrs: {
-                                    responsive: "",
                                     small: "",
+                                    fixed: "",
+                                    "show-empty": "",
                                     "table-variant": "info",
                                     "head-variant": "dark",
                                     fields: _vm.ExtenColumn,
                                     items: data.item.stocks
-                                  }
+                                  },
+                                  scopedSlots: _vm._u(
+                                    [
+                                      {
+                                        key: "cell(action)",
+                                        fn: function(data) {
+                                          return [
+                                            _c(
+                                              "a",
+                                              {
+                                                staticClass:
+                                                  "badge badge-primary del-btn",
+                                                attrs: {
+                                                  "data-toggle": "modal",
+                                                  "data-target":
+                                                    "#EditFormModal"
+                                                },
+                                                on: {
+                                                  click: function($event) {
+                                                    return _vm.setEditForm(
+                                                      data.item
+                                                    )
+                                                  }
+                                                }
+                                              },
+                                              [_vm._v("EDIT")]
+                                            )
+                                          ]
+                                        }
+                                      }
+                                    ],
+                                    null,
+                                    true
+                                  )
                                 })
                               ],
                               1
@@ -45264,6 +45935,34 @@ var staticRenderFns = [
           attrs: { id: "exampleModalCenterTitle" }
         },
         [_vm._v("\n\t\t\t\t\t\tCreate stock\n\t\t\t\t\t")]
+      ),
+      _vm._v(" "),
+      _c(
+        "button",
+        {
+          staticClass: "close",
+          attrs: {
+            type: "button",
+            "data-dismiss": "modal",
+            "aria-label": "Close"
+          }
+        },
+        [_c("span", { attrs: { "aria-hidden": "true" } }, [_vm._v("×")])]
+      )
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "modal-header" }, [
+      _c(
+        "h5",
+        {
+          staticClass: "modal-title",
+          attrs: { id: "exampleModalCenterTitle" }
+        },
+        [_vm._v("Edit stock")]
       ),
       _vm._v(" "),
       _c(
