@@ -282,6 +282,17 @@
 								</template>
 
 								<template #cell(status)="data">
+
+									<template v-if="data.item.status == 'finished'">
+										<span class="badge badge-pill badge-success">
+											<b-icon
+												class="costum-badge"
+												icon="check2-square"
+											></b-icon>
+											{{ data.item.status.toUpperCase() }}
+										</span>
+									</template>
+
 									<template v-if="data.item.status == 'processing all'">
 										<span class="badge badge-pill badge-success">
 											<b-icon class="costum-badge" icon="clock"></b-icon>
@@ -322,6 +333,17 @@
 								</template>
 
 								<template #cell(confirm_status)="data">
+
+									<template v-if="data.item.confirm_status == 'revision confirmed'">
+										<span class="badge badge-pill badge-success">
+											<b-icon
+												class="costum-badge"
+												icon="check2-square"
+											></b-icon>
+											{{ data.item.confirm_status.toUpperCase() }}
+										</span>
+									</template>
+
 									<template v-if="data.item.confirm_status == 'revision'">
 										<span class="badge badge-pill badge-warning">
 											<b-icon
@@ -371,6 +393,8 @@
 										><b-icon icon="search"></b-icon
 									></router-link> -->
 
+									
+
 									<template
 										v-if="
 											data.item.status == 'stored' &&
@@ -402,8 +426,10 @@
 
 									<template
 										v-if="
-											data.item.confirm_status == 'confirmed' &&
-											data.item.status != 'processing all'
+											(data.item.confirm_status == 'revision confirmed' &&
+											data.item.status != 'finished') ||
+											(data.item.confirm_status == 'confirmed' &&
+											data.item.status != 'processing all' )
 										"
 									>
 										<a

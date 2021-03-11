@@ -6877,7 +6877,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                     name: "bb.index"
                   });
 
-                  _this3.$toast.success("Mantap", "Berhasil Horee!", {
+                  _this3.$toast.success("Submit success", "DOne!", {
                     position: "topRight"
                   }); //  console.log(response.status);
 
@@ -6891,7 +6891,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 _context3.t0 = _context3["catch"](0);
                 _this3.theErrors = _context3.t0.response.data.errors;
 
-                _this3.$toast.error("Ada yang error!", "Oops,", {
+                _this3.$toast.error("Something wrong!", "Oops,", {
                   position: "topRight"
                 });
 
@@ -7247,11 +7247,39 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
       isBusy: false,
       raws: [],
+      form: {
+        id: "",
+        nop: "",
+        series: "",
+        unit: ""
+      },
       kolom: [{
         key: "series",
         label: "Series",
@@ -7320,7 +7348,14 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   },
   methods: {
     confirmRevision: function confirmRevision(value) {
-      console.log(value);
+      var _this = this;
+
+      // console.log(value);
+      this.form.id = value.id;
+      this.form.unit = value.unit;
+      this.form.nop = value.nop;
+      this.form.series = value.series; // console.log(this.form);
+
       Vue.swal({
         title: "Are you sure to confirm this revision?",
         html: "the real stock of <b>".concat(value.series, "</b> on <b>Gudang Sawmill</b> is <b>").concat(value.unit, "</b> unit"),
@@ -7330,14 +7365,62 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         timerProgressBar: true,
         showCloseButton: true
       }).then(function (result) {
-        if (result.isConfirmed) {// console.log("rollback!!");
+        if (result.isConfirmed) {
+          // console.log("rollback!!");
           // console.log(value);
           // this.rollbackActions(value);
+          _this.confirmRevisionAction();
         }
       });
     },
+    confirmRevisionAction: function confirmRevisionAction() {
+      var _this2 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee() {
+        var response;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                console.log(_this2.form);
+                _context.prev = 1;
+                _context.next = 4;
+                return axios.patch("/api/gudang-bahanbaku/confirm-mismatch/".concat(_this2.form.id), _this2.form);
+
+              case 4:
+                response = _context.sent;
+
+                if (response.status == 200) {
+                  _this2.form.id = "";
+                  _this2.form.nop = "";
+                  _this2.form.series = "";
+                  _this2.form.unit = "";
+
+                  _this2.$toast.success("Mismatch has been confirmed", "Done!", {
+                    position: "topRight"
+                  });
+
+                  _this2.toggleBusy();
+                }
+
+                _context.next = 11;
+                break;
+
+              case 8:
+                _context.prev = 8;
+                _context.t0 = _context["catch"](1);
+                console.log(_context.t0.response.data.errors);
+
+              case 11:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee, null, [[1, 8]]);
+      }))();
+    },
     rollback: function rollback(value) {
-      var _this = this;
+      var _this3 = this;
 
       Vue.swal({
         title: "Are you sure to rollback this data ?",
@@ -7351,61 +7434,61 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         if (result.isConfirmed) {
           // console.log("rollback!!");
           // console.log(value);
-          _this.rollbackActions(value);
+          _this3.rollbackActions(value);
         }
       });
     },
     rollbackActions: function rollbackActions(value) {
-      var _this2 = this;
+      var _this4 = this;
 
-      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee() {
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee2() {
         var response, _yield$axios$get, data;
 
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee2$(_context2) {
           while (1) {
-            switch (_context.prev = _context.next) {
+            switch (_context2.prev = _context2.next) {
               case 0:
-                _context.prev = 0;
-                _context.next = 3;
+                _context2.prev = 0;
+                _context2.next = 3;
                 return axios["delete"]("/api/gudang-bahanbaku/output-index/rollback/".concat(value.id), value);
 
               case 3:
-                response = _context.sent;
+                response = _context2.sent;
 
                 if (!(response.status == 200)) {
-                  _context.next = 12;
+                  _context2.next = 12;
                   break;
                 }
 
-                _this2.$toast.success("data has been returned", "Done!", {
+                _this4.$toast.success("data has been returned", "Done!", {
                   position: "topRight"
                 }); // console.log(response);
 
 
-                _context.next = 8;
+                _context2.next = 8;
                 return axios.get("/api/gudang-bahanbaku/output-index");
 
               case 8:
-                _yield$axios$get = _context.sent;
+                _yield$axios$get = _context2.sent;
                 data = _yield$axios$get.data;
-                _this2.raws = [];
-                _this2.raws = data.data;
+                _this4.raws = [];
+                _this4.raws = data.data;
 
               case 12:
-                _context.next = 17;
+                _context2.next = 17;
                 break;
 
               case 14:
-                _context.prev = 14;
-                _context.t0 = _context["catch"](0);
-                console.log(_context.t0.response.data.errors);
+                _context2.prev = 14;
+                _context2.t0 = _context2["catch"](0);
+                console.log(_context2.t0.response.data.errors);
 
               case 17:
               case "end":
-                return _context.stop();
+                return _context2.stop();
             }
           }
-        }, _callee, null, [[0, 14]]);
+        }, _callee2, null, [[0, 14]]);
       }))();
     },
     onFiltered: function onFiltered(filteredItems) {
@@ -7414,34 +7497,34 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       this.currentPage = 1;
     },
     toggleBusy: function toggleBusy() {
-      var _this3 = this;
+      var _this5 = this;
 
-      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee2() {
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee3() {
         var _yield$axios$get2, data;
 
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee2$(_context2) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee3$(_context3) {
           while (1) {
-            switch (_context2.prev = _context2.next) {
+            switch (_context3.prev = _context3.next) {
               case 0:
-                _this3.isBusy = !_this3.isBusy;
-                _context2.next = 3;
+                _this5.isBusy = !_this5.isBusy;
+                _context3.next = 3;
                 return axios.get("/api/gudang-bahanbaku/output-index");
 
               case 3:
-                _yield$axios$get2 = _context2.sent;
+                _yield$axios$get2 = _context3.sent;
                 data = _yield$axios$get2.data;
-                _this3.raws = [];
-                _this3.raws = data.data;
-                _this3.totalRows = _this3.raws.length;
-                setTimeout(_this3.isBusy = !_this3.isBusy, 6000);
-                console.log(_this3.raws.length);
+                _this5.raws = [];
+                _this5.raws = data.data;
+                _this5.totalRows = _this5.raws.length;
+                setTimeout(_this5.isBusy = !_this5.isBusy, 6000);
+                console.log(_this5.raws.length);
 
               case 10:
               case "end":
-                return _context2.stop();
+                return _context3.stop();
             }
           }
-        }, _callee2);
+        }, _callee3);
       }))();
     }
   }
@@ -8967,6 +9050,32 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
@@ -9566,6 +9675,91 @@ function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -9907,8 +10101,24 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
-    return {
-      form: {},
+    return _defineProperty({
+      widthError: true,
+      heightError: true,
+      lengthError: true,
+      typeProduct: [],
+      btnLoading: false,
+      form: {
+        sawmillrun_id: "",
+        structure_category: "",
+        type_id: "",
+        size: "",
+        height: "",
+        width: "",
+        length: "",
+        id: "",
+        nop: "",
+        series: ""
+      },
       theErrors: [],
       isBusy: false,
       process: [],
@@ -9930,7 +10140,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         label: "Status",
         sortable: true
       }, "action"],
-      ExtenColumn: ["name", "shortname", "address", "owner", "email", "action"],
+      ExtenColumn: ["name", "tally", "height", "width", "length", "action"],
       sortBy: "",
       sortDesc: false,
       filter: null,
@@ -9950,9 +10160,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         text: "Show a lot"
       }],
       totalRows: 1,
-      currentPage: 1,
-      btnLoading: false
-    };
+      currentPage: 1
+    }, "btnLoading", false);
   },
   computed: {
     sortOptions: function sortOptions() {
@@ -9968,20 +10177,182 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   },
   mounted: function mounted() {
     this.toggleBusy();
+    this.getTypeProduct();
   },
   methods: {
-    finish: function finish(value) {
+    getTypeProduct: function getTypeProduct() {
+      var _this = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee() {
+        var response;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                _context.next = 2;
+                return axios.get("/api/type/index");
+
+              case 2:
+                response = _context.sent;
+
+                if (response.status === 200) {
+                  _this.typeProduct = response.data.data;
+                } else {
+                  _this.$toast.error("Can't request TYPE PRODUCT", "Oops", {
+                    position: "topRight"
+                  });
+                }
+
+              case 4:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee);
+      }))();
+    },
+    CreateModal: function CreateModal(value) {
+      this.form.sawmillrun_id = value.id;
+      this.form.structure_category = value.structure_category;
+      this.form.id = value.id;
+      this.form.nop = value.nop;
+      this.form.series = value.series;
       console.log(value);
     },
-    push: function push(value) {
-      return [].push(value.supplier);
+    addstock: function addstock() {
+      var _this2 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee2() {
+        var response;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                _this2.btnLoading = true; // console.log(this.form);
+
+                _context2.prev = 1;
+                _context2.next = 4;
+                return axios.post("/api/stock/addstock", _this2.form);
+
+              case 4:
+                response = _context2.sent;
+
+                if (response.status == 200) {
+                  _this2.form = {};
+                  _this2.theErrors = [];
+                  _this2.btnLoading = false;
+
+                  _this2.refreshTable();
+
+                  _this2.$toast.success("Action success", "Done!", {
+                    position: "topRight"
+                  });
+
+                  $("#StockFormModal").modal("hide");
+                }
+
+                _context2.next = 15;
+                break;
+
+              case 8:
+                _context2.prev = 8;
+                _context2.t0 = _context2["catch"](1);
+                _this2.btnLoading = false;
+                _this2.theErrors = _context2.t0.response.data.errors;
+                console.log(_this2.theErrors);
+                console.log(_context2.t0.response.data);
+
+                _this2.$toast.error("Something wrong when updating data!", "Oops,", {
+                  position: "topRight"
+                });
+
+              case 15:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2, null, [[1, 8]]);
+      }))();
+    },
+    finish: function finish(value) {
+      var _this3 = this;
+
+      this.form.id = value.id;
+      this.form.nop = value.nop;
+      this.form.series = value.series; // console.log(this.form);
+
+      Vue.swal({
+        title: "Are you sure to finish this process",
+        html: "Finish the  <b>".concat(value.series, "</b> series."),
+        icon: "question",
+        confirmButtonText: "Confirm",
+        cancelButtonText: "No",
+        showCancelButton: true,
+        timerProgressBar: true,
+        showCloseButton: true
+      }).then(function (result) {
+        if (result.isConfirmed) {
+          // console.log(value.sawmillstock_id.id);
+          // console.log(this.form);
+          // this.rollbackAction();
+          _this3.finishAction();
+        }
+      });
+    },
+    finishAction: function finishAction() {
+      var _this4 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee3() {
+        var response;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee3$(_context3) {
+          while (1) {
+            switch (_context3.prev = _context3.next) {
+              case 0:
+                _context3.prev = 0;
+                _context3.next = 3;
+                return axios.patch("/api/gudang-sawmill/finish-process/".concat(_this4.form.id), _this4.form);
+
+              case 3:
+                response = _context3.sent;
+
+                if (response.status == 200) {
+                  _this4.form.id = "";
+                  _this4.form.nop = "";
+                  _this4.form.series = "";
+
+                  _this4.refreshTable();
+
+                  _this4.$toast.success("Action success", "Done!", {
+                    position: "topRight"
+                  });
+                }
+
+                _context3.next = 11;
+                break;
+
+              case 7:
+                _context3.prev = 7;
+                _context3.t0 = _context3["catch"](0);
+                console.log(_context3.t0.response);
+
+                _this4.$toast.error("Something wrong", "Oops", {
+                  position: "topRight"
+                });
+
+              case 11:
+              case "end":
+                return _context3.stop();
+            }
+          }
+        }, _callee3, null, [[0, 7]]);
+      }))();
     },
     cek: function cek(value) {
       console.log(value);
       value._showDetails = !value._showDetails; // this.extendable.push(value.supplier);
     },
     rollback: function rollback(value) {
-      var _this = this;
+      var _this5 = this;
 
       this.form = value; // console.log(this.form);
 
@@ -9998,54 +10369,54 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         if (result.isConfirmed) {
           // console.log(value.sawmillstock_id.id);
           // console.log(this.form);
-          _this.rollbackAction();
+          _this5.rollbackAction();
         }
       });
     },
     rollbackAction: function rollbackAction() {
-      var _this2 = this;
+      var _this6 = this;
 
-      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee() {
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee4() {
         var response;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee4$(_context4) {
           while (1) {
-            switch (_context.prev = _context.next) {
+            switch (_context4.prev = _context4.next) {
               case 0:
-                _context.prev = 0;
-                _context.next = 3;
-                return axios.patch("/api/gudang-sawmill/rollback-process/".concat(_this2.form.id), _this2.form);
+                _context4.prev = 0;
+                _context4.next = 3;
+                return axios.patch("/api/gudang-sawmill/rollback-process/".concat(_this6.form.id), _this6.form);
 
               case 3:
-                response = _context.sent;
+                response = _context4.sent;
 
                 if (response.status == 200) {
-                  _this2.refreshTable();
+                  _this6.refreshTable();
 
-                  _this2.$toast.success("Successfully processing", "Done!", {
+                  _this6.$toast.success("Successfully processing", "Done!", {
                     position: "topRight"
                   });
 
-                  _this2.form = {};
+                  _this6.form = {};
                 }
 
-                _context.next = 11;
+                _context4.next = 11;
                 break;
 
               case 7:
-                _context.prev = 7;
-                _context.t0 = _context["catch"](0);
-                console.log(_context.t0.response);
+                _context4.prev = 7;
+                _context4.t0 = _context4["catch"](0);
+                console.log(_context4.t0.response);
 
-                _this2.$toast.error("Something wrong", "Oops", {
+                _this6.$toast.error("Something wrong", "Oops", {
                   position: "topRight"
                 });
 
               case 11:
               case "end":
-                return _context.stop();
+                return _context4.stop();
             }
           }
-        }, _callee, null, [[0, 7]]);
+        }, _callee4, null, [[0, 7]]);
       }))();
     },
     onFiltered: function onFiltered(filteredItems) {
@@ -10054,89 +10425,64 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       this.currentPage = 1;
     },
     toggleBusy: function toggleBusy() {
-      var _this3 = this;
+      var _this7 = this;
 
-      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee2() {
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee5() {
         var _yield$axios$get, data;
 
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee2$(_context2) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee5$(_context5) {
           while (1) {
-            switch (_context2.prev = _context2.next) {
+            switch (_context5.prev = _context5.next) {
               case 0:
-                _this3.isBusy = !_this3.isBusy;
-                _context2.next = 3;
+                _this7.isBusy = !_this7.isBusy;
+                _context5.next = 3;
                 return axios.get("/api/gudang-sawmill/process-index");
 
               case 3:
-                _yield$axios$get = _context2.sent;
+                _yield$axios$get = _context5.sent;
                 data = _yield$axios$get.data;
-                _this3.process = [];
-                _this3.process = data.data; // this.process.forEach((element) => {
+                _this7.process = [];
+                _this7.process = data.data; // this.process.forEach((element) => {
                 // 	this.extendable.push(element.supplier);
                 // });
 
-                _this3.totalRows = _this3.process.length;
-                setTimeout(_this3.isBusy = !_this3.isBusy, 6000);
+                _this7.totalRows = _this7.process.length;
+                setTimeout(_this7.isBusy = !_this7.isBusy, 6000);
 
               case 9:
               case "end":
-                return _context2.stop();
+                return _context5.stop();
             }
           }
-        }, _callee2);
-      }))();
-    },
-    store: function store() {
-      var _this4 = this;
-
-      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee3() {
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee3$(_context3) {
-          while (1) {
-            switch (_context3.prev = _context3.next) {
-              case 0:
-                try {} catch (e) {
-                  _this4.btnLoading = false;
-                  _this4.theErrors = e.response.data.errors;
-
-                  _this4.$toast.error("Something wrong when updating data!", "Oops,", {
-                    position: "topRight"
-                  });
-                }
-
-              case 1:
-              case "end":
-                return _context3.stop();
-            }
-          }
-        }, _callee3);
+        }, _callee5);
       }))();
     },
     refreshTable: function refreshTable() {
-      var _this5 = this;
+      var _this8 = this;
 
-      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee4() {
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee6() {
         var _yield$axios$get2, data;
 
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee4$(_context4) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee6$(_context6) {
           while (1) {
-            switch (_context4.prev = _context4.next) {
+            switch (_context6.prev = _context6.next) {
               case 0:
-                _context4.next = 2;
+                _context6.next = 2;
                 return axios.get("/api/gudang-sawmill/process-index");
 
               case 2:
-                _yield$axios$get2 = _context4.sent;
+                _yield$axios$get2 = _context6.sent;
                 data = _yield$axios$get2.data;
-                _this5.process = [];
-                _this5.process = data.data;
-                _this5.totalRows = _this5.process.length;
+                _this8.process = [];
+                _this8.process = data.data;
+                _this8.totalRows = _this8.process.length;
 
               case 7:
               case "end":
-                return _context4.stop();
+                return _context6.stop();
             }
           }
-        }, _callee4);
+        }, _callee6);
       }))();
     }
   }
@@ -40453,11 +40799,11 @@ var render = function() {
                   ])
                 }),
                 _vm._v(" "),
-                _vm.theErrors.name
+                _vm.theErrors.structure_category_id
                   ? _c("div", { staticClass: "mt-2 text-danger" }, [
                       _vm._v(
                         "\n\t\t\t\t\t\t" +
-                          _vm._s(_vm.theErrors.name[0]) +
+                          _vm._s(_vm.theErrors.structure_category_id[0]) +
                           "\n\t\t\t\t\t"
                       )
                     ])
@@ -40626,11 +40972,11 @@ var render = function() {
                   ])
                 }),
                 _vm._v(" "),
-                _vm.theErrors.supplier_id
+                _vm.theErrors.invoice_id
                   ? _c("div", { staticClass: "mt-2 text-danger" }, [
                       _vm._v(
                         "\n\t\t\t\t\t\t" +
-                          _vm._s(_vm.theErrors.supplier_id[0]) +
+                          _vm._s(_vm.theErrors.invoice_id[0]) +
                           "\n\t\t\t\t\t"
                       )
                     ])
@@ -41026,6 +41372,30 @@ var render = function() {
                       key: "cell(status)",
                       fn: function(data) {
                         return [
+                          data.item.status == "finished"
+                            ? [
+                                _c(
+                                  "span",
+                                  {
+                                    staticClass:
+                                      "badge badge-pill badge-success"
+                                  },
+                                  [
+                                    _c("b-icon", {
+                                      staticClass: "costum-badge",
+                                      attrs: { icon: "check2-square" }
+                                    }),
+                                    _vm._v(
+                                      "\n\t\t\t\t\t\t\t\t\t\t" +
+                                        _vm._s(data.item.status.toUpperCase()) +
+                                        "\n\t\t\t\t\t\t\t\t\t"
+                                    )
+                                  ],
+                                  1
+                                )
+                              ]
+                            : _vm._e(),
+                          _vm._v(" "),
                           data.item.status == "moving"
                             ? [
                                 _c(
@@ -41153,6 +41523,32 @@ var render = function() {
                       key: "cell(confirm_status)",
                       fn: function(data) {
                         return [
+                          data.item.confirm_status == "revision confirmed"
+                            ? [
+                                _c(
+                                  "span",
+                                  {
+                                    staticClass:
+                                      "badge badge-pill badge-success"
+                                  },
+                                  [
+                                    _c("b-icon", {
+                                      staticClass: "costum-badge",
+                                      attrs: { icon: "check2-square" }
+                                    }),
+                                    _vm._v(
+                                      "\n\t\t\t\t\t\t\t\t\t\t" +
+                                        _vm._s(
+                                          data.item.confirm_status.toUpperCase()
+                                        ) +
+                                        "\n\t\t\t\t\t\t\t\t\t"
+                                    )
+                                  ],
+                                  1
+                                )
+                              ]
+                            : _vm._e(),
+                          _vm._v(" "),
                           data.item.confirm_status == "revision"
                             ? [
                                 _c(
@@ -41296,7 +41692,8 @@ var render = function() {
                               _vm._v(" "),
                               data.item.confirm_status != "mismatch" &&
                               data.item.confirm_status != "confirmed" &&
-                              data.item.confirm_status != "revision"
+                              data.item.confirm_status != "revision" &&
+                              data.item.confirm_status != "revision confirmed"
                                 ? [
                                     _c(
                                       "a",
@@ -43359,6 +43756,30 @@ var render = function() {
                       key: "cell(status)",
                       fn: function(data) {
                         return [
+                          data.item.status == "finished"
+                            ? [
+                                _c(
+                                  "span",
+                                  {
+                                    staticClass:
+                                      "badge badge-pill badge-success"
+                                  },
+                                  [
+                                    _c("b-icon", {
+                                      staticClass: "costum-badge",
+                                      attrs: { icon: "check2-square" }
+                                    }),
+                                    _vm._v(
+                                      "\n\t\t\t\t\t\t\t\t\t\t" +
+                                        _vm._s(data.item.status.toUpperCase()) +
+                                        "\n\t\t\t\t\t\t\t\t\t"
+                                    )
+                                  ],
+                                  1
+                                )
+                              ]
+                            : _vm._e(),
+                          _vm._v(" "),
                           data.item.status == "processing all"
                             ? [
                                 _c(
@@ -43487,6 +43908,32 @@ var render = function() {
                       key: "cell(confirm_status)",
                       fn: function(data) {
                         return [
+                          data.item.confirm_status == "revision confirmed"
+                            ? [
+                                _c(
+                                  "span",
+                                  {
+                                    staticClass:
+                                      "badge badge-pill badge-success"
+                                  },
+                                  [
+                                    _c("b-icon", {
+                                      staticClass: "costum-badge",
+                                      attrs: { icon: "check2-square" }
+                                    }),
+                                    _vm._v(
+                                      "\n\t\t\t\t\t\t\t\t\t\t" +
+                                        _vm._s(
+                                          data.item.confirm_status.toUpperCase()
+                                        ) +
+                                        "\n\t\t\t\t\t\t\t\t\t"
+                                    )
+                                  ],
+                                  1
+                                )
+                              ]
+                            : _vm._e(),
+                          _vm._v(" "),
                           data.item.confirm_status == "revision"
                             ? [
                                 _c(
@@ -43661,8 +44108,10 @@ var render = function() {
                               ]
                             : _vm._e(),
                           _vm._v(" "),
-                          data.item.confirm_status == "confirmed" &&
-                          data.item.status != "processing all"
+                          (data.item.confirm_status == "revision confirmed" &&
+                            data.item.status != "finished") ||
+                          (data.item.confirm_status == "confirmed" &&
+                            data.item.status != "processing all")
                             ? [
                                 _c(
                                   "a",
@@ -43882,15 +44331,414 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", [
-    _vm._m(0),
+    _c(
+      "div",
+      {
+        staticClass: "modal fade",
+        attrs: {
+          id: "StockFormModal",
+          tabindex: "-1",
+          role: "dialog",
+          "aria-labelledby": "exampleModalCenterTitle",
+          "aria-hidden": "true"
+        }
+      },
+      [
+        _c("div", { staticClass: "modal-dialog modal-dialog-centered" }, [
+          _c("div", { staticClass: "modal-content" }, [
+            _vm._m(0),
+            _vm._v(" "),
+            _c("div", { staticClass: "modal-body" }, [
+              _c(
+                "form",
+                {
+                  attrs: { method: "post" },
+                  on: {
+                    submit: function($event) {
+                      $event.preventDefault()
+                      return _vm.addstock($event)
+                    }
+                  }
+                },
+                [
+                  _c("div", { staticClass: "form-group" }, [
+                    _c(
+                      "label",
+                      { staticClass: "col-form-label", attrs: { for: "nop" } },
+                      [_vm._v("Series")]
+                    ),
+                    _vm._v(" "),
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.form.series,
+                          expression: "form.series"
+                        }
+                      ],
+                      staticClass: "form-control",
+                      attrs: { readonly: "", type: "text" },
+                      domProps: { value: _vm.form.series },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.$set(_vm.form, "series", $event.target.value)
+                        }
+                      }
+                    }),
+                    _vm._v(" "),
+                    _c(
+                      "label",
+                      {
+                        staticClass: "col-form-label",
+                        attrs: { for: "TypeProduct" }
+                      },
+                      [_vm._v("Type Product")]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "select",
+                      {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.form.type_id,
+                            expression: "form.type_id"
+                          }
+                        ],
+                        attrs: { name: "TypeProduct", id: "typeProduct" },
+                        on: {
+                          change: function($event) {
+                            var $$selectedVal = Array.prototype.filter
+                              .call($event.target.options, function(o) {
+                                return o.selected
+                              })
+                              .map(function(o) {
+                                var val = "_value" in o ? o._value : o.value
+                                return val
+                              })
+                            _vm.$set(
+                              _vm.form,
+                              "type_id",
+                              $event.target.multiple
+                                ? $$selectedVal
+                                : $$selectedVal[0]
+                            )
+                          }
+                        }
+                      },
+                      _vm._l(_vm.typeProduct, function(data) {
+                        return _c(
+                          "option",
+                          { key: data.id, domProps: { value: data.id } },
+                          [
+                            _vm._v(
+                              "\n\t\t\t\t\t\t\t\t\t" +
+                                _vm._s(data.name) +
+                                "\n\t\t\t\t\t\t\t\t"
+                            )
+                          ]
+                        )
+                      }),
+                      0
+                    ),
+                    _vm._v(" "),
+                    _vm.theErrors.type_id
+                      ? _c("div", { staticClass: "mt-2 text-danger" }, [
+                          _vm._v(
+                            "\n\t\t\t\t\t\t\t\t" +
+                              _vm._s(_vm.theErrors.type_id[0]) +
+                              "\n\t\t\t\t\t\t\t"
+                          )
+                        ])
+                      : _vm._e(),
+                    _vm._v(" "),
+                    _c(
+                      "label",
+                      { staticClass: "col-form-label", attrs: { for: "nop" } },
+                      [_vm._v("Height (meters)")]
+                    ),
+                    _vm._v(" "),
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.form.height,
+                          expression: "form.height"
+                        }
+                      ],
+                      staticClass: "form-control form-control-danger",
+                      attrs: {
+                        type: "number",
+                        step: "0.001",
+                        placeholder: "Height in meters"
+                      },
+                      domProps: { value: _vm.form.height },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.$set(_vm.form, "height", $event.target.value)
+                        }
+                      }
+                    }),
+                    _vm._v(" "),
+                    _vm.theErrors.height
+                      ? _c("div", { staticClass: "mt-2 text-danger" }, [
+                          _vm._v(
+                            "\n\t\t\t\t\t\t\t\t" +
+                              _vm._s(_vm.theErrors.height[0]) +
+                              "\n\t\t\t\t\t\t\t"
+                          )
+                        ])
+                      : _vm._e(),
+                    _vm._v(" "),
+                    _c(
+                      "label",
+                      { staticClass: "col-form-label", attrs: { for: "nop" } },
+                      [_vm._v("width (meters)")]
+                    ),
+                    _vm._v(" "),
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.form.width,
+                          expression: "form.width"
+                        }
+                      ],
+                      staticClass: "form-control",
+                      attrs: {
+                        type: "number",
+                        step: "0.001",
+                        placeholder: "Width in meters"
+                      },
+                      domProps: { value: _vm.form.width },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.$set(_vm.form, "width", $event.target.value)
+                        }
+                      }
+                    }),
+                    _vm._v(" "),
+                    _vm.theErrors.width
+                      ? _c("div", { staticClass: "mt-2 text-danger" }, [
+                          _vm._v(
+                            "\n\t\t\t\t\t\t\t\t" +
+                              _vm._s(_vm.theErrors.width[0]) +
+                              "\n\t\t\t\t\t\t\t"
+                          )
+                        ])
+                      : _vm._e(),
+                    _vm._v(" "),
+                    _c(
+                      "label",
+                      { staticClass: "col-form-label", attrs: { for: "nop" } },
+                      [_vm._v("length (meters)")]
+                    ),
+                    _vm._v(" "),
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.form.length,
+                          expression: "form.length"
+                        }
+                      ],
+                      staticClass: "form-control",
+                      attrs: {
+                        type: "number",
+                        step: "0.001",
+                        placeholder: "Length in meters"
+                      },
+                      domProps: { value: _vm.form.length },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.$set(_vm.form, "length", $event.target.value)
+                        }
+                      }
+                    }),
+                    _vm._v(" "),
+                    _vm.theErrors.length
+                      ? _c("div", { staticClass: "mt-2 text-danger" }, [
+                          _vm._v(
+                            "\n\t\t\t\t\t\t\t\t" +
+                              _vm._s(_vm.theErrors.length[0]) +
+                              "\n\t\t\t\t\t\t\t"
+                          )
+                        ])
+                      : _vm._e()
+                  ])
+                ]
+              )
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "modal-footer" }, [
+              _c(
+                "button",
+                {
+                  staticClass: "btn btn-primary custom-button-animate",
+                  attrs: { type: "submit" },
+                  on: { click: _vm.addstock }
+                },
+                [
+                  _c(
+                    "div",
+                    { staticClass: "custom-button-animate-item1" },
+                    [
+                      _vm.btnLoading
+                        ? [
+                            _c(
+                              "svg",
+                              {
+                                staticStyle: {
+                                  margin: "auto",
+                                  background: "none",
+                                  display: "block",
+                                  "shape-rendering": "auto"
+                                },
+                                attrs: {
+                                  xmlns: "http://www.w3.org/2000/svg",
+                                  "xmlns:xlink": "http://www.w3.org/1999/xlink",
+                                  width: "28px",
+                                  height: "28px",
+                                  viewBox: "0 0 100 100",
+                                  preserveAspectRatio: "xMidYMid"
+                                }
+                              },
+                              [
+                                _c(
+                                  "circle",
+                                  {
+                                    attrs: {
+                                      cx: "50",
+                                      cy: "50",
+                                      r: "0",
+                                      fill: "none",
+                                      stroke: "#26232b",
+                                      "stroke-width": "8"
+                                    }
+                                  },
+                                  [
+                                    _c("animate", {
+                                      attrs: {
+                                        attributeName: "r",
+                                        repeatCount: "indefinite",
+                                        dur: "0.6896551724137931s",
+                                        values: "0;40",
+                                        keyTimes: "0;1",
+                                        keySplines: "0 0.2 0.8 1",
+                                        calcMode: "spline",
+                                        begin: "0s"
+                                      }
+                                    }),
+                                    _vm._v(" "),
+                                    _c("animate", {
+                                      attrs: {
+                                        attributeName: "opacity",
+                                        repeatCount: "indefinite",
+                                        dur: "0.6896551724137931s",
+                                        values: "1;0",
+                                        keyTimes: "0;1",
+                                        keySplines: "0.2 0 0.8 1",
+                                        calcMode: "spline",
+                                        begin: "0s"
+                                      }
+                                    })
+                                  ]
+                                ),
+                                _vm._v(" "),
+                                _c(
+                                  "circle",
+                                  {
+                                    attrs: {
+                                      cx: "50",
+                                      cy: "50",
+                                      r: "0",
+                                      fill: "none",
+                                      stroke: "#6b3f20",
+                                      "stroke-width": "8"
+                                    }
+                                  },
+                                  [
+                                    _c("animate", {
+                                      attrs: {
+                                        attributeName: "r",
+                                        repeatCount: "indefinite",
+                                        dur: "0.6896551724137931s",
+                                        values: "0;40",
+                                        keyTimes: "0;1",
+                                        keySplines: "0 0.2 0.8 1",
+                                        calcMode: "spline",
+                                        begin: "-0.3448275862068966s"
+                                      }
+                                    }),
+                                    _vm._v(" "),
+                                    _c("animate", {
+                                      attrs: {
+                                        attributeName: "opacity",
+                                        repeatCount: "indefinite",
+                                        dur: "0.6896551724137931s",
+                                        values: "1;0",
+                                        keyTimes: "0;1",
+                                        keySplines: "0.2 0 0.8 1",
+                                        calcMode: "spline",
+                                        begin: "-0.3448275862068966s"
+                                      }
+                                    })
+                                  ]
+                                )
+                              ]
+                            )
+                          ]
+                        : _vm._e()
+                    ],
+                    2
+                  ),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "custom-button-animate-item2" }, [
+                    _vm._v("Submit")
+                  ])
+                ]
+              ),
+              _vm._v(" "),
+              _c(
+                "button",
+                {
+                  staticClass: "btn btn-secondary",
+                  attrs: { type: "button", "data-dismiss": "modal" }
+                },
+                [_vm._v("\n\t\t\t\t\t\tClose\n\t\t\t\t\t")]
+              )
+            ])
+          ])
+        ])
+      ]
+    ),
+    _vm._v(" "),
+    _vm._m(1),
     _vm._v(" "),
     _c("div", { staticClass: "row" }, [
       _c("div", { staticClass: "col-md-12 grid-margin stretch-card" }, [
         _c("div", { staticClass: "card" }, [
           _c("div", { staticClass: "card-body" }, [
-            _vm._m(1),
-            _vm._v(" "),
             _vm._m(2),
+            _vm._v(" "),
+            _vm._m(3),
             _vm._v(" "),
             _c("div", { staticClass: "grid-container" }, [
               _c("div", { staticClass: "grid-item-container grid-item-1" }, [
@@ -44149,6 +44997,30 @@ var render = function() {
                       key: "cell(status)",
                       fn: function(data) {
                         return [
+                          data.item.status == "finished"
+                            ? [
+                                _c(
+                                  "span",
+                                  {
+                                    staticClass:
+                                      "badge badge-pill badge-success"
+                                  },
+                                  [
+                                    _c("b-icon", {
+                                      staticClass: "costum-badge",
+                                      attrs: { icon: "check2-square" }
+                                    }),
+                                    _vm._v(
+                                      "\n\t\t\t\t\t\t\t\t\t\t" +
+                                        _vm._s(data.item.status.toUpperCase()) +
+                                        "\n\t\t\t\t\t\t\t\t\t"
+                                    )
+                                  ],
+                                  1
+                                )
+                              ]
+                            : _vm._e(),
+                          _vm._v(" "),
                           data.item.status == "processed"
                             ? [
                                 _c(
@@ -44197,13 +45069,40 @@ var render = function() {
                                 1
                               ),
                               _vm._v(" "),
+                              info.item.status == "finished"
+                                ? [
+                                    _c(
+                                      "a",
+                                      {
+                                        staticClass:
+                                          "badge badge-primary del-btn",
+                                        attrs: {
+                                          "data-toggle": "modal",
+                                          "data-target": "#StockFormModal"
+                                        },
+                                        on: {
+                                          click: function($event) {
+                                            return _vm.CreateModal(info.item)
+                                          }
+                                        }
+                                      },
+                                      [_vm._v("CREATE STOCK")]
+                                    )
+                                  ]
+                                : _vm._e(),
+                              _vm._v(" "),
                               info.item.status == "processed"
                                 ? [
                                     _c(
                                       "a",
                                       {
                                         staticClass:
-                                          "badge badge-success del-btn"
+                                          "badge badge-success del-btn",
+                                        on: {
+                                          click: function($event) {
+                                            return _vm.finish(info.item)
+                                          }
+                                        }
                                       },
                                       [_vm._v("FINISH")]
                                     )
@@ -44244,12 +45143,12 @@ var render = function() {
                               [
                                 _c("b-table", {
                                   attrs: {
-                                    fixed: "",
+                                    responsive: "",
                                     small: "",
                                     "table-variant": "info",
                                     "head-variant": "dark",
                                     fields: _vm.ExtenColumn,
-                                    items: [data.item.supplier]
+                                    items: data.item.stocks
                                   }
                                 })
                               ],
@@ -44353,6 +45252,34 @@ var render = function() {
   ])
 }
 var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "modal-header" }, [
+      _c(
+        "h5",
+        {
+          staticClass: "modal-title",
+          attrs: { id: "exampleModalCenterTitle" }
+        },
+        [_vm._v("\n\t\t\t\t\t\tCreate stock\n\t\t\t\t\t")]
+      ),
+      _vm._v(" "),
+      _c(
+        "button",
+        {
+          staticClass: "close",
+          attrs: {
+            type: "button",
+            "data-dismiss": "modal",
+            "aria-label": "Close"
+          }
+        },
+        [_c("span", { attrs: { "aria-hidden": "true" } }, [_vm._v("×")])]
+      )
+    ])
+  },
   function() {
     var _vm = this
     var _h = _vm.$createElement

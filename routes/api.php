@@ -32,7 +32,7 @@ Route::namespace('App\Http\Controllers')->group(function(){
         Route::patch('index/{raw:id}', 'RawController@update');
         Route::patch('{raw:id}/move', 'RawController@move');
         Route::get('output-index', 'RecordController@recordBB');
-        Route::patch('confirm-mismatch', 'RecordController@confirmMismatch');
+        Route::patch('confirm-mismatch/{record:id}', 'RecordController@confirmMismatch');
         Route::delete('output-index/rollback/{record:id}', 'RecordController@rollbackBB');
     });
 
@@ -48,6 +48,7 @@ Route::namespace('App\Http\Controllers')->group(function(){
         Route::post('add-bb-stock', 'SawmillstockController@add_bb_stock');
         Route::patch('process/{record:id}', 'SawmillstockController@addprocess');
         Route::get('process-index', 'SawmillstockController@processindex');
+        Route::patch('finish-process/{sawmillrun:id}', 'SawmillstockController@finishprocess');
         Route::patch('rollback-process/{sawmillrun:id}', 'SawmillstockController@rollbackprocess');
     });
 
@@ -80,7 +81,20 @@ Route::namespace('App\Http\Controllers')->group(function(){
         Route::get('index', 'RecordController@index');
         Route::post('move/{raw:id}', 'RecordController@move');
         Route::get('check/{raw:id}', 'RecordController@check');
-        
+    });
+
+    Route::prefix('type')->group(function(){
+        Route::get('index', 'TypeController@index');
+        Route::post('add-type', 'TypeController@addtype');
+        Route::get('edit-type/{type:id}', 'TypeController@updatetype');
+        Route::patch('edit-type/{type:id}/update', 'TypeController@updatetype');
+    });
+
+    Route::prefix('stock')->group(function(){
+        Route::get('index', 'StockController@index');
+        Route::post('addstock', 'StockController@addstock');
+        Route::get('index/{stock:id}', 'StockController@show');
+        Route::patch('index/{stock:id}/update', 'StockController@update');
     });
 
 });

@@ -144,6 +144,17 @@
 								</template>
 
 								<template #cell(status)="data">
+
+									<template v-if="data.item.status == 'finished'">
+										<span class="badge badge-pill badge-success">
+											<b-icon
+												class="costum-badge"
+												icon="check2-square"
+											></b-icon>
+											{{ data.item.status.toUpperCase() }}
+										</span>
+									</template>
+
 									<template v-if="data.item.status == 'moving'">
 										<span class="badge badge-pill badge-info">
 											<b-icon
@@ -183,6 +194,16 @@
 								</template>
 
 								<template #cell(confirm_status)="data">
+
+									<template v-if="data.item.confirm_status == 'revision confirmed'">
+										<span class="badge badge-pill badge-success">
+											<b-icon
+												class="costum-badge"
+												icon="check2-square"
+											></b-icon>
+											{{ data.item.confirm_status.toUpperCase() }}
+										</span>
+									</template>
 
 									<template v-if="data.item.confirm_status == 'revision'">
 										<span class="badge badge-pill badge-warning">
@@ -239,7 +260,8 @@
 											v-if="
 												data.item.confirm_status != 'mismatch' &&
 												data.item.confirm_status != 'confirmed' &&
-												data.item.confirm_status != 'revision'
+												data.item.confirm_status != 'revision' &&
+												data.item.confirm_status != 'revision confirmed'
 											"
 										>
 											<a
@@ -295,6 +317,12 @@ export default {
 		return {
 			isBusy: false,
 			raws: [],
+			form: {
+				id:"",
+				nop:"",
+				series:"",
+				unit:"",
+			},
 			kolom: [
 				{ key: "series", label: "Series", sortable: true },
 				{ key: "destination_name", label: "Destination", sortable: true },
@@ -338,7 +366,12 @@ export default {
 
 	methods: {
 		confirmRevision(value){
-			console.log(value);
+			// console.log(value);
+			this.form.id = value.id
+			this.form.unit = value.unit
+			this.form.nop = value.nop
+			this.form.series = value.series
+			// console.log(this.form);
 			Vue.swal({
 				title: `Are you sure to confirm this revision?`,
 				html: `the real stock of <b>${value.series}</b> on <b>Gudang Sawmill</b> is <b>${value.unit}</b> unit`,
@@ -352,8 +385,28 @@ export default {
 					// console.log("rollback!!");
 					// console.log(value);
 					// this.rollbackActions(value);
+					this.confirmRevisionAction()
 				}
 			});
+		},
+		async confirmRevisionAction(){
+			console.log(this.form);
+
+			try {
+				let response = await axios.patch(`/api/gudang-bahanbaku/confirm-mismatch/${this.form.id}`, this.form)
+				if (response.status == 200){
+					this.form.id = ""
+					this.form.nop = ""
+					this.form.series = ""
+					this.form.unit =""
+					this.$toast.success("Mismatch has been confirmed", "Done!", {
+						position: "topRight",
+					});
+					this.toggleBusy()
+				}
+			} catch (e) {
+				console.log(e.response.data.errors);
+			}
 		},
 		rollback(value) {
 			Vue.swal({

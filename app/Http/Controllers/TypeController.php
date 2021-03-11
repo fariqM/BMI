@@ -10,14 +10,13 @@ class TypeController extends Controller
 {
     public function index(){
         $types = Type::get();
-        return TypeResource::collection('$types');
+        return TypeResource::collection($types);
     }
 
     public function addtype(){
 
         $type = request()->validate([
             'name' => 'required',
-            'shortname' => 'required',
         ]);
 
         $type2 = [
@@ -29,6 +28,5 @@ class TypeController extends Controller
         return response()->json([
             'message' => 'success'
         ]);
-
     }
 }

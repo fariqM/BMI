@@ -31,8 +31,8 @@
 								</div>
 							</template>
 						</v-select>
-						<div v-if="theErrors.name" class="mt-2 text-danger">
-							{{ theErrors.name[0] }}
+						<div v-if="theErrors.structure_category_id" class="mt-2 text-danger">
+							{{ theErrors.structure_category_id[0] }}
 						</div>
 					</div>
 				</div>
@@ -98,8 +98,8 @@
 								</div>
 							</template>
 						</v-select>
-						<div v-if="theErrors.supplier_id" class="mt-2 text-danger">
-							{{ theErrors.supplier_id[0] }}
+						<div v-if="theErrors.invoice_id" class="mt-2 text-danger">
+							{{ theErrors.invoice_id[0] }}
 						</div>
 					</div>
 				</div>
@@ -220,14 +220,14 @@ export default {
 				);
 				if (response.status == 200) {
 					this.$router.push({ name: "bb.index" });
-					this.$toast.success("Mantap", "Berhasil Horee!", {
+					this.$toast.success("Submit success", "DOne!", {
 						position: "topRight",
 					});
 					//  console.log(response.status);
 				}
 			} catch (e) {
 				this.theErrors = e.response.data.errors;
-				this.$toast.error("Ada yang error!", "Oops,", { position: "topRight" });
+				this.$toast.error("Something wrong!", "Oops,", { position: "topRight" });
 			}
 		},
 

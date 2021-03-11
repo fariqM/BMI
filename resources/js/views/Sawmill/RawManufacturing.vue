@@ -1,8 +1,8 @@
 <template>
 	<div>
-		<!-- <div
+		<div
 			class="modal fade"
-			id="exampleModalCenter"
+			id="StockFormModal"
 			tabindex="-1"
 			role="dialog"
 			aria-labelledby="exampleModalCenterTitle"
@@ -12,7 +12,7 @@
 				<div class="modal-content">
 					<div class="modal-header">
 						<h5 class="modal-title" id="exampleModalCenterTitle">
-							Raw Manufacturing at <b>Gudang Sawmill</b>
+							Create stock
 						</h5>
 						<button
 							type="button"
@@ -24,21 +24,80 @@
 						</button>
 					</div>
 					<div class="modal-body">
-						<form method="post" @submit.prevent="verify">
+						<form method="post" @submit.prevent="addstock">
 							<div class="form-group">
-								<label for="nop" class="col-form-label">NOP</label>
+								<label for="nop" class="col-form-label">Series</label>
 								<input
-									type="number"
-									v-model="form.nop_virtual"
+									v-model="form.series"
+									readonly
+									type="text"
 									class="form-control"
-									placeholder="Number of Pieces"
 								/>
+
+								<label for="TypeProduct" class="col-form-label"
+									>Type Product</label
+								>
+								<select
+									v-model="form.type_id"
+									name="TypeProduct"
+									id="typeProduct"
+								>
+									<option
+										v-for="data in typeProduct"
+										:key="data.id"
+										:value="data.id"
+									>
+										{{ data.name }}
+									</option>
+								</select>
+								<div v-if="theErrors.type_id" class="mt-2 text-danger">
+									{{ theErrors.type_id[0] }}
+								</div>
+
+								<label for="nop" class="col-form-label">Height (meters)</label>
+								<input
+									
+									type="number"
+									step="0.001"
+									v-model="form.height"
+									class="form-control form-control-danger"
+									placeholder="Height in meters"
+								/>
+								<div v-if="theErrors.height" class="mt-2 text-danger">
+									{{ theErrors.height[0] }}
+								</div>
+
+								<label for="nop" class="col-form-label">width (meters)</label>
+								<input
+									
+									type="number"
+									step="0.001"
+									v-model="form.width"
+									class="form-control"
+									placeholder="Width in meters"
+								/>
+								<div v-if="theErrors.width" class="mt-2 text-danger">
+									{{ theErrors.width[0] }}
+								</div>
+
+								<label for="nop" class="col-form-label">length (meters)</label>
+								<input
+									
+									type="number"
+									step="0.001"
+									v-model="form.length"
+									class="form-control"
+									placeholder="Length in meters"
+								/>
+								<div v-if="theErrors.length" class="mt-2 text-danger">
+									{{ theErrors.length[0] }}
+								</div>
 							</div>
 						</form>
 					</div>
 					<div class="modal-footer">
 						<button
-							@click="verify"
+							@click="addstock"
 							type="submit"
 							class="btn btn-primary custom-button-animate"
 						>
@@ -119,7 +178,7 @@
 									</svg>
 								</template>
 							</div>
-							<div class="custom-button-animate-item2">Move</div>
+							<div class="custom-button-animate-item2">Submit</div>
 						</button>
 						<button
 							type="button"
@@ -131,7 +190,7 @@
 					</div>
 				</div>
 			</div>
-		</div> -->
+		</div>
 
 		<nav class="page-breadcrumb">
 			<ol class="breadcrumb">
@@ -250,6 +309,16 @@
 								</template>
 
 								<template #cell(status)="data">
+									<template v-if="data.item.status == 'finished'">
+										<span class="badge badge-pill badge-success">
+											<b-icon
+												class="costum-badge"
+												icon="check2-square"
+											></b-icon>
+											{{ data.item.status.toUpperCase() }}
+										</span>
+									</template>
+
 									<template v-if="data.item.status == 'processed'">
 										<span class="badge badge-pill badge-success">
 											<b-icon class="costum-badge" icon="clock"></b-icon>
@@ -264,8 +333,22 @@
 											><b-icon icon="search"></b-icon
 										></a>
 
-										<template @click="finish(info.item)" v-if="info.item.status == 'processed'">
-											<a class="badge badge-success del-btn">FINISH</a>
+										<template v-if="info.item.status == 'finished'">
+											<a
+												@click="CreateModal(info.item)"
+												data-toggle="modal"
+												data-target="#StockFormModal"
+												class="badge badge-primary del-btn"
+												>CREATE STOCK</a
+											>
+										</template>
+
+										<template v-if="info.item.status == 'processed'">
+											<a
+												@click="finish(info.item)"
+												class="badge badge-success del-btn"
+												>FINISH</a
+											>
 										</template>
 
 										<template v-if="info.item.status == 'processed'">
@@ -282,12 +365,12 @@
 									<div>
 										<div class="table-responsive">
 											<b-table
-												fixed
+												responsive
 												small
 												table-variant="info"
 												head-variant="dark"
 												:fields="ExtenColumn"
-												:items="[data.item.supplier]"
+												:items="data.item.stocks"
 											></b-table>
 										</div>
 										<!-- <div class="col-md-12 grid-margin stretch-card">
@@ -341,7 +424,23 @@
 export default {
 	data() {
 		return {
-			form: {},
+			widthError: true,
+			heightError: true,
+			lengthError: true,
+			typeProduct: [],
+			btnLoading: false,
+			form: {
+				sawmillrun_id: "",
+				structure_category: "",
+				type_id: "",
+				size: "",
+				height: "",
+				width: "",
+				length: "",
+				id: "",
+				nop: "",
+				series: "",
+			},
 			theErrors: [],
 			isBusy: false,
 			process: [],
@@ -353,7 +452,7 @@ export default {
 				{ key: "status", label: "Status", sortable: true },
 				"action",
 			],
-			ExtenColumn: ["name", "shortname", "address", "owner", "email", "action"],
+			ExtenColumn: ["name", "tally", "height", "width", "length", "action"],
 			sortBy: "",
 			sortDesc: false,
 			filter: null,
@@ -383,14 +482,98 @@ export default {
 
 	mounted() {
 		this.toggleBusy();
+		this.getTypeProduct();
 	},
 
 	methods: {
-		finish(value){
+		async getTypeProduct() {
+			let response = await axios.get("/api/type/index");
+			if (response.status === 200) {
+				this.typeProduct = response.data.data;
+			} else {
+				this.$toast.error("Can't request TYPE PRODUCT", "Oops", {
+					position: "topRight",
+				});
+			}
+		},
+		CreateModal(value) {
+			this.form.sawmillrun_id = value.id;
+			this.form.structure_category = value.structure_category;
+			this.form.id = value.id;
+			this.form.nop = value.nop;
+			this.form.series = value.series;
 			console.log(value);
 		},
-		push(value) {
-			return [].push(value.supplier);
+
+		async addstock() {
+			this.btnLoading = true;
+			// console.log(this.form);
+			try {
+				let response = await axios.post("/api/stock/addstock", this.form);
+				if (response.status == 200) {
+					this.form = {};
+					this.theErrors = [];
+					this.btnLoading = false;
+					this.refreshTable()
+					this.$toast.success("Action success", "Done!", {
+						position: "topRight",
+					});
+					$("#StockFormModal").modal("hide");
+				}
+			} catch (e) {
+				this.btnLoading = false;
+				this.theErrors = e.response.data.errors;
+				console.log(this.theErrors);
+				console.log(e.response.data);
+				this.$toast.error("Something wrong when updating data!", "Oops,", {
+					position: "topRight",
+				});
+			}
+		},
+		finish(value) {
+			this.form.id = value.id;
+			this.form.nop = value.nop;
+			this.form.series = value.series;
+			// console.log(this.form);
+			Vue.swal({
+				title: "Are you sure to finish this process",
+				html: `Finish the  <b>${value.series}</b> series.`,
+				icon: "question",
+				confirmButtonText: `Confirm`,
+				cancelButtonText: "No",
+				showCancelButton: true,
+				timerProgressBar: true,
+				showCloseButton: true,
+			}).then((result) => {
+				if (result.isConfirmed) {
+					// console.log(value.sawmillstock_id.id);
+					// console.log(this.form);
+					// this.rollbackAction();
+					this.finishAction();
+				}
+			});
+		},
+		async finishAction() {
+			try {
+				let response = await axios.patch(
+					`/api/gudang-sawmill/finish-process/${this.form.id}`,
+					this.form
+				);
+				if (response.status == 200) {
+					this.form.id = "";
+					this.form.nop = "";
+					this.form.series = "";
+					this.refreshTable();
+					this.$toast.success("Action success", "Done!", {
+						position: "topRight",
+					});
+				}
+			} catch (e) {
+				console.log(e.response);
+				this.$toast.error("Something wrong", "Oops", {
+					position: "topRight",
+				});
+			}
 		},
 		cek(value) {
 			console.log(value);
@@ -452,16 +635,6 @@ export default {
 			// });
 			this.totalRows = this.process.length;
 			setTimeout((this.isBusy = !this.isBusy), 6000);
-		},
-		async store() {
-			try {
-			} catch (e) {
-				this.btnLoading = false;
-				this.theErrors = e.response.data.errors;
-				this.$toast.error("Something wrong when updating data!", "Oops,", {
-					position: "topRight",
-				});
-			}
 		},
 		async refreshTable() {
 			let { data } = await axios.get("/api/gudang-sawmill/process-index");

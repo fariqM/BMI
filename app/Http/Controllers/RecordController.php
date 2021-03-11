@@ -86,7 +86,8 @@ class RecordController extends Controller
         return RecordResource::make($record);
     }
 
-    public function editOnHand(Record $record){
+    public function editOnHand(Record $record)
+    {
 
         $record->update([
             'unit' => request('nop'),
@@ -100,23 +101,23 @@ class RecordController extends Controller
 
     public function confirmMismatch(Record $record)
     {
+        $unit = request('unit');
         $series = request('series');
         $nop = request('nop');
-        $nop_virtual = request('nop_virtual');
 
-        $dev = $nop - $nop_virtual; 
+        $dev = $nop - $unit;
 
         $record->update([
             'confirm_status' => 'revision confirmed',
             'status' => 'on queue',
-            'nop' => $nop,
+            'nop' =>  $unit,
         ]);
 
         Raw::where('series', '=', $series)->increment('nop', $dev);
 
         $stock = Sawmillstock::where('series', $series)->first();
         $stock->update([
-            'nop' => $nop,
+            'nop' =>  $unit,
             'nop_virtual' => 0,
         ]);
 

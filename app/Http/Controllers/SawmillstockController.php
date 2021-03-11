@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Resources\SawmillResource;
 use App\Http\Resources\SawmillrunResource;
 use App\Http\Resources\StockResource;
+use App\Models\Raw;
 use App\Models\Record;
 use App\Models\Sawmillrun;
 use App\Models\Sawmillstock;
@@ -20,13 +21,43 @@ class SawmillstockController extends Controller
     }
 
     public function processindex(){
-        $sawmillruns = Sawmillrun::with('sawmillstock')->get();
+        $sawmillruns = Sawmillrun::with('sawmillstock')->latest()->get();
         return SawmillrunResource::collection($sawmillruns);
     }
 
     public function bbindex(){
         $stocks = Stock::where('origin', '1')->with('sawmillrun', 'type', 'warehouse', 'unit_measure')->get();
         return  StockResource::collection($stocks);
+    }
+
+    public function finishprocess(Sawmillrun $sawmillrun){
+        $nop = request('nop');
+        $series = request('series');
+
+        $sawmillrun->update([
+            'status' => 'finished'
+        ]);
+
+        optional(Record::where('series', $series)->where('nop', $nop))->update([
+            'status' => 'finished'
+        ]);
+
+        $raw = Raw::where('series', $series)->first();
+        if($raw->nop == 0){
+            $raw->update([
+                'status' => 'all finished'
+            ]);
+        } else {
+            $raw->update([
+                'status' => 'partially finished'
+            ]);
+        }
+
+        return response()->json([
+            'message' => 'success'
+        ]);
+        
+
     }
 
     public function rollbackprocess(Sawmillrun $sawmillrun){
