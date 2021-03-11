@@ -638,6 +638,7 @@ export default {
 				width: 0.0,
 				type_id: 0,
 				type: "",
+				structure_category:"",
 			},
 			theErrors: [],
 			isBusy: false,
@@ -701,15 +702,19 @@ export default {
 		},
 		async EditStock() {
 			this.btnLoading = true;
-			// console.log(this.Editform);
-
 			try {
 				let response = await axios.patch(
 					`/api/stock/index/${this.Editform.id}/update`,
 					this.Editform
 				);
 				if(response.status == 200){
-					this.form = {};
+					this.Editform.id = "",
+					this.Editform.length = "",
+					this.Editform.width = "",
+					this.Editform.height = "",
+					this.Editform.structure_category = "",
+					this.Editform.type_id = "",
+					this.Editform.type = "",
 					this.theErrors = [];
 					this.btnLoading = false;
 					this.refreshTable();
@@ -810,6 +815,7 @@ export default {
 			}
 		},
 		cek(value) {
+			this.Editform.structure_category = value.structure_category
 			value._showDetails = !value._showDetails;
 		},
 		rollback(value) {

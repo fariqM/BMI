@@ -10315,7 +10315,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         length: 0.0,
         width: 0.0,
         type_id: 0,
-        type: ""
+        type: "",
+        structure_category: ""
       },
       theErrors: [],
       isBusy: false,
@@ -10418,8 +10419,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                _this.btnLoading = true; // console.log(this.Editform);
-
+                _this.btnLoading = true;
                 _context.prev = 1;
                 _context.next = 4;
                 return axios.patch("/api/stock/index/".concat(_this.Editform.id, "/update"), _this.Editform);
@@ -10428,8 +10428,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
                 response = _context.sent;
 
                 if (response.status == 200) {
-                  _this.form = {};
-                  _this.theErrors = [];
+                  _this.Editform.id = "", _this.Editform.length = "", _this.Editform.width = "", _this.Editform.height = "", _this.Editform.structure_category = "", _this.Editform.type_id = "", _this.Editform.type = "", _this.theErrors = [];
                   _this.btnLoading = false;
 
                   _this.refreshTable();
@@ -10622,6 +10621,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       }))();
     },
     cek: function cek(value) {
+      this.Editform.structure_category = value.structure_category;
       value._showDetails = !value._showDetails;
     },
     rollback: function rollback(value) {
