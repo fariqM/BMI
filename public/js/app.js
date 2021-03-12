@@ -5433,6 +5433,37 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({});
 
 /***/ }),
@@ -6380,6 +6411,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
@@ -6498,27 +6533,23 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     verify: function verify() {
       this.btnLoading = true;
 
-      if (this.nop_before == 0) {
-        this.$toast.warning("Stock is 0, please check afresh!", "Oops..", {
+      if (this.form.nop <= 0) {
+        this.$toast.error("The minimum number is 1", "Oops..", {
           position: "topRight"
         });
         this.btnLoading = false;
       } else {
-        this.form.nop = this.form.nop - this.form.nop_virtual;
-
-        if (this.form.nop >= 0) {
-          this.store();
-        } else if (this.form.nop < 0) {
-          this.$toast.error("Out of stock, please check nop stock.", "Failed!,", {
+        // console.log(this.form);
+        if (parseInt(this.form.nop) > parseInt(this.form.nop_virtual)) {
+          this.$toast.error("Out of stock", "Oops..", {
             position: "topRight"
           });
-          this.form.nop = this.nop_before;
           this.btnLoading = false;
+        } else {
+          console.log("go");
+          this.store();
         }
-      } // console.log("nop  = "+ this.form.nop);
-      // console.log("nop before = "+ this.nop_before);
-      // console.log("nop virtual = "+ this.form.nop_virtual);
-
+      }
     },
     store: function store() {
       var _this2 = this;
@@ -9074,8 +9105,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
-//
-//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
@@ -9225,7 +9254,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       // console.log(this.form);
       this.btnLoading = true;
 
-      if (this.form.nop < 0) {
+      if (this.form.nop <= 0) {
         this.$toast.error("The minimum number is 0", "Failed!,", {
           position: "topRight"
         });
@@ -9268,21 +9297,21 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   _this.btnLoading = false;
                 }
 
-                _context.next = 12;
+                _context.next = 11;
                 break;
 
               case 7:
                 _context.prev = 7;
                 _context.t0 = _context["catch"](0);
-                console.log(_context.t0.response.data.errors);
 
-                _this.$toast.error("Something wrong", "Oops", {
+                // console.log(response);
+                _this.$toast.error("Something wrong, please check the on hand value", "Oops", {
                   position: "topRight"
                 });
 
                 _this.btnLoading = false;
 
-              case 12:
+              case 11:
               case "end":
                 return _context.stop();
             }
@@ -10598,6 +10627,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
                   _this5.$toast.success("Action success", "Done!", {
                     position: "topRight"
                   });
+
+                  console.log(response);
                 }
 
                 _context4.next = 11;
@@ -39301,6 +39332,64 @@ var render = function() {
               1
             )
           ])
+        ]),
+        _vm._v(" "),
+        _c("li", { staticClass: "nav-item" }, [
+          _vm._m(3),
+          _vm._v(" "),
+          _c("ul", { staticClass: "costum-submenu" }, [
+            _c(
+              "li",
+              { staticClass: "nav-item costum-nav-item" },
+              [
+                _c(
+                  "router-link",
+                  {
+                    staticClass: "nav-link costum-nav-link",
+                    attrs: { to: { name: "sawmil.input.index" } }
+                  },
+                  [_vm._v("Input Record\n\t\t\t\t\t\t")]
+                )
+              ],
+              1
+            ),
+            _vm._v(" "),
+            _c(
+              "li",
+              {
+                staticClass: "nav-item costum-nav-item costum-nav-item-active"
+              },
+              [
+                _c(
+                  "router-link",
+                  {
+                    staticClass: "nav-link costum-nav-link",
+                    attrs: { to: { name: "sawmil.raw.manufacturing" } }
+                  },
+                  [_vm._v("Raw Manufacturing")]
+                )
+              ],
+              1
+            ),
+            _vm._v(" "),
+            _c(
+              "li",
+              {
+                staticClass: "nav-item costum-nav-item costum-nav-item-active"
+              },
+              [
+                _c(
+                  "router-link",
+                  {
+                    staticClass: "nav-link costum-nav-link",
+                    attrs: { to: { name: "sawmil.output.index" } }
+                  },
+                  [_vm._v("Output Record")]
+                )
+              ],
+              1
+            )
+          ])
         ])
       ])
     ])
@@ -39363,6 +39452,26 @@ var staticRenderFns = [
         }),
         _vm._v(" "),
         _c("span", { staticClass: "link-title" }, [_vm._v("Gudang Sawmill")])
+      ]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "a",
+      {
+        staticClass: "nav-link has-arrow",
+        attrs: { "aria-expanded": "false" }
+      },
+      [
+        _c("i", {
+          staticClass: "link-icon",
+          attrs: { "data-feather": "life-buoy" }
+        }),
+        _vm._v(" "),
+        _c("span", { staticClass: "link-title" }, [_vm._v("Gudang P Basah")])
       ]
     )
   }
@@ -40255,7 +40364,7 @@ var render = function() {
                     _c(
                       "label",
                       { staticClass: "col-form-label", attrs: { for: "nop" } },
-                      [_vm._v("NOP")]
+                      [_vm._v("AMOUNT")]
                     ),
                     _vm._v(" "),
                     _c("input", {
@@ -40263,8 +40372,8 @@ var render = function() {
                         {
                           name: "model",
                           rawName: "v-model",
-                          value: _vm.form.nop_virtual,
-                          expression: "form.nop_virtual"
+                          value: _vm.form.nop,
+                          expression: "form.nop"
                         }
                       ],
                       staticClass: "form-control",
@@ -40272,13 +40381,13 @@ var render = function() {
                         type: "number",
                         placeholder: "Number of Pieces"
                       },
-                      domProps: { value: _vm.form.nop_virtual },
+                      domProps: { value: _vm.form.nop },
                       on: {
                         input: function($event) {
                           if ($event.target.composing) {
                             return
                           }
-                          _vm.$set(_vm.form, "nop_virtual", $event.target.value)
+                          _vm.$set(_vm.form, "nop", $event.target.value)
                         }
                       }
                     })
@@ -40757,24 +40866,29 @@ var render = function() {
                                 [_vm._v("EDIT")]
                               ),
                               _vm._v(" "),
-                              _c(
-                                "a",
-                                {
-                                  staticClass: "badge badge-danger del-btn",
-                                  attrs: {
-                                    "data-toggle": "modal",
-                                    "data-target": "#exampleModalCenter"
-                                  },
-                                  on: {
-                                    click: function($event) {
-                                      return _vm.setValue(info.item)
-                                    }
-                                  }
-                                },
-                                [_vm._v("MOVE\n\t\t\t\t\t\t\t\t\t")]
-                              )
+                              info.item.nop > 0
+                                ? [
+                                    _c(
+                                      "a",
+                                      {
+                                        staticClass:
+                                          "badge badge-danger del-btn",
+                                        attrs: {
+                                          "data-toggle": "modal",
+                                          "data-target": "#exampleModalCenter"
+                                        },
+                                        on: {
+                                          click: function($event) {
+                                            return _vm.setValue(info.item)
+                                          }
+                                        }
+                                      },
+                                      [_vm._v("MOVE\n\t\t\t\t\t\t\t\t\t\t")]
+                                    )
+                                  ]
+                                : _vm._e()
                             ],
-                            1
+                            2
                           )
                         ]
                       }
@@ -43513,7 +43627,7 @@ var render = function() {
                     _c(
                       "label",
                       { staticClass: "col-form-label", attrs: { for: "nop" } },
-                      [_vm._v("ON HAND")]
+                      [_vm._v("ON HAND VALUE")]
                     ),
                     _vm._v(" "),
                     _c("input", {
@@ -44374,10 +44488,10 @@ var render = function() {
                               ]
                             : _vm._e(),
                           _vm._v(" "),
-                          (data.item.confirm_status == "revision confirmed" &&
-                            data.item.status != "finished") ||
-                          (data.item.confirm_status == "confirmed" &&
-                            data.item.status != "processing all")
+                          data.item.confirm_status.includes("confirmed") &&
+                          data.item.status != "finished" &&
+                          data.item.confirm_status != "unconfirmed" &&
+                          data.item.status != "processing all"
                             ? [
                                 _c(
                                   "a",
@@ -44528,7 +44642,7 @@ var staticRenderFns = [
           staticClass: "modal-title",
           attrs: { id: "exampleModalCenterTitle" }
         },
-        [_vm._v("\n\t\t\t\t\t\tEdit real stock\n\t\t\t\t\t")]
+        [_vm._v("\n\t\t\t\t\t\tEdit real on\n\t\t\t\t\t")]
       ),
       _vm._v(" "),
       _c(
@@ -44660,7 +44774,7 @@ var render = function() {
                       "label",
                       {
                         staticClass: "col-form-label",
-                        attrs: { for: "TypeProduct" }
+                        attrs: { for: "typeProductCreate" }
                       },
                       [_vm._v("Type Product")]
                     ),
@@ -44676,7 +44790,7 @@ var render = function() {
                             expression: "form.type_id"
                           }
                         ],
-                        attrs: { name: "TypeProduct", id: "typeProduct" },
+                        attrs: { name: "TypeProduct", id: "typeProductCreate" },
                         on: {
                           change: function($event) {
                             var $$selectedVal = Array.prototype.filter

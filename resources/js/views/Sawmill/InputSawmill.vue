@@ -22,7 +22,7 @@
 				<div class="modal-content">
 					<div class="modal-header">
 						<h5 class="modal-title" id="exampleModalCenterTitle">
-							Edit real stock
+							Edit real on
 						</h5>
 						<button
 							type="button"
@@ -36,7 +36,7 @@
 					<div class="modal-body">
 						<form method="post" @submit.prevent="revisionAction">
 							<div class="form-group">
-								<label for="nop" class="col-form-label">ON HAND</label>
+								<label for="nop" class="col-form-label">ON HAND VALUE</label>
 								<input
 									type="number"
 									v-model="form.nop"
@@ -282,7 +282,6 @@
 								</template>
 
 								<template #cell(status)="data">
-
 									<template v-if="data.item.status == 'finished'">
 										<span class="badge badge-pill badge-success">
 											<b-icon
@@ -333,8 +332,9 @@
 								</template>
 
 								<template #cell(confirm_status)="data">
-
-									<template v-if="data.item.confirm_status == 'revision confirmed'">
+									<template
+										v-if="data.item.confirm_status == 'revision confirmed'"
+									>
 										<span class="badge badge-pill badge-success">
 											<b-icon
 												class="costum-badge"
@@ -393,8 +393,6 @@
 										><b-icon icon="search"></b-icon
 									></router-link> -->
 
-									
-
 									<template
 										v-if="
 											data.item.status == 'stored' &&
@@ -426,10 +424,10 @@
 
 									<template
 										v-if="
-											(data.item.confirm_status == 'revision confirmed' &&
-											data.item.status != 'finished') ||
-											(data.item.confirm_status == 'confirmed' &&
-											data.item.status != 'processing all' )
+											data.item.confirm_status.includes('confirmed') &&
+											data.item.status != 'finished' &&
+											data.item.confirm_status != 'unconfirmed' &&
+											data.item.status != 'processing all' 
 										"
 									>
 										<a
@@ -584,7 +582,7 @@ export default {
 		revisionAction() {
 			// console.log(this.form);
 			this.btnLoading = true;
-			if (this.form.nop < 0) {
+			if (this.form.nop <= 0) {
 				this.$toast.error("The minimum number is 0", "Failed!,", {
 					position: "topRight",
 				});
@@ -615,8 +613,8 @@ export default {
 					this.btnLoading = false;
 				}
 			} catch (e) {
-				console.log(e.response.data.errors);
-				this.$toast.error("Something wrong", "Oops", {
+				// console.log(response);
+				this.$toast.error("Something wrong, please check the on hand value", "Oops", {
 					position: "topRight",
 				});
 				this.btnLoading = false;

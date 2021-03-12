@@ -24,23 +24,15 @@ class RecordController extends Controller
         // first set data for record attribute before it updated
         $series = $raw->series;
         $nop = $raw->nop - request('nop');
-
-
-        $attr = request()->validate([
-            'nop' => 'required',
-        ]);
-
-
         $raw->update([
-            'nop' => request('nop'),
-            'status' => 'processed'
+            'nop' => $nop,
         ]);
 
-        $record = Record::create([
+        Record::create([
             'series' => $series,
             'origin' => 5,
             'warehouse_id' => 1,
-            'nop' => $nop,
+            'nop' => request('nop'),
             'status' => 'moving',
             'confirm_status' => 'unconfirmed',
         ]);
@@ -88,15 +80,26 @@ class RecordController extends Controller
 
     public function editOnHand(Record $record)
     {
+        $series = request('series');
+        $nop = request('nop');
+        $nop_before = request('nop_before');
+        $status = 0;
+        $raw = Raw::where('series', $series)->first();
+        $total = $raw->nop + $nop_before;
 
-        $record->update([
-            'unit' => request('nop'),
-            'confirm_status' => 'revision'
-        ]);
+        if($total >= $nop){
+            $record->update([
+                'unit' => $nop,
+                'confirm_status' => 'revision'
+            ]);
+            $status = 200;
+        } else {
+            $status = 404;
+        }
 
         return response()->json([
-            'message' => 'success'
-        ]);
+            'message' => 'processing'
+        ], $status);
     }
 
     public function confirmMismatch(Record $record)

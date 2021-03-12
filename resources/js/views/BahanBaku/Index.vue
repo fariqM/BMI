@@ -26,10 +26,10 @@
 					<div class="modal-body">
 						<form method="post" @submit.prevent="verify">
 							<div class="form-group">
-								<label for="nop" class="col-form-label">NOP</label>
+								<label for="nop" class="col-form-label">AMOUNT</label>
 								<input
 									type="number"
-									v-model="form.nop_virtual"
+									v-model="form.nop"
 									class="form-control"
 									placeholder="Number of Pieces"
 								/>
@@ -286,26 +286,30 @@
 								</template>
 								<template #cell(action)="info">
 									<div class="grid-action-column">
-										<router-link :to="{
+										<router-link
+											:to="{
 												name: 'bb.show',
 												params: { RawId: info.item.id },
-											}" class="badge badge-info"
+											}"
+											class="badge badge-info"
 											><b-icon icon="search"></b-icon
 										></router-link>
 
 										<router-link
-											:to="{name:'home'}"
+											:to="{ name: 'home' }"
 											class="badge badge-primary"
 											>EDIT</router-link
 										>
 
-										<a
-											@click="setValue(info.item)"
-											data-toggle="modal"
-											data-target="#exampleModalCenter"
-											class="badge badge-danger del-btn"
-											>MOVE
-										</a>
+										<template v-if="info.item.nop > 0">
+											<a
+												@click="setValue(info.item)"
+												data-toggle="modal"
+												data-target="#exampleModalCenter"
+												class="badge badge-danger del-btn"
+												>MOVE
+											</a>
+										</template>
 									</div>
 								</template>
 							</b-table>
@@ -427,30 +431,23 @@ export default {
 		},
 		verify() {
 			this.btnLoading = true;
-			if (this.nop_before == 0) {
-				this.$toast.warning("Stock is 0, please check afresh!", "Oops..", {
+			if (this.form.nop <= 0) {
+				this.$toast.error("The minimum number is 1", "Oops..", {
 					position: "topRight",
 				});
 				this.btnLoading = false;
 			} else {
-				this.form.nop = this.form.nop - this.form.nop_virtual;
-				if (this.form.nop >= 0) {
-					this.store();
-				} else if (this.form.nop < 0) {
-					this.$toast.error(
-						"Out of stock, please check nop stock.",
-						"Failed!,",
-						{
-							position: "topRight",
-						}
-					);
-					this.form.nop = this.nop_before;
+				// console.log(this.form);
+				if (parseInt(this.form.nop) > parseInt(this.form.nop_virtual)) {
+					this.$toast.error("Out of stock", "Oops..", {
+						position: "topRight",
+					});
 					this.btnLoading = false;
+				} else {
+					console.log("go");
+					this.store();
 				}
 			}
-			// console.log("nop  = "+ this.form.nop);
-			// console.log("nop before = "+ this.nop_before);
-			// console.log("nop virtual = "+ this.form.nop_virtual);
 		},
 		async store() {
 			try {

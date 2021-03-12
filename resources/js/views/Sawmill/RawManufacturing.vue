@@ -35,13 +35,13 @@
 									class="form-control"
 								/>
 
-								<label for="TypeProduct" class="col-form-label"
+								<label for="typeProductCreate" class="col-form-label"
 									>Type Product</label
 								>
 								<select
 									v-model="form.type_id"
 									name="TypeProduct"
-									id="typeProduct"
+									id="typeProductCreate"
 								>
 									<option
 										v-for="data in typeProduct"
@@ -806,6 +806,7 @@ export default {
 					this.$toast.success("Action success", "Done!", {
 						position: "topRight",
 					});
+					console.log(response);
 				}
 			} catch (e) {
 				console.log(e.response);
