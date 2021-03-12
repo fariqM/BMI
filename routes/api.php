@@ -50,6 +50,17 @@ Route::namespace('App\Http\Controllers')->group(function(){
         Route::get('process-index', 'SawmillstockController@processindex');
         Route::patch('finish-process/{sawmillrun:id}', 'SawmillstockController@finishprocess');
         Route::patch('rollback-process/{sawmillrun:id}', 'SawmillstockController@rollbackprocess');
+        Route::get('output-index', 'SawmillstockController@outputIndex');
+        Route::patch('output-index/rollback/{stock:id}', 'SawmillstockController@rollbackOutput');
+    });
+
+    Route::prefix('gudang-p-basah')->group(function(){
+        Route::get('input-index', 'StockController@indexInputBasah');
+        Route::patch('confirm/{stock:id}', 'StockController@confirmBasah');
+        Route::patch('proceed/{stock:id}', 'StockController@proceedBasah');
+        Route::patch('rollback/{stock:id}', 'StockController@rollbackBasahProcess');
+        Route::get('process-index', 'StockController@processIndexBasah');
+        Route::patch('create-profile-stock/{stock:id}', 'StockController@createProfileStock');
     });
 
 
@@ -95,6 +106,7 @@ Route::namespace('App\Http\Controllers')->group(function(){
         Route::post('addstock', 'StockController@addstock');
         Route::get('index/{stock:id}', 'StockController@show');
         Route::patch('index/{stock:id}/update', 'StockController@update');
+        Route::patch('move1/{stock:id}', 'StockController@move1');
     });
 
 });

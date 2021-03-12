@@ -128,4 +128,24 @@ class SawmillstockController extends Controller
             'messsage' => $message
         ]);
     }
+
+    public function outputIndex(){
+        $stocks = Stock::where('origin', 1)->where('confirm_status', 'unconfirmed')->latest()->get();
+        return StockResource::collection($stocks);
+    }
+
+    public function rollbackOutput(Stock $stock){
+
+        $stock->update([
+            'confirm_status' => NULL,
+            'status' => NULL,
+            'origin' => 1,
+            'warehouse_id' => 1
+        ]);
+
+        return response()->json([
+            'message' => 'success',
+        ]);
+
+    }
 }

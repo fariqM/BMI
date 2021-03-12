@@ -32,7 +32,7 @@
 									v-model="form.series"
 									readonly
 									type="text"
-									class="form-control"
+									class="form-control form-control-sm"
 								/>
 
 								<label for="typeProductCreate" class="col-form-label"
@@ -40,6 +40,7 @@
 								>
 								<select
 									v-model="form.type_id"
+									class="form-control form-control-sm"
 									name="TypeProduct"
 									id="typeProductCreate"
 								>
@@ -60,7 +61,7 @@
 									type="number"
 									step="0.001"
 									v-model="form.height"
-									class="form-control form-control-danger"
+									class="form-control form-control-sm"
 									placeholder="Height in meters"
 								/>
 								<div v-if="theErrors.height" class="mt-2 text-danger">
@@ -72,7 +73,7 @@
 									type="number"
 									step="0.001"
 									v-model="form.width"
-									class="form-control"
+									class="form-control form-control-sm"
 									placeholder="Width in meters"
 								/>
 								<div v-if="theErrors.width" class="mt-2 text-danger">
@@ -84,9 +85,10 @@
 									type="number"
 									step="0.001"
 									v-model="form.length"
-									class="form-control"
+									class="form-control form-control-sm"
 									placeholder="Length in meters"
 								/>
+
 								<div v-if="theErrors.length" class="mt-2 text-danger">
 									{{ theErrors.length[0] }}
 								</div>
@@ -370,6 +372,143 @@
 			</div>
 		</div>
 
+		<div
+			class="modal fade"
+			id="MoveProcessModal"
+			tabindex="-1"
+			role="dialog"
+			aria-labelledby="exampleModalCenterTitle"
+			aria-hidden="true"
+		>
+			<div class="modal-dialog modal-dialog-centered">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="exampleModalCenterTitle">
+							Process {{ Editform.name }} - {{ Editform.tally }} to
+						</h5>
+						<button
+							type="button"
+							class="close"
+							data-dismiss="modal"
+							aria-label="Close"
+						>
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div class="modal-body">
+						<form method="patch" @submit.prevent="ProcessTo">
+							<div class="form-group">
+								<label for="TypeProduct" class="col-form-label"
+									>Warehouse</label
+								>
+								<select
+									v-model="Editform.warehouse_id"
+									name="TypeProduct"
+									id="typeProduct"
+								>
+									<option value="2">PEMBAHANAN BASAH</option>
+									<option value="3">PEMBAHANAN KERING</option>
+								</select>
+							</div>
+						</form>
+					</div>
+					<div class="modal-footer">
+						<button
+							@click="ProcessTo"
+							type="submit"
+							class="btn btn-primary custom-button-animate"
+						>
+							<div class="custom-button-animate-item1">
+								<template v-if="btnLoading">
+									<svg
+										xmlns="http://www.w3.org/2000/svg"
+										xmlns:xlink="http://www.w3.org/1999/xlink"
+										style="
+											margin: auto;
+											background: none;
+											display: block;
+											shape-rendering: auto;
+										"
+										width="28px"
+										height="28px"
+										viewBox="0 0 100 100"
+										preserveAspectRatio="xMidYMid"
+									>
+										<circle
+											cx="50"
+											cy="50"
+											r="0"
+											fill="none"
+											stroke="#26232b"
+											stroke-width="8"
+										>
+											<animate
+												attributeName="r"
+												repeatCount="indefinite"
+												dur="0.6896551724137931s"
+												values="0;40"
+												keyTimes="0;1"
+												keySplines="0 0.2 0.8 1"
+												calcMode="spline"
+												begin="0s"
+											></animate>
+											<animate
+												attributeName="opacity"
+												repeatCount="indefinite"
+												dur="0.6896551724137931s"
+												values="1;0"
+												keyTimes="0;1"
+												keySplines="0.2 0 0.8 1"
+												calcMode="spline"
+												begin="0s"
+											></animate>
+										</circle>
+										<circle
+											cx="50"
+											cy="50"
+											r="0"
+											fill="none"
+											stroke="#6b3f20"
+											stroke-width="8"
+										>
+											<animate
+												attributeName="r"
+												repeatCount="indefinite"
+												dur="0.6896551724137931s"
+												values="0;40"
+												keyTimes="0;1"
+												keySplines="0 0.2 0.8 1"
+												calcMode="spline"
+												begin="-0.3448275862068966s"
+											></animate>
+											<animate
+												attributeName="opacity"
+												repeatCount="indefinite"
+												dur="0.6896551724137931s"
+												values="1;0"
+												keyTimes="0;1"
+												keySplines="0.2 0 0.8 1"
+												calcMode="spline"
+												begin="-0.3448275862068966s"
+											></animate>
+										</circle>
+									</svg>
+								</template>
+							</div>
+							<div class="custom-button-animate-item2">Save</div>
+						</button>
+						<button
+							type="button"
+							class="btn btn-secondary"
+							data-dismiss="modal"
+						>
+							Close
+						</button>
+					</div>
+				</div>
+			</div>
+		</div>
+
 		<nav class="page-breadcrumb">
 			<ol class="breadcrumb">
 				<li class="breadcrumb-item"><a href="#">Gudang sawmill</a></li>
@@ -559,17 +698,40 @@
 														class="badge badge-primary del-btn"
 														>EDIT</a
 													>
-												</template></b-table
-											>
+
+													<a
+														@click="setEditForm(data.item)"
+														data-toggle="modal"
+														data-target="#MoveProcessModal"
+														class="badge badge-secondary del-btn"
+													>
+														PROCESS TO
+													</a>
+												</template>
+
+												<template #cell(status)="data">
+													<template v-if="data.item.status === null">
+														<span class="badge badge-pill badge-dark">
+															<b-icon
+																class="costum-badge"
+																icon="question-diamond"
+															></b-icon>
+															NOT SET
+														</span>
+													</template>
+
+													<template v-if="data.item.status !== null">
+														<span class="badge badge-pill badge-success">
+															<b-icon
+																class="costum-badge"
+																icon="clock"
+															></b-icon>
+															PROCESSED
+														</span>
+													</template>
+												</template>
+											</b-table>
 										</div>
-										<!-- <div class="col-md
-										12 grid-margin stretch-card">
-											<div class="card">
-												<div class="card-body">
-													
-												</div>
-											</div>
-										</div> -->
 									</div>
 								</template>
 							</b-table>
@@ -632,13 +794,16 @@ export default {
 				series: "",
 			},
 			Editform: {
+				name: "",
 				id: 0,
+				tally: "",
 				height: 0.0,
 				length: 0.0,
 				width: 0.0,
 				type_id: 0,
 				type: "",
-				structure_category:"",
+				structure_category: "",
+				warehouse_id: 0,
 			},
 			theErrors: [],
 			isBusy: false,
@@ -658,6 +823,7 @@ export default {
 				{ key: "width", label: "width (m)", sortable: true },
 				{ key: "length", label: "length (m)", sortable: true },
 				{ key: "size", label: "volume (m3)", sortable: true },
+				{ key: "status", label: "status", sortable: true },
 				"action",
 			],
 			sortBy: "",
@@ -693,7 +859,41 @@ export default {
 	},
 
 	methods: {
+		async ProcessTo() {
+			this.btnLoading = true;
+
+			try {
+				let response = await axios.patch(
+					`/api/stock/move1/${this.Editform.id}`,
+					this.Editform
+				);
+				if (response.status == 200) {
+					(this.Editform.id = ""),
+						(this.Editform.length = ""),
+						(this.Editform.width = ""),
+						(this.Editform.height = ""),
+						(this.Editform.structure_category = ""),
+						(this.Editform.type_id = ""),
+						(this.Editform.type = ""),
+						(this.theErrors = []);
+					this.btnLoading = false;
+					this.refreshTable();
+					this.$toast.success("Action success", "Done!", {
+						position: "topRight",
+					});
+					$("#MoveProcessModal").modal("hide");
+				}
+			} catch (e) {
+				this.btnLoading = false;
+				console.log(e.response.data.errors);
+				this.$toast.error("Something wrong when updating data!", "Oops,", {
+					position: "topRight",
+				});
+			}
+		},
 		setEditForm(value) {
+			this.Editform.tally = value.tally;
+			this.Editform.name = value.name;
 			this.Editform.id = value.id;
 			this.Editform.height = value.height;
 			this.Editform.length = value.length;
@@ -707,15 +907,15 @@ export default {
 					`/api/stock/index/${this.Editform.id}/update`,
 					this.Editform
 				);
-				if(response.status == 200){
-					this.Editform.id = "",
-					this.Editform.length = "",
-					this.Editform.width = "",
-					this.Editform.height = "",
-					this.Editform.structure_category = "",
-					this.Editform.type_id = "",
-					this.Editform.type = "",
-					this.theErrors = [];
+				if (response.status == 200) {
+					(this.Editform.id = ""),
+						(this.Editform.length = ""),
+						(this.Editform.width = ""),
+						(this.Editform.height = ""),
+						(this.Editform.structure_category = ""),
+						(this.Editform.type_id = ""),
+						(this.Editform.type = ""),
+						(this.theErrors = []);
 					this.btnLoading = false;
 					this.refreshTable();
 					this.$toast.success("Action success", "Done!", {
@@ -816,7 +1016,7 @@ export default {
 			}
 		},
 		cek(value) {
-			this.Editform.structure_category = value.structure_category
+			this.Editform.structure_category = value.structure_category;
 			value._showDetails = !value._showDetails;
 		},
 		rollback(value) {

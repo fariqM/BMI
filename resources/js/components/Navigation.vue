@@ -113,21 +113,21 @@
 					<ul class="costum-submenu">
 						<li class="nav-item costum-nav-item">
 							<router-link
-								:to="{ name: 'sawmil.input.index' }"
+								:to="{ name: 'basah.input.index' }"
 								class="nav-link costum-nav-link"
 								>Input Record
 							</router-link>
 						</li>
 						<li class="nav-item costum-nav-item costum-nav-item-active">
 							<router-link
-								:to="{ name: 'sawmil.raw.manufacturing' }"
+								:to="{ name: 'basah.master.index' }"
 								class="nav-link costum-nav-link"
-								>Raw Manufacturing</router-link
+								>Processing Index</router-link
 							>
 						</li>
 						<li class="nav-item costum-nav-item costum-nav-item-active">
 							<router-link
-								:to="{ name: 'sawmil.output.index' }"
+								:to="{ name: 'basah.output.index' }"
 								class="nav-link costum-nav-link"
 								>Output Record</router-link
 							>

@@ -411,7 +411,7 @@ export default {
 		rollback(value) {
 			Vue.swal({
 				title: "Are you sure to rollback this data ?",
-				html: `the amount of nop will return to your warehouse data.`,
+				html: `the amount of stock will return to your warehouse data.`,
 				icon: "question",
 				confirmButtonText: `Confirm`,
 				showCancelButton: true,

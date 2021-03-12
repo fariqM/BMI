@@ -366,6 +366,18 @@ label.costum-checkbox {
 .col-form-label {
     padding-bottom: 0;
 }
+
+.costum-size-profile-wood{
+    display: grid;
+    grid-template-rows: auto auto;
+    grid-template-columns: 1fr;
+    /* background-color: yellow; */
+}
+.costum-size-profile-wood-item2{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    background-color: teal;
+}
 /* End Costum Modal */
 
 /* Costum badge  */
@@ -475,3 +487,5 @@ label.costum-checkbox {
     background: #e8ebf1;
     color: #ffffff;
 }
+
+

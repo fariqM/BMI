@@ -613,7 +613,7 @@ export default {
 					this.btnLoading = false;
 				}
 			} catch (e) {
-				// console.log(response);
+				console.log(e.response.data.errors);
 				this.$toast.error("Something wrong, please check the on hand value", "Oops", {
 					position: "topRight",
 				});

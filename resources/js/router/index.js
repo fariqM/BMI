@@ -17,8 +17,9 @@ import Sawmill from '../views/Sawmill/Index'
 import OutputSawmill from '../views/Sawmill/OutputSawmill'
 import inputSawmill from '../views/Sawmill/InputSawmill'
 import RawManufacturing from '../views/Sawmill/RawManufacturing'
-
-
+import InputBasah from '../views/Basah/InputBasah'
+import OutputBasah from '../views/Basah/OutputBasah'
+import IndexBasah from '../views/Basah/IndexBasah'
 
 export default{
     mode: 'history',
@@ -106,6 +107,25 @@ export default{
             name: 'sawmil.raw.manufacturing',
             component: RawManufacturing
         },
+
+        {
+            path: '/p-basah/input-index',
+            name: 'basah.input.index',
+            component: InputBasah
+        },
+
+        {
+            path: '/p-basah/master-index',
+            name: 'basah.master.index',
+            component: IndexBasah
+        },
+
+        {
+            path: '/p-basah/output-index',
+            name: 'basah.output.index',
+            component: OutputBasah
+        },
+
 
         
         {
