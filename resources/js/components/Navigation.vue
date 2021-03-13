@@ -166,6 +166,36 @@
 					</ul>
 				</li>
 
+				<li class="nav-item" style="">
+					<a class="nav-link has-arrow" aria-expanded="false">
+						<i class="link-icon" data-feather="life-buoy"></i>
+						<span class="link-title">Gudang Coating</span>
+					</a>
+					<ul class="costum-submenu">
+						<li class="nav-item costum-nav-item">
+							<router-link
+								:to="{ name: 'coating.input.index' }"
+								class="nav-link costum-nav-link"
+								>Input Record
+							</router-link>
+						</li>
+						<li class="nav-item costum-nav-item costum-nav-item-active">
+							<router-link
+								:to="{ name: 'coating.master.index' }"
+								class="nav-link costum-nav-link"
+								>Processing Index</router-link
+							>
+						</li>
+						<li class="nav-item costum-nav-item costum-nav-item-active">
+							<router-link
+								:to="{ name: 'coating.output.index' }"
+								class="nav-link costum-nav-link"
+								>Output Record</router-link
+							>
+						</li>
+					</ul>
+				</li>
+
 			</ul>
 		</div>
 	</nav>

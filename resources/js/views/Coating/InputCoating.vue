@@ -2,11 +2,9 @@
 	<div>
 		<nav class="page-breadcrumb">
 			<ol class="breadcrumb">
-				<li class="breadcrumb-item">
-					<a href="#">Gudang Pembahanan Kering</a>
-				</li>
+				<li class="breadcrumb-item"><a href="#">Gudang Coating</a></li>
 
-				<li class="breadcrumb-item active" aria-current="page">index</li>
+				<li class="breadcrumb-item active" aria-current="page">Input index</li>
 			</ol>
 		</nav>
 
@@ -14,9 +12,7 @@
 			<div class="col-md-12 grid-margin stretch-card">
 				<div class="card">
 					<div class="card-body">
-						<h6 class="card-title">
-							Index of Log in <b>Gudang Pembahanan Kering</b>
-						</h6>
+						<h6 class="card-title">Index of Log in <b>Gudang Coating</b></h6>
 						<p class="card-description">
 							Read the
 							<a
@@ -131,9 +127,8 @@
 									<template
 										v-if="
 											data.item.confirm_status == 'confirmed' &&
-											data.item.status != 'profile process' &&
-											data.item.status != 'finished on BMI-DB' &&
-											data.item.status != 'moulding process'
+											data.item.status != 'processed' &&
+											data.item.status != 'finished on BMI-D'
 										"
 									>
 										<a
@@ -229,7 +224,7 @@ export default {
 		async rollbackAction() {
 			try {
 				let response = await axios.patch(
-					`/api/gudang-p-kering/rollback/${this.form.id}`,
+					`/api/gudang-p-basah/rollback/${this.form.id}`,
 					this.form
 				);
 				if (response.status == 200) {
@@ -268,7 +263,7 @@ export default {
 		async confirmAction() {
 			try {
 				let response = await axios.patch(
-					`/api/gudang-p-kering/confirm/${this.form.id}`,
+					`/api/gudang-p-basah/confirm/${this.form.id}`,
 					this.form
 				);
 				if (response.status == 200) {
@@ -308,7 +303,7 @@ export default {
 			// console.log(this.form);
 			try {
 				let response = await axios.patch(
-					`/api/gudang-p-kering/proceed/${this.form.id}`,
+					`/api/gudang-p-basah/proceed/${this.form.id}`,
 					this.form
 				);
 				if (response.status == 200) {
@@ -333,14 +328,14 @@ export default {
 		},
 		async toggleBusy() {
 			this.isBusy = !this.isBusy;
-			let { data } = await axios.get("/api/gudang-p-kering/input-index");
+			let { data } = await axios.get("/api/gudang-coating/input-index");
 			this.stocks = [];
 			this.stocks = data.data;
 			this.totalRows = this.stocks.length;
 			setTimeout((this.isBusy = !this.isBusy), 6000);
 		},
 		async refreshTable() {
-			let { data } = await axios.get("/api/gudang-p-kering/input-index");
+			let { data } = await axios.get("/api/gudang-coating/input-index");
 			this.stocks = [];
 			this.stocks = data.data;
 			this.totalRows = this.stocks.length;

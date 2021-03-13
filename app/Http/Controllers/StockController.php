@@ -130,7 +130,7 @@ class StockController extends Controller
     public function proceedBasah(Stock $stock)
     {
         $stock->update([
-            'status' => 'processed'
+            'status' => 'profile process'
         ]);
 
         return response()->json([
@@ -148,11 +148,41 @@ class StockController extends Controller
         ]);
     }
 
+    public function cancelMouldingBasah(Stock $stock){
+        $stock->update([
+            'status' => 'finished on BMI-D'
+        ]);
+        return response()->json([
+            'message' => 'success',
+        ]);
+    }
+
+    public function finishMouldingBasah(Stock $stock){
+        $name = request('name').' '.'MD';
+
+        $stock->update([
+            'name' => $name,
+            'status' => 'finished on BMI-D'
+        ]);
+        return response()->json([
+            'message' => 'success',
+        ]);
+    }
+
     public function processIndexBasah()
     {
         $stocks = Stock::with('stockprofile')->where('warehouse_id', 2)
-        ->where('status', 'processed')->orWhere('status', 'finished on BMI-D')->latest()->get();
+        ->where('confirm_status', 'confirmed')->latest()->get();
         return StockResource::collection($stocks);
+    }
+
+    public function mouldingProcessBasah(Stock $stock){
+        $stock->update([
+            'status' => 'moulding process'
+        ]);
+        return response()->json([
+            'message' => 'success',
+        ]);
     }
 
     public function createProfileStock(Stock $stock)
@@ -214,14 +244,14 @@ class StockController extends Controller
         ]);
     }
 
-    public function MoveToCoating(Stock $stock){
-
-        $warehouse = Warehouse::find(13);
+    public function BasahMoveto(Stock $stock){
+        $warehouse_id = request('warehouse_id');
+        $warehouse = Warehouse::find($warehouse_id);
 
         $status = "moving to " . $warehouse->name;
 
         $stock->update([
-            'warehouse_id' => 13,
+            'warehouse_id' => $warehouse_id,
             'status' => $status,
             'origin' => 2,
             'confirm_status' => 'unconfirmed'
@@ -259,7 +289,7 @@ class StockController extends Controller
     public function outputBasahIndexRollback(Stock $stock){
         $stock->update([
             'warehouse_id' => 2,
-            'status' => 'finished',
+            'status' => 'finished on BMI-D',
             'origin' => 1,
             'confirm_status' => 'confirmed'
         ]);
@@ -267,6 +297,15 @@ class StockController extends Controller
             'message' => 'success'
         ]);
     }
+
+   
+
+    public function indexInputCoating(){
+        $stocks = Stock::where('warehouse_id', 13)->latest()->get();
+        return StockResource::collection($stocks);
+    }
+
+
 
     public function indexInputKering(){
         $stocks = Stock::where('warehouse_id', 3)->latest()->get();
@@ -289,7 +328,7 @@ class StockController extends Controller
     public function proceedKering(Stock $stock)
     {
         $stock->update([
-            'status' => 'processed'
+            'status' => 'profile process'
         ]);
 
         return response()->json([
@@ -307,18 +346,67 @@ class StockController extends Controller
         ]);
     }
 
+    public function cancelMouldingKering(Stock $stock){
+        $stock->update([
+            'status' => 'finished on BMI-DB'
+        ]);
+        return response()->json([
+            'message' => 'success',
+        ]);
+    }
+
+    public function finishMouldingKering(Stock $stock){
+        $name = request('name').' '.'MD';
+
+        $stock->update([
+            'name' => $name,
+            'status' => 'finished on BMI-DB'
+        ]);
+        return response()->json([
+            'message' => 'success',
+        ]);
+    }
+
+    
+    public function mouldingProcessKering(Stock $stock){
+        $stock->update([
+            'status' => 'moulding process'
+        ]);
+        return response()->json([
+            'message' => 'success',
+        ]);
+    }
+
+    public function KeringMoveto(Stock $stock){
+        $warehouse_id = request('warehouse_id');
+        $warehouse = Warehouse::find($warehouse_id);
+
+        $status = "moving to " . $warehouse->name;
+
+        $stock->update([
+            'warehouse_id' => $warehouse_id,
+            'status' => $status,
+            'origin' => 3,
+            'confirm_status' => 'unconfirmed'
+        ]);
+
+        return response()->json([
+            'message' => 'success'
+        ]);
+    }
+
     
     public function processIndexKering()
     {
-        $stocks = Stock::with('stockprofile')->where('warehouse_id', 3)
-        ->where('status', 'processed')->orWhere('status', 'finished on BMI-DB')->latest()->get();
+        $stocks = Stock::with('stockprofile')
+        ->where('warehouse_id', 3)->where('confirm_status', 'confirmed')->latest()->get();
         return StockResource::collection($stocks);
     }
 
     
     public function createProfileStockKering(Stock $stock)
     {
-
+        $name = request('name').' '.'KD';
         $length = request('length');
         $width = request('width');
         $height = request('height');
@@ -343,6 +431,7 @@ class StockController extends Controller
         $stock->update([
             'stockprofile_id' => $latestid,
             'status' => 'finished on BMI-DB',
+            'name' => $name,
         ]);
 
         return response()->json([

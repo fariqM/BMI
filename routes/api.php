@@ -62,8 +62,11 @@ Route::namespace('App\Http\Controllers')->group(function(){
         Route::get('process-index', 'StockController@processIndexBasah');
         Route::patch('create-profile-stock/{stock:id}', 'StockController@createProfileStock');
         Route::patch('edit-profile-stock/{stockprofile:id}', 'StockController@UpdateProfileStock');
-        Route::patch('move-to-coating/{stock:id}', 'StockController@MoveToCoating');
+        Route::patch('basah-move-to/{stock:id}', 'StockController@BasahMoveto');
+        Route::patch('cancel-moulding-basah/{stock:id}', 'StockController@cancelMouldingBasah');
+        Route::patch('finish-moulding-basah/{stock:id}', 'StockController@finishMouldingBasah');
         Route::patch('move-to-joint/{stock:id}', 'StockController@MoveToJoint');
+        Route::patch('proceed/moulding/{stock:id}', 'StockController@mouldingProcessBasah');
         Route::get('output-index', 'StockController@outputBasahIndex');
         Route::patch('output-index/rollback/{stock:id}', 'StockController@outputBasahIndexRollback');
     });
@@ -76,10 +79,22 @@ Route::namespace('App\Http\Controllers')->group(function(){
         Route::get('process-index', 'StockController@processIndexKering');
         Route::patch('create-profile-stock/{stock:id}', 'StockController@createProfileStockKering');
         Route::patch('edit-profile-stock/{stockprofile:id}', 'StockController@UpdateProfileStock');
-        Route::patch('move-to-coating/{stock:id}', 'StockController@MoveToCoatingFromBasah');
+        Route::patch('kering-move-to/{stock:id}', 'StockController@KeringMoveto');
+        Route::patch('cancel-moulding-kering/{stock:id}', 'StockController@cancelMouldingKering');
+        Route::patch('finish-moulding-kering/{stock:id}', 'StockController@finishMouldingKering');
         Route::patch('move-to-joint/{stock:id}', 'StockController@MoveToJointFromBasah');
+        Route::patch('proceed/moulding/{stock:id}', 'StockController@mouldingProcessBasah');
         Route::get('output-index', 'StockController@outputKeringIndex');
         Route::patch('output-index/rollback/{stock:id}', 'StockController@outputKeringIndexRollback');
+    });
+
+    Route::prefix('gudang-coating')->group(function(){
+        Route::get('input-index', 'StockController@indexInputCoating');
+        Route::patch('confirm/{stock:id}', 'StockController@confirmKering');
+        Route::patch('proceed/{stock:id}', 'StockController@proceedKering');
+        Route::patch('rollback/{stock:id}', 'StockController@rollbackKeringProcess');
+        Route::get('process-index', 'StockController@processIndexKering');
+        Route::get('process-index', 'StockController@processIndexKering');
     });
 
 

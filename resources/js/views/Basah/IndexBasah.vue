@@ -324,6 +324,142 @@
 			</div>
 		</div>
 
+		<!-- Process to Modal  -->
+		<div
+			class="modal fade"
+			id="NextProcessModal"
+			tabindex="-1"
+			role="dialog"
+			aria-labelledby="exampleModalCenterTitle"
+			aria-hidden="true"
+		>
+			<div class="modal-dialog modal-dialog-centered">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="exampleModalCenterTitle">Process to</h5>
+						<button
+							type="button"
+							class="close"
+							data-dismiss="modal"
+							aria-label="Close"
+						>
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div class="modal-body">
+						<form method="patch" @submit.prevent="ProcessTo">
+							<div class="form-group">
+								<label for="TypeProduct" class="col-form-label"
+									>Warehouse</label
+								>
+								<select
+									v-model="form.warehouse_id"
+									name="TypeProduct"
+									id="typeProduct"
+								>
+									<option value="13">COATING</option>
+									<option value="14">PACKING</option>
+								</select>
+							</div>
+						</form>
+					</div>
+					<div class="modal-footer">
+						<button
+							@click="ProcessTo"
+							type="submit"
+							class="btn btn-primary custom-button-animate"
+						>
+							<div class="custom-button-animate-item1">
+								<template v-if="btnLoading">
+									<svg
+										xmlns="http://www.w3.org/2000/svg"
+										xmlns:xlink="http://www.w3.org/1999/xlink"
+										style="
+											margin: auto;
+											background: none;
+											display: block;
+											shape-rendering: auto;
+										"
+										width="28px"
+										height="28px"
+										viewBox="0 0 100 100"
+										preserveAspectRatio="xMidYMid"
+									>
+										<circle
+											cx="50"
+											cy="50"
+											r="0"
+											fill="none"
+											stroke="#26232b"
+											stroke-width="8"
+										>
+											<animate
+												attributeName="r"
+												repeatCount="indefinite"
+												dur="0.6896551724137931s"
+												values="0;40"
+												keyTimes="0;1"
+												keySplines="0 0.2 0.8 1"
+												calcMode="spline"
+												begin="0s"
+											></animate>
+											<animate
+												attributeName="opacity"
+												repeatCount="indefinite"
+												dur="0.6896551724137931s"
+												values="1;0"
+												keyTimes="0;1"
+												keySplines="0.2 0 0.8 1"
+												calcMode="spline"
+												begin="0s"
+											></animate>
+										</circle>
+										<circle
+											cx="50"
+											cy="50"
+											r="0"
+											fill="none"
+											stroke="#6b3f20"
+											stroke-width="8"
+										>
+											<animate
+												attributeName="r"
+												repeatCount="indefinite"
+												dur="0.6896551724137931s"
+												values="0;40"
+												keyTimes="0;1"
+												keySplines="0 0.2 0.8 1"
+												calcMode="spline"
+												begin="-0.3448275862068966s"
+											></animate>
+											<animate
+												attributeName="opacity"
+												repeatCount="indefinite"
+												dur="0.6896551724137931s"
+												values="1;0"
+												keyTimes="0;1"
+												keySplines="0.2 0 0.8 1"
+												calcMode="spline"
+												begin="-0.3448275862068966s"
+											></animate>
+										</circle>
+									</svg>
+								</template>
+							</div>
+							<div class="custom-button-animate-item2">Save</div>
+						</button>
+						<button
+							type="button"
+							class="btn btn-secondary"
+							data-dismiss="modal"
+						>
+							Close
+						</button>
+					</div>
+				</div>
+			</div>
+		</div>
+
 		<nav class="page-breadcrumb">
 			<ol class="breadcrumb">
 				<li class="breadcrumb-item"><a href="#">Gudang Pembahanan Basah</a></li>
@@ -441,12 +577,20 @@
 								</template>
 
 								<template #cell(status)="data">
-									<template v-if="data.item.status == 'processed'">
+									<template v-if="data.item.status == 'profile process'">
 										<span class="badge badge-pill badge-success">
 											<b-icon class="costum-badge" icon="clock"></b-icon>
 											{{ data.item.status.toUpperCase() }}
 										</span>
 									</template>
+
+									<template v-if="data.item.status == 'moulding process'">
+										<span class="badge badge-pill badge-success">
+											<b-icon class="costum-badge" icon="clock"></b-icon>
+											{{ data.item.status.toUpperCase() }}
+										</span>
+									</template>
+
 									<template v-if="data.item.status == 'finished on BMI-D'">
 										<span class="badge badge-pill badge-success">
 											<b-icon
@@ -470,24 +614,34 @@
 											</a>
 
 											<template v-if="info.item.name.includes('JOINT')">
-												<a @click="JointStage(info.item)"
-												class="badge badge-secondary del-btn">
+												<a
+													@click="JointStage(info.item)"
+													class="badge badge-secondary del-btn"
+												>
 													JOINT STAGE
 												</a>
 											</template>
 
 											<template v-if="!info.item.name.includes('JOINT')">
+												<template v-if="!info.item.name.includes('MD')">
+													<a
+														@click="moulding(info.item)"
+														class="badge badge-secondary del-btn"
+														>MOULDING
+													</a>
+												</template>
 												<a
-													@click="CoatingStage(info.item)"
+													data-toggle="modal"
+													data-target="#NextProcessModal"
+													@click="nextProcess(info.item)"
 													class="badge badge-secondary del-btn"
 												>
-													COATING STAGE
+													PROCESS TO
 												</a>
 											</template>
-
 										</template>
 
-										<template v-if="info.item.status == 'processed'">
+										<template v-if="info.item.status == 'profile process'">
 											<a
 												@click="finish(info.item)"
 												data-toggle="modal"
@@ -495,14 +649,25 @@
 												class="badge badge-success del-btn"
 												>FINISH</a
 											>
-										</template>
-
-										<template v-if="info.item.status == 'processed'">
 											<a
 												@click="rollback(info.item)"
 												class="badge badge-warning del-btn"
 											>
 												ROLLBACK
+											</a>
+										</template>
+
+										<template v-if="info.item.status == 'moulding process'">
+											<a
+												@click="finishMoulding(info.item)"
+												class="badge badge-success del-btn"
+												>FINISH</a
+											>
+											<a
+												@click="cancelMoulding(info.item)"
+												class="badge badge-warning del-btn"
+											>
+												CANCEL
 											</a>
 										</template>
 									</div>
@@ -642,7 +807,150 @@ export default {
 	},
 
 	methods: {
-		JointStage(value){
+		cancelMoulding(value) {
+			this.form.id = value.id;
+			this.form.name = value.name;
+			Vue.swal({
+				title: `Are you sure to cancel this process`,
+				html: `are you sure want to cancel moulding process the <b>${this.form.name}</b> - <b>${this.form.tally}</b> to moulding process?`,
+				icon: "warning",
+				confirmButtonText: `Yes`,
+				cancelButtonText: "No",
+				showCancelButton: true,
+				timerProgressBar: true,
+				showCloseButton: true,
+			}).then((result) => {
+				if (result.isConfirmed) {
+					this.cancelMouldingAction();
+				}
+			});
+		},
+		async cancelMouldingAction() {
+			try {
+				let response = await axios.patch(
+					`/api/gudang-p-basah/cancel-moulding-basah/${this.form.id}`,
+					this.form
+				);
+				if (response.status == 200) {
+					this.refreshTable();
+					this.$toast.success("Rollback success", "Done!", {
+						position: "topRight",
+					});
+				}
+			} catch (e) {
+				console.log(e);
+				this.$toast.error("Something wrong", "Oops", {
+					position: "topRight",
+				});
+			}
+		},
+		finishMoulding(value) {
+			this.form.id = value.id;
+			this.form.name = value.name;
+			this.form.tally = value.tally;
+			Vue.swal({
+				title: "Finish Alert",
+				html: `are you sure want to finish moulding process of the <b>${this.form.name}</b> - <b>${this.form.tally}</b> ?`,
+				icon: "question",
+				confirmButtonText: `Yes`,
+				cancelButtonText: "No",
+				showCancelButton: true,
+				timerProgressBar: true,
+				showCloseButton: true,
+			}).then((result) => {
+				if (result.isConfirmed) {
+					this.finishMouldingAction();
+				}
+			});
+		},
+		async finishMouldingAction() {
+			// console.log(this.form);
+			try {
+				let response = await axios.patch(
+					`/api/gudang-p-basah/finish-moulding-basah/${this.form.id}`,
+					this.form
+				);
+				if (response.status == 200) {
+					this.refreshTable();
+					this.$toast.success("Rollback success", "Done!", {
+						position: "topRight",
+					});
+				}
+			} catch (e) {
+				console.log(e);
+				this.$toast.error("Something wrong", "Oops", {
+					position: "topRight",
+				});
+			}
+		},
+		nextProcess(value) {
+			// this.form.id = value.id
+			this.form.id = value.id;
+		},
+		async ProcessTo() {
+			this.btnLoading = true;
+			// console.log(this.form);
+			try {
+				let response = await axios.patch(
+					`/api/gudang-p-basah/basah-move-to/${this.form.id}`,
+					this.form
+				);
+				if (response.status == 200) {
+					$("#NextProcessModal").modal("hide");
+					this.refreshTable();
+					this.btnLoading = false;
+					this.$toast.success("Action success", "Done!", {
+						position: "topRight",
+					});
+				}
+			} catch (e) {
+				console.log(e);
+				this.btnLoading = false;
+				this.$toast.error("Something wrong", "Oops", {
+					position: "topRight",
+				});
+			}
+		},
+		moulding(value) {
+			this.form.id = value.id;
+			this.form.name = value.name;
+			this.form.tally = value.tally;
+			Vue.swal({
+				title: "Process to moulding ?",
+				html: `are you sure want to process the <b>${this.form.name}</b> - <b>${this.form.tally}</b> to moulding process?`,
+				icon: "warning",
+				confirmButtonText: `Yes`,
+				cancelButtonText: "No",
+				showCancelButton: true,
+				timerProgressBar: true,
+				showCloseButton: true,
+			}).then((result) => {
+				if (result.isConfirmed) {
+					this.mouldingAction();
+				}
+			});
+		},
+		async mouldingAction() {
+			console.log(this.form);
+			try {
+				let response = await axios.patch(
+					`/api/gudang-p-basah/proceed/moulding/${this.form.id}`,
+					this.form
+				);
+				if (response.status == 200) {
+					this.refreshTable();
+					this.$toast.success("Action success", "Done!", {
+						position: "topRight",
+					});
+				}
+			} catch (e) {
+				console.log(e);
+				this.$toast.error("Something wrong", "Oops", {
+					position: "topRight",
+				});
+			}
+		},
+		JointStage(value) {
 			this.form.name = value.name;
 			this.form.tally = value.tally;
 			this.form.id = value.id;
@@ -661,7 +969,7 @@ export default {
 				}
 			});
 		},
-		async JointStageAction(){
+		async JointStageAction() {
 			// console.log(this.form);
 			try {
 				let response = await axios.patch(
@@ -670,7 +978,7 @@ export default {
 				);
 				if (response.status == 200) {
 					this.refreshTable();
-					this.$toast.success("Rollback success", "Done!", {
+					this.$toast.success("Action success", "Done!", {
 						position: "topRight",
 					});
 				}
@@ -714,7 +1022,7 @@ export default {
 				);
 				if (response.status == 200) {
 					this.refreshTable();
-					this.$toast.success("Rollback success", "Done!", {
+					this.$toast.success("Action success", "Done!", {
 						position: "topRight",
 					});
 				}
@@ -725,6 +1033,7 @@ export default {
 				});
 			}
 		},
+
 		setEditForm(value) {
 			this.form.name = value.name;
 			this.form.tally = value.tally;
@@ -746,7 +1055,7 @@ export default {
 					this.theErrors = [];
 					$("#EditProfileWood").modal("hide");
 					this.btnLoading = false;
-					this.$toast.success("Rollback success", "Done!", {
+					this.$toast.success("Action success", "Done!", {
 						position: "topRight",
 					});
 				}
@@ -774,7 +1083,7 @@ export default {
 					this.theErrors = [];
 					$("#CreateProfile").modal("hide");
 					this.btnLoading = false;
-					this.$toast.success("Rollback success", "Done!", {
+					this.$toast.success("Action success", "Done!", {
 						position: "topRight",
 					});
 				}

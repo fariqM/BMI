@@ -127,8 +127,9 @@
 									<template
 										v-if="
 											data.item.confirm_status == 'confirmed' &&
-											data.item.status != 'processed' &&
-											data.item.status != 'finished on BMI-D'
+											data.item.status != 'profile process' &&
+											data.item.status != 'finished on BMI-D' && 
+											data.item.status != 'moulding process'
 										"
 									>
 										<a

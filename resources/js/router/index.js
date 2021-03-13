@@ -17,12 +17,18 @@ import Sawmill from '../views/Sawmill/Index'
 import OutputSawmill from '../views/Sawmill/OutputSawmill'
 import inputSawmill from '../views/Sawmill/InputSawmill'
 import RawManufacturing from '../views/Sawmill/RawManufacturing'
+
 import InputBasah from '../views/Basah/InputBasah'
 import OutputBasah from '../views/Basah/OutputBasah'
 import IndexBasah from '../views/Basah/IndexBasah'
+
 import InputKering from '../views/Kering/InputKering'
 import OutputKering from '../views/Kering/OutputKering'
 import IndexKering from '../views/Kering/IndexKering'
+
+import InputCoating from '../views/Coating/InputCoating'
+import OutputCoating from '../views/Coating/OutputCoating'
+import IndexCoating from '../views/Coating/IndexCoating'
 
 export default{
     mode: 'history',
@@ -147,6 +153,23 @@ export default{
             component: OutputKering
         },
 
+        {
+            path: '/p-coating/input-index',
+            name: 'coating.input.index',
+            component: InputCoating
+        },
+
+        {
+            path: '/p-coating/master-index',
+            name: 'coating.master.index',
+            component: IndexCoating
+        },
+
+        {
+            path: '/p-coating/output-index',
+            name: 'coating.output.index',
+            component: OutputCoating
+        },
 
 
 
