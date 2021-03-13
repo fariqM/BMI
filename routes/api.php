@@ -74,7 +74,7 @@ Route::namespace('App\Http\Controllers')->group(function(){
         Route::patch('proceed/{stock:id}', 'StockController@proceedKering');
         Route::patch('rollback/{stock:id}', 'StockController@rollbackKeringProcess');
         Route::get('process-index', 'StockController@processIndexKering');
-        Route::patch('create-profile-stock/{stock:id}', 'StockController@createProfileStock');
+        Route::patch('create-profile-stock/{stock:id}', 'StockController@createProfileStockKering');
         Route::patch('edit-profile-stock/{stockprofile:id}', 'StockController@UpdateProfileStock');
         Route::patch('move-to-coating/{stock:id}', 'StockController@MoveToCoatingFromBasah');
         Route::patch('move-to-joint/{stock:id}', 'StockController@MoveToJointFromBasah');

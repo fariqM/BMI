@@ -9005,6 +9005,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
@@ -11167,6 +11171,14 @@ function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -48568,7 +48580,7 @@ var render = function() {
                               ]
                             : _vm._e(),
                           _vm._v(" "),
-                          data.item.status == "finished"
+                          data.item.status == "finished on BMI-D"
                             ? [
                                 _c(
                                   "span",
@@ -48582,9 +48594,7 @@ var render = function() {
                                       attrs: { icon: "check2-square" }
                                     }),
                                     _vm._v(
-                                      "\n\t\t\t\t\t\t\t\t\t\t" +
-                                        _vm._s(data.item.status.toUpperCase()) +
-                                        "\n\t\t\t\t\t\t\t\t\t"
+                                      "\n\t\t\t\t\t\t\t\t\t\tFINISHED\n\t\t\t\t\t\t\t\t\t"
                                     )
                                   ],
                                   1
@@ -48604,7 +48614,7 @@ var render = function() {
                             [
                               void 0,
                               _vm._v(" "),
-                              info.item.status == "finished"
+                              info.item.status == "finished on BMI-D"
                                 ? [
                                     _c(
                                       "a",
@@ -49281,7 +49291,7 @@ var render = function() {
                           _vm._v(" "),
                           data.item.confirm_status == "confirmed" &&
                           data.item.status != "processed" &&
-                          data.item.status != "finished"
+                          data.item.status != "finished on BMI-D"
                             ? [
                                 _c(
                                   "a",
@@ -50982,7 +50992,7 @@ var render = function() {
                               ]
                             : _vm._e(),
                           _vm._v(" "),
-                          data.item.status == "finished"
+                          data.item.status == "finished on BMI-DB"
                             ? [
                                 _c(
                                   "span",
@@ -51018,7 +51028,7 @@ var render = function() {
                             [
                               void 0,
                               _vm._v(" "),
-                              info.item.status == "finished"
+                              info.item.status == "finished on BMI-DB"
                                 ? [
                                     _c(
                                       "a",
@@ -51697,7 +51707,7 @@ var render = function() {
                           _vm._v(" "),
                           data.item.confirm_status == "confirmed" &&
                           data.item.status != "processed" &&
-                          data.item.status != "finished"
+                          data.item.status != "finished on BMI-DB"
                             ? [
                                 _c(
                                   "a",
@@ -51760,7 +51770,7 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("h6", { staticClass: "card-title" }, [
-      _vm._v("Index of Log in "),
+      _vm._v("\n\t\t\t\t\t\tIndex of Log in "),
       _c("b", [_vm._v("Gudang Pembahanan Kering")])
     ])
   },

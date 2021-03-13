@@ -2,7 +2,9 @@
 	<div>
 		<nav class="page-breadcrumb">
 			<ol class="breadcrumb">
-				<li class="breadcrumb-item"><a href="#">Gudang Pembahanan Kering</a></li>
+				<li class="breadcrumb-item">
+					<a href="#">Gudang Pembahanan Kering</a>
+				</li>
 
 				<li class="breadcrumb-item active" aria-current="page">index</li>
 			</ol>
@@ -12,7 +14,9 @@
 			<div class="col-md-12 grid-margin stretch-card">
 				<div class="card">
 					<div class="card-body">
-						<h6 class="card-title">Index of Log in <b>Gudang Pembahanan Kering</b></h6>
+						<h6 class="card-title">
+							Index of Log in <b>Gudang Pembahanan Kering</b>
+						</h6>
 						<p class="card-description">
 							Read the
 							<a
@@ -124,7 +128,13 @@
 										>
 									</template>
 
-									<template v-if="data.item.confirm_status == 'confirmed' && data.item.status != 'processed' && data.item.status != 'finished'">
+									<template
+										v-if="
+											data.item.confirm_status == 'confirmed' &&
+											data.item.status != 'processed' &&
+											data.item.status != 'finished on BMI-DB'
+										"
+									>
 										<a
 											@click="proceed(data.item)"
 											class="badge badge-primary del-btn"
@@ -132,8 +142,6 @@
 											PROCEED
 										</a>
 									</template>
-
-                  
 								</template>
 							</b-table>
 						</div>
@@ -200,9 +208,9 @@ export default {
 	},
 
 	methods: {
-    rollback(value){
-      this.form.id = value.id;
-      Vue.swal({
+		rollback(value) {
+			this.form.id = value.id;
+			Vue.swal({
 				title: "Rollback alert!",
 				html: `Are you sure to rollback the <b>${value.name}</b> - <b>${value.tally}</b> form your process ?`,
 				icon: "question",
@@ -216,10 +224,10 @@ export default {
 					this.confirmAction();
 				}
 			});
-    },
-    async rollbackAction(){
-      try {
-        let response = await axios.patch(
+		},
+		async rollbackAction() {
+			try {
+				let response = await axios.patch(
 					`/api/gudang-p-kering/rollback/${this.form.id}`,
 					this.form
 				);
@@ -229,13 +237,13 @@ export default {
 					});
 					this.refreshTable();
 				}
-      } catch (e) {
-        this.$toast.error("Something wrong", "Oops!", {
+			} catch (e) {
+				this.$toast.error("Something wrong", "Oops!", {
 					position: "topRight",
 				});
 				console.log(e);
-      }
-    },
+			}
+		},
 
 		confirm(value) {
 			console.log(value);

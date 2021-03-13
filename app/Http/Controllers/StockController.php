@@ -141,7 +141,7 @@ class StockController extends Controller
     public function rollbackBasahProcess(Stock $stock)
     {
         $stock->update([
-            'status' => 'confirmed'
+            'status' => 'stored at GUDANG P BASAH'
         ]);
         return response()->json([
             'message' => 'success',
@@ -150,7 +150,8 @@ class StockController extends Controller
 
     public function processIndexBasah()
     {
-        $stocks = Stock::with('stockprofile')->where('warehouse_id', 2)->where('status', 'processed')->orWhere('status', 'finished')->latest()->get();
+        $stocks = Stock::with('stockprofile')->where('warehouse_id', 2)
+        ->where('status', 'processed')->orWhere('status', 'finished on BMI-D')->latest()->get();
         return StockResource::collection($stocks);
     }
 
@@ -180,7 +181,7 @@ class StockController extends Controller
 
         $stock->update([
             'stockprofile_id' => $latestid,
-            'status' => 'finished',
+            'status' => 'finished on BMI-D',
         ]);
 
         return response()->json([
@@ -299,7 +300,7 @@ class StockController extends Controller
     public function rollbackKeringProcess(Stock $stock)
     {
         $stock->update([
-            'status' => 'confirmed'
+            'status' => 'stored at GUDANG P KERING'
         ]);
         return response()->json([
             'message' => 'success',
@@ -309,8 +310,44 @@ class StockController extends Controller
     
     public function processIndexKering()
     {
-        $stocks = Stock::with('stockprofile')->where('warehouse_id', 3)->where('status', 'processed')->latest()->get();
+        $stocks = Stock::with('stockprofile')->where('warehouse_id', 3)
+        ->where('status', 'processed')->orWhere('status', 'finished on BMI-DB')->latest()->get();
         return StockResource::collection($stocks);
+    }
+
+    
+    public function createProfileStockKering(Stock $stock)
+    {
+
+        $length = request('length');
+        $width = request('width');
+        $height = request('height');
+        $size = $length * $width * $height;
+        $float = number_format((float)$size, 3, '.', '');
+
+
+        $stockprofile = request()->validate([
+            'length' => ['required', new PositiveBolean],
+            'width' => ['required', new PositiveBolean],
+            'height' => ['required', new PositiveBolean],
+        ]);
+
+        $stockprofile2 = [
+            'size' => $float
+        ];
+
+        Stockprofile::create(array_merge($stockprofile, $stockprofile2));
+
+        $latestid = latestid('stockprofiles');
+
+        $stock->update([
+            'stockprofile_id' => $latestid,
+            'status' => 'finished on BMI-DB',
+        ]);
+
+        return response()->json([
+            'message' => 'success'
+        ]);
     }
 
     public function MoveToCoatingFromBasah(Stock $stock){
@@ -358,7 +395,7 @@ class StockController extends Controller
     public function outputKeringIndexRollback(Stock $stock){
         $stock->update([
             'warehouse_id' => 3,
-            'status' => 'finished',
+            'status' => 'finished on BMI-DB',
             'origin' => 1,
             'confirm_status' => 'confirmed'
         ]);

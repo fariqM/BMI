@@ -124,7 +124,13 @@
 										>
 									</template>
 
-									<template v-if="data.item.confirm_status == 'confirmed' && data.item.status != 'processed' && data.item.status != 'finished'">
+									<template
+										v-if="
+											data.item.confirm_status == 'confirmed' &&
+											data.item.status != 'processed' &&
+											data.item.status != 'finished on BMI-D'
+										"
+									>
 										<a
 											@click="proceed(data.item)"
 											class="badge badge-primary del-btn"
@@ -132,8 +138,6 @@
 											PROCEED
 										</a>
 									</template>
-
-                  
 								</template>
 							</b-table>
 						</div>
@@ -200,9 +204,9 @@ export default {
 	},
 
 	methods: {
-    rollback(value){
-      this.form.id = value.id;
-      Vue.swal({
+		rollback(value) {
+			this.form.id = value.id;
+			Vue.swal({
 				title: "Rollback alert!",
 				html: `Are you sure to rollback the <b>${value.name}</b> - <b>${value.tally}</b> form your process ?`,
 				icon: "question",
@@ -216,10 +220,10 @@ export default {
 					this.confirmAction();
 				}
 			});
-    },
-    async rollbackAction(){
-      try {
-        let response = await axios.patch(
+		},
+		async rollbackAction() {
+			try {
+				let response = await axios.patch(
 					`/api/gudang-p-basah/rollback/${this.form.id}`,
 					this.form
 				);
@@ -229,13 +233,13 @@ export default {
 					});
 					this.refreshTable();
 				}
-      } catch (e) {
-        this.$toast.error("Something wrong", "Oops!", {
+			} catch (e) {
+				this.$toast.error("Something wrong", "Oops!", {
 					position: "topRight",
 				});
 				console.log(e);
-      }
-    },
+			}
+		},
 
 		confirm(value) {
 			console.log(value);

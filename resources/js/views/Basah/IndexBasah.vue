@@ -447,13 +447,13 @@
 											{{ data.item.status.toUpperCase() }}
 										</span>
 									</template>
-									<template v-if="data.item.status == 'finished'">
+									<template v-if="data.item.status == 'finished on BMI-D'">
 										<span class="badge badge-pill badge-success">
 											<b-icon
 												class="costum-badge"
 												icon="check2-square"
 											></b-icon>
-											{{ data.item.status.toUpperCase() }}
+											FINISHED
 										</span>
 									</template>
 								</template>
@@ -462,7 +462,7 @@
 									<div class="grid-action-column">
 										<template> </template>
 
-										<template v-if="info.item.status == 'finished'">
+										<template v-if="info.item.status == 'finished on BMI-D'">
 											<a
 												@click="cek(info.item)"
 												class="badge badge-info del-btn"
