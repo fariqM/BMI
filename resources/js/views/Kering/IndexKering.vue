@@ -326,7 +326,7 @@
 
 		<nav class="page-breadcrumb">
 			<ol class="breadcrumb">
-				<li class="breadcrumb-item"><a href="#">Gudang Pembahanan Basah</a></li>
+				<li class="breadcrumb-item"><a href="#">Gudang Pembahanan Kering</a></li>
 				<li class="breadcrumb-item active" aria-current="page">
 					Process Index
 				</li>
@@ -338,7 +338,7 @@
 				<div class="card">
 					<div class="card-body">
 						<h6 class="card-title">
-							Process Control In <b>Gudang Pembahanan Basah</b>
+							Process Control In <b>Gudang Pembahanan Kering</b>
 						</h6>
 						<p class="card-description">
 							Read the
@@ -665,7 +665,7 @@ export default {
 			// console.log(this.form);
 			try {
 				let response = await axios.patch(
-					`/api/gudang-p-basah/move-to-joint/${this.form.id}`,
+					`/api/gudang-p-kering/move-to-joint/${this.form.id}`,
 					this.form
 				);
 				if (response.status == 200) {
@@ -709,7 +709,7 @@ export default {
 			console.log(this.form);
 			try {
 				let response = await axios.patch(
-					`/api/gudang-p-basah/move-to-coating/${this.form.id}`,
+					`/api/gudang-p-kering/move-to-coating/${this.form.id}`,
 					this.form
 				);
 				if (response.status == 200) {
@@ -738,7 +738,7 @@ export default {
 			// console.log(this.form);
 			try {
 				let response = await axios.patch(
-					`/api/gudang-p-basah/edit-profile-stock/${this.form.id}`,
+					`/api/gudang-p-kering/edit-profile-stock/${this.form.id}`,
 					this.form
 				);
 				if (response.status == 200) {
@@ -766,7 +766,7 @@ export default {
 			// console.log(this.form);
 			try {
 				let response = await axios.patch(
-					`/api/gudang-p-basah/create-profile-stock/${this.form.id}`,
+					`/api/gudang-p-kering/create-profile-stock/${this.form.id}`,
 					this.form
 				);
 				if (response.status == 200) {
@@ -811,7 +811,7 @@ export default {
 		async rollbackAction() {
 			try {
 				let response = await axios.patch(
-					`/api/gudang-p-basah/rollback/${this.form.id}`,
+					`/api/gudang-p-kering/rollback/${this.form.id}`,
 					this.form
 				);
 				if (response.status == 200) {
@@ -833,14 +833,15 @@ export default {
 		},
 		async toggleBusy() {
 			this.isBusy = !this.isBusy;
-			let { data } = await axios.get("/api/gudang-p-basah/process-index");
+			let { data } = await axios.get("/api/gudang-p-kering/process-index");
 			this.process = [];
 			this.process = data.data;
 			this.totalRows = this.process.length;
 			setTimeout((this.isBusy = !this.isBusy), 6000);
+			
 		},
 		async refreshTable() {
-			let { data } = await axios.get("/api/gudang-p-basah/process-index");
+			let { data } = await axios.get("/api/gudang-p-kering/process-index");
 			this.process = [];
 			this.process = data.data;
 			this.totalRows = this.process.length;

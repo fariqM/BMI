@@ -61,6 +61,25 @@ Route::namespace('App\Http\Controllers')->group(function(){
         Route::patch('rollback/{stock:id}', 'StockController@rollbackBasahProcess');
         Route::get('process-index', 'StockController@processIndexBasah');
         Route::patch('create-profile-stock/{stock:id}', 'StockController@createProfileStock');
+        Route::patch('edit-profile-stock/{stockprofile:id}', 'StockController@UpdateProfileStock');
+        Route::patch('move-to-coating/{stock:id}', 'StockController@MoveToCoating');
+        Route::patch('move-to-joint/{stock:id}', 'StockController@MoveToJoint');
+        Route::get('output-index', 'StockController@outputBasahIndex');
+        Route::patch('output-index/rollback/{stock:id}', 'StockController@outputBasahIndexRollback');
+    });
+
+    Route::prefix('gudang-p-kering')->group(function(){
+        Route::get('input-index', 'StockController@indexInputKering');
+        Route::patch('confirm/{stock:id}', 'StockController@confirmKering');
+        Route::patch('proceed/{stock:id}', 'StockController@proceedKering');
+        Route::patch('rollback/{stock:id}', 'StockController@rollbackKeringProcess');
+        Route::get('process-index', 'StockController@processIndexKering');
+        Route::patch('create-profile-stock/{stock:id}', 'StockController@createProfileStock');
+        Route::patch('edit-profile-stock/{stockprofile:id}', 'StockController@UpdateProfileStock');
+        Route::patch('move-to-coating/{stock:id}', 'StockController@MoveToCoatingFromBasah');
+        Route::patch('move-to-joint/{stock:id}', 'StockController@MoveToJointFromBasah');
+        Route::get('output-index', 'StockController@outputKeringIndex');
+        Route::patch('output-index/rollback/{stock:id}', 'StockController@outputKeringIndexRollback');
     });
 
 

@@ -20,6 +20,9 @@ import RawManufacturing from '../views/Sawmill/RawManufacturing'
 import InputBasah from '../views/Basah/InputBasah'
 import OutputBasah from '../views/Basah/OutputBasah'
 import IndexBasah from '../views/Basah/IndexBasah'
+import InputKering from '../views/Kering/InputKering'
+import OutputKering from '../views/Kering/OutputKering'
+import IndexKering from '../views/Kering/IndexKering'
 
 export default{
     mode: 'history',
@@ -125,6 +128,27 @@ export default{
             name: 'basah.output.index',
             component: OutputBasah
         },
+
+        {
+            path: '/p-kering/input-index',
+            name: 'kering.input.index',
+            component: InputKering
+        },
+
+        {
+            path: '/p-kering/master-index',
+            name: 'kering.master.index',
+            component: IndexKering
+        },
+
+        {
+            path: '/p-kering/output-index',
+            name: 'kering.output.index',
+            component: OutputKering
+        },
+
+
+
 
 
         

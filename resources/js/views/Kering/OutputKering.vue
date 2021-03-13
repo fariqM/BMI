@@ -2,9 +2,9 @@
 	<div>
 		<nav class="page-breadcrumb">
 			<ol class="breadcrumb">
-				<li class="breadcrumb-item"><a href="#">Gudang Pembahanan Basah</a></li>
+				<li class="breadcrumb-item"><a href="#">Gudang Pembahanan Kering</a></li>
 
-				<li class="breadcrumb-item active" aria-current="page">Input index</li>
+				<li class="breadcrumb-item active" aria-current="page">index</li>
 			</ol>
 		</nav>
 
@@ -12,7 +12,7 @@
 			<div class="col-md-12 grid-margin stretch-card">
 				<div class="card">
 					<div class="card-body">
-						<h6 class="card-title">Index of Log in <b>Gudang P Basah</b></h6>
+						<h6 class="card-title">Index of Log in <b>Gudang Pembahanan Kering</b></h6>
 						<p class="card-description">
 							Read the
 							<a
@@ -38,20 +38,20 @@
 									<input
 										class="costum-checkbox"
 										v-model="filterOn"
-										value="tally"
+										value="series"
 										id="kolomID"
 										type="checkbox"
 									/>
-									<label class="costum-checkbox" for="kolomID">Tally</label>
+									<label class="costum-checkbox" for="kolomID">Series</label>
 
 									<input
 										class="costum-checkbox"
 										v-model="filterOn"
-										value="name"
+										value="nop"
 										id="kolomRef"
 										type="checkbox"
 									/>
-									<label class="costum-checkbox" for="kolomRef">Name</label>
+									<label class="costum-checkbox" for="kolomRef">Amount</label>
 								</div>
 							</div>
 							<div class="grid-item-container-2 grid-item-2">
@@ -116,24 +116,15 @@
 								</template>
 
 								<template #cell(action)="data">
+                  
 									<template v-if="data.item.confirm_status != 'confirmed'">
 										<a
-											@click="confirm(data.item)"
-											class="badge badge-success del-btn"
-											>CONFIRM</a
+											@click="rollback(data.item)"
+											class="badge badge-warning del-btn"
 										>
-									</template>
-
-									<template v-if="data.item.confirm_status == 'confirmed' && data.item.status != 'processed' && data.item.status != 'finished'">
-										<a
-											@click="proceed(data.item)"
-											class="badge badge-primary del-btn"
-										>
-											PROCEED
+											ROLLBACK
 										</a>
 									</template>
-
-                  
 								</template>
 							</b-table>
 						</div>
@@ -171,6 +162,7 @@ export default {
 				{ key: "size", label: "volume", sortable: true },
 				{ key: "status", label: "status", sortable: true },
 				{ key: "confirm_status", label: "Confirm Status", sortable: true },
+				{ key: "warehouse", label: "to", sortable: true },
 				"action",
 			],
 			form: {
@@ -200,89 +192,13 @@ export default {
 	},
 
 	methods: {
-    rollback(value){
-      this.form.id = value.id;
-      Vue.swal({
-				title: "Rollback alert!",
-				html: `Are you sure to rollback the <b>${value.name}</b> - <b>${value.tally}</b> form your process ?`,
-				icon: "question",
-				confirmButtonText: `Confirm`,
-				showCancelButton: true,
-				timerProgressBar: true,
-				showCloseButton: true,
-			}).then((result) => {
-				if (result.isConfirmed) {
-					// console.log();
-					this.confirmAction();
-				}
-			});
-    },
-    async rollbackAction(){
-      try {
-        let response = await axios.patch(
-					`/api/gudang-p-basah/rollback/${this.form.id}`,
-					this.form
-				);
-				if (response.status == 200) {
-					this.$toast.success("Confirmed", "Done!", {
-						position: "topRight",
-					});
-					this.refreshTable();
-				}
-      } catch (e) {
-        this.$toast.error("Something wrong", "Oops!", {
-					position: "topRight",
-				});
-				console.log(e);
-      }
-    },
-
-		confirm(value) {
-			console.log(value);
-			this.form.id = value.id;
-			Vue.swal({
-				title: "Confirm alert!",
-				html: `Are you sure to confirm the <b>${value.name}</b> - <b>${value.tally}</b> and store to your warehouse ?`,
-				icon: "question",
-				confirmButtonText: `Confirm`,
-				showCancelButton: true,
-				timerProgressBar: true,
-				showCloseButton: true,
-			}).then((result) => {
-				if (result.isConfirmed) {
-					// console.log();
-					this.confirmAction();
-				}
-			});
-		},
-
-		async confirmAction() {
-			try {
-				let response = await axios.patch(
-					`/api/gudang-p-basah/confirm/${this.form.id}`,
-					this.form
-				);
-				if (response.status == 200) {
-					this.$toast.success("Confirmed", "Done!", {
-						position: "topRight",
-					});
-					this.refreshTable();
-				}
-			} catch (e) {
-				this.$toast.error("Something wrong", "Oops!", {
-					position: "topRight",
-				});
-				console.log(e);
-			}
-		},
-
-		proceed(value) {
+		rollback(value) {
 			this.form.id = value.id;
 			this.form.tally = value.tally;
 			this.form.name = value.name;
 			Vue.swal({
-				title: `Proceed alert`,
-				html: `Are you sure to process the <b>${this.form.name}</b> - <b>${this.form.tally}</b> ?`,
+				title: "Are you sure to rollback this data ?",
+				html: `The data will send-back to your warehouse data`,
 				icon: "question",
 				confirmButtonText: `Confirm`,
 				showCancelButton: true,
@@ -290,30 +206,30 @@ export default {
 				showCloseButton: true,
 			}).then((result) => {
 				if (result.isConfirmed) {
-					this.proceedAction();
+					this.rollbackAction();
 				}
 			});
 		},
 
-		async proceedAction() {
+		async rollbackAction() {
 			// console.log(this.form);
 			try {
 				let response = await axios.patch(
-					`/api/gudang-p-basah/proceed/${this.form.id}`,
+					`/api/gudang-p-kering/output-index/rollback/${this.form.id}`,
 					this.form
 				);
 				if (response.status == 200) {
 					this.form.id = "";
 					this.form.tally = "";
 					this.form.name = "";
-					this.refreshTable();
-					this.$toast.success("Proceed action success", "Done!", {
+					this.refreshTable()
+					this.$toast.success("Rollback success", "Done!", {
 						position: "topRight",
 					});
 				}
 			} catch (e) {
 				this.$toast.error("Something wrong", "Oops!", {
-					position: "topRight",
+						position: "topRight",
 				});
 				console.log(e);
 			}
@@ -324,14 +240,14 @@ export default {
 		},
 		async toggleBusy() {
 			this.isBusy = !this.isBusy;
-			let { data } = await axios.get("/api/gudang-p-basah/input-index");
+			let { data } = await axios.get("/api/gudang-p-kering/output-index");
 			this.stocks = [];
 			this.stocks = data.data;
 			this.totalRows = this.stocks.length;
 			setTimeout((this.isBusy = !this.isBusy), 6000);
 		},
 		async refreshTable() {
-			let { data } = await axios.get("/api/gudang-p-basah/input-index");
+			let { data } = await axios.get("/api/gudang-p-kering/output-index");
 			this.stocks = [];
 			this.stocks = data.data;
 			this.totalRows = this.stocks.length;

@@ -113,6 +113,7 @@ class StockController extends Controller
         return StockResource::collection($stocks);
     }
 
+
     public function confirmBasah(Stock $stock)
     {
 
@@ -186,4 +187,189 @@ class StockController extends Controller
             'message' => 'success'
         ]);
     }
+
+    public function UpdateProfileStock(Stockprofile $stockprofile){
+
+        $attr = request()->validate([
+            'length' => ['required', new PositiveBolean],
+            'width' => ['required', new PositiveBolean],
+            'height' => ['required', new PositiveBolean],
+        ]);
+        $length = request('length');
+        $width = request('width');
+        $height = request('height');
+        $size = $length * $width * $height;
+        $float = number_format((float)$size, 3, '.', '');
+
+        $attr2 = [
+            'size' => $float,
+        ];
+
+        $stockprofile->update(array_merge($attr, $attr2));
+
+        return response()->json([
+            'message' => 'success',
+            'info' => $stockprofile
+        ]);
+    }
+
+    public function MoveToCoating(Stock $stock){
+
+        $warehouse = Warehouse::find(13);
+
+        $status = "moving to " . $warehouse->name;
+
+        $stock->update([
+            'warehouse_id' => 13,
+            'status' => $status,
+            'origin' => 2,
+            'confirm_status' => 'unconfirmed'
+        ]);
+
+        return response()->json([
+            'message' => 'success'
+        ]);
+    }
+
+    public function MoveToJoint(Stock $stock){
+        $warehouse = Warehouse::find(4);
+
+        $status = "moving to " . $warehouse->name;
+
+        $stock->update([
+            'warehouse_id' => 4,
+            'status' => $status,
+            'origin' => 2,
+            'confirm_status' => 'unconfirmed'
+        ]);
+
+        return response()->json([
+            'message' => 'success'
+        ]);
+    }
+
+    public function outputBasahIndex(){
+
+        $stocks = Stock::where('origin', 2)->get();
+
+        return StockResource::collection($stocks);
+    }
+
+    public function outputBasahIndexRollback(Stock $stock){
+        $stock->update([
+            'warehouse_id' => 2,
+            'status' => 'finished',
+            'origin' => 1,
+            'confirm_status' => 'confirmed'
+        ]);
+        return response()->json([
+            'message' => 'success'
+        ]);
+    }
+
+    public function indexInputKering(){
+        $stocks = Stock::where('warehouse_id', 3)->latest()->get();
+        return StockResource::collection($stocks);
+    }
+
+    public function confirmKering(Stock $stock)
+    {
+
+        $stock->update([
+            'confirm_status' => 'confirmed',
+            'status' => 'stored at GUDANG P Kering',
+        ]);
+
+        return response()->json([
+            'message' => 'success',
+        ]);
+    }
+
+    public function proceedKering(Stock $stock)
+    {
+        $stock->update([
+            'status' => 'processed'
+        ]);
+
+        return response()->json([
+            'message' => 'success',
+        ]);
+    }
+
+    public function rollbackKeringProcess(Stock $stock)
+    {
+        $stock->update([
+            'status' => 'confirmed'
+        ]);
+        return response()->json([
+            'message' => 'success',
+        ]);
+    }
+
+    
+    public function processIndexKering()
+    {
+        $stocks = Stock::with('stockprofile')->where('warehouse_id', 3)->where('status', 'processed')->latest()->get();
+        return StockResource::collection($stocks);
+    }
+
+    public function MoveToCoatingFromBasah(Stock $stock){
+
+        $warehouse = Warehouse::find(13);
+
+        $status = "moving to " . $warehouse->name;
+
+        $stock->update([
+            'warehouse_id' => 13,
+            'status' => $status,
+            'origin' => 3,
+            'confirm_status' => 'unconfirmed'
+        ]);
+
+        return response()->json([
+            'message' => 'success'
+        ]);
+    }
+
+    public function MoveToJointFromBasah(Stock $stock){
+        $warehouse = Warehouse::find(4);
+
+        $status = "moving to " . $warehouse->name;
+
+        $stock->update([
+            'warehouse_id' => 4,
+            'status' => $status,
+            'origin' => 3,
+            'confirm_status' => 'unconfirmed'
+        ]);
+
+        return response()->json([
+            'message' => 'success'
+        ]);
+    }
+
+    public function outputKeringIndex(){
+
+        $stocks = Stock::where('origin', 3)->get();
+
+        return StockResource::collection($stocks);
+    }
+
+    public function outputKeringIndexRollback(Stock $stock){
+        $stock->update([
+            'warehouse_id' => 3,
+            'status' => 'finished',
+            'origin' => 1,
+            'confirm_status' => 'confirmed'
+        ]);
+        return response()->json([
+            'message' => 'success'
+        ]);
+    }
+    
+
+    
+
+
+    
 }
