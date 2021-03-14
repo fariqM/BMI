@@ -196,6 +196,36 @@
 					</ul>
 				</li>
 
+				<li class="nav-item">
+					<a class="nav-link has-arrow" aria-expanded="false">
+						<i class="link-icon" data-feather="life-buoy"></i>
+						<span class="link-title">Gudang Joint</span>
+					</a>
+					<ul class="costum-submenu">
+						<li class="nav-item costum-nav-item">
+							<router-link
+								:to="{ name: 'joint.input.index' }"
+								class="nav-link costum-nav-link"
+								>Input Record
+							</router-link>
+						</li>
+						<li class="nav-item costum-nav-item costum-nav-item-active">
+							<router-link
+								:to="{ name: 'joint.master.index' }"
+								class="nav-link costum-nav-link"
+								>Processing Index</router-link
+							>
+						</li>
+						<li class="nav-item costum-nav-item costum-nav-item-active">
+							<router-link
+								:to="{ name: 'joint.output.index' }"
+								class="nav-link costum-nav-link"
+								>Output Record</router-link
+							>
+						</li>
+					</ul>
+				</li>
+
 			</ul>
 		</div>
 	</nav>

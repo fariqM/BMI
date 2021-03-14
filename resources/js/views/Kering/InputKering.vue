@@ -128,21 +128,6 @@
 										>
 									</template>
 
-									<template
-										v-if="
-											data.item.confirm_status == 'confirmed' &&
-											data.item.status != 'profile process' &&
-											data.item.status != 'finished on BMI-DB' &&
-											data.item.status != 'moulding process'
-										"
-									>
-										<a
-											@click="proceed(data.item)"
-											class="badge badge-primary del-btn"
-										>
-											PROCEED
-										</a>
-									</template>
 								</template>
 							</b-table>
 						</div>
@@ -285,48 +270,7 @@ export default {
 			}
 		},
 
-		proceed(value) {
-			this.form.id = value.id;
-			this.form.tally = value.tally;
-			this.form.name = value.name;
-			Vue.swal({
-				title: `Proceed alert`,
-				html: `Are you sure to process the <b>${this.form.name}</b> - <b>${this.form.tally}</b> ?`,
-				icon: "question",
-				confirmButtonText: `Confirm`,
-				showCancelButton: true,
-				timerProgressBar: true,
-				showCloseButton: true,
-			}).then((result) => {
-				if (result.isConfirmed) {
-					this.proceedAction();
-				}
-			});
-		},
-
-		async proceedAction() {
-			// console.log(this.form);
-			try {
-				let response = await axios.patch(
-					`/api/gudang-p-kering/proceed/${this.form.id}`,
-					this.form
-				);
-				if (response.status == 200) {
-					this.form.id = "";
-					this.form.tally = "";
-					this.form.name = "";
-					this.refreshTable();
-					this.$toast.success("Proceed action success", "Done!", {
-						position: "topRight",
-					});
-				}
-			} catch (e) {
-				this.$toast.error("Something wrong", "Oops!", {
-					position: "topRight",
-				});
-				console.log(e);
-			}
-		},
+		
 		onFiltered(filteredItems) {
 			this.totalRows = filteredItems.length;
 			this.currentPage = 1;

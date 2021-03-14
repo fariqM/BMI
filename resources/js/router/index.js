@@ -30,6 +30,10 @@ import InputCoating from '../views/Coating/InputCoating'
 import OutputCoating from '../views/Coating/OutputCoating'
 import IndexCoating from '../views/Coating/IndexCoating'
 
+import InputJoint from '../views/Joint/InputJoint'
+import OutputJoint from '../views/Joint/OutputJoint'
+import IndexJoint from '../views/Joint/IndexJoint'
+
 export default{
     mode: 'history',
 
@@ -169,6 +173,24 @@ export default{
             path: '/p-coating/output-index',
             name: 'coating.output.index',
             component: OutputCoating
+        },
+
+        {
+            path: '/p-joint/input-index',
+            name: 'joint.input.index',
+            component: InputJoint
+        },
+
+        {
+            path: '/p-joint/master-index',
+            name: 'joint.master.index',
+            component: IndexJoint
+        },
+
+        {
+            path: '/p-joint/output-index',
+            name: 'joint.output.index',
+            component: OutputJoint
         },
 
 

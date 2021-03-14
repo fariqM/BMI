@@ -100,6 +100,23 @@ Route::namespace('App\Http\Controllers')->group(function(){
         Route::patch('output-index/rollback/{stock:id}', 'StockController@outputCoatingIndexRollback');
     });
 
+    Route::prefix('gudang-joint')->group(function(){
+        Route::get('input-index', 'StockController@indexInputJoint');
+        Route::patch('confirm/{stock:id}', 'StockController@confirmJoint');
+        Route::patch('proceed-fj/{stock:id}', 'StockController@proceedFingerJoint');
+        Route::patch('finish-fj/{stock:id}', 'StockController@finishFingerJoint');
+        Route::patch('proceed-hf/{stock:id}', 'StockController@proceedHighFreqJoint');
+        Route::patch('finish-hf/{stock:id}', 'StockController@finishHighFreq');
+        Route::patch('rollback/{stock:id}', 'StockController@rollbackJointProcess');
+        Route::get('process-index', 'StockController@processIndexJoint');
+        Route::patch('joint-move-to/{stock:id}', 'StockController@JointMoveto');
+        Route::get('output-index', 'StockController@outputJointIndex');
+        Route::patch('output-index/rollback/{stock:id}', 'StockController@outputJointIndexRollback');
+        Route::patch('proceed-moulding-joint/{stock:id}', 'StockController@mouldingJointProceed');
+        Route::patch('proceed-moulding-joint/finish/{stock:id}', 'StockController@FinishMouldingJointProceed');
+        Route::patch('proceed-moulding-joint/cancel/{stock:id}', 'StockController@CancelMouldingJointProceed');
+    });
+
 
     Route::prefix('invoice')->group(function(){
         Route::get('index', 'InvoiceController@index');

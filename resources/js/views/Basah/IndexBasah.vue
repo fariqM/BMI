@@ -577,10 +577,18 @@
 								</template>
 
 								<template #cell(status)="data">
+
 									<template v-if="data.item.status == 'profile process'">
 										<span class="badge badge-pill badge-success">
 											<b-icon class="costum-badge" icon="clock"></b-icon>
 											{{ data.item.status.toUpperCase() }}
+										</span>
+									</template>
+
+									<template v-if="data.item.status == 'stored at GUDANG P BASAH'">
+										<span class="badge badge-pill badge-success">
+											<b-icon class="costum-badge" icon="box-arrow-in-down-left"></b-icon>
+											STORED ON GUDANG P.BASAH
 										</span>
 									</template>
 
@@ -604,7 +612,21 @@
 
 								<template #cell(action)="info">
 									<div class="grid-action-column">
-										<template> </template>
+										<template
+											v-if="
+												info.item.confirm_status == 'confirmed' &&
+												info.item.status != 'profile process' &&
+												info.item.status != 'finished on BMI-D' &&
+												info.item.status != 'moulding process'
+											"
+										>
+											<a
+												@click="proceed(info.item)"
+												class="badge badge-primary del-btn"
+											>
+												PROCEED
+											</a>
+										</template>
 
 										<template v-if="info.item.status == 'finished on BMI-D'">
 											<a
@@ -618,7 +640,7 @@
 													@click="JointStage(info.item)"
 													class="badge badge-secondary del-btn"
 												>
-													JOINT STAGE
+													JOINT PROCESS
 												</a>
 											</template>
 
@@ -807,6 +829,48 @@ export default {
 	},
 
 	methods: {
+		proceed(value) {
+			this.form.id = value.id;
+			this.form.tally = value.tally;
+			this.form.name = value.name;
+			Vue.swal({
+				title: `Proceed alert`,
+				html: `Are you sure to process the <b>${this.form.name}</b> - <b>${this.form.tally}</b> ?`,
+				icon: "question",
+				confirmButtonText: `Confirm`,
+				showCancelButton: true,
+				timerProgressBar: true,
+				showCloseButton: true,
+			}).then((result) => {
+				if (result.isConfirmed) {
+					this.proceedAction();
+				}
+			});
+		},
+
+		async proceedAction() {
+			// console.log(this.form);
+			try {
+				let response = await axios.patch(
+					`/api/gudang-p-basah/proceed/${this.form.id}`,
+					this.form
+				);
+				if (response.status == 200) {
+					this.form.id = "";
+					this.form.tally = "";
+					this.form.name = "";
+					this.refreshTable();
+					this.$toast.success("Proceed action success", "Done!", {
+						position: "topRight",
+					});
+				}
+			} catch (e) {
+				this.$toast.error("Something wrong", "Oops!", {
+					position: "topRight",
+				});
+				console.log(e);
+			}
+		},
 		cancelMoulding(value) {
 			this.form.id = value.id;
 			this.form.name = value.name;

@@ -1,7 +1,5 @@
 <template>
 	<div>
-		
-
 		<nav class="page-breadcrumb">
 			<ol class="breadcrumb">
 				<li class="breadcrumb-item"><a href="#">Gudang Coating</a></li>
@@ -15,9 +13,7 @@
 			<div class="col-md-12 grid-margin stretch-card">
 				<div class="card">
 					<div class="card-body">
-						<h6 class="card-title">
-							Process Control In <b>Gudang Coating</b>
-						</h6>
+						<h6 class="card-title">Process Control In <b>Gudang Coating</b></h6>
 						<p class="card-description">
 							Read the
 							<a
@@ -119,6 +115,12 @@
 								</template>
 
 								<template #cell(status)="data">
+									<template v-if="data.item.status == 'stored at GUDANG COATING'">
+										<span class="badge badge-pill badge-success">
+											<b-icon class="costum-badge" icon="box-arrow-in-down-left"></b-icon>
+											STORED ON GUDANG COATING
+										</span>
+									</template>
 									<template v-if="data.item.status == 'coating process'">
 										<span class="badge badge-pill badge-success">
 											<b-icon class="costum-badge" icon="clock"></b-icon>
@@ -139,6 +141,20 @@
 
 								<template #cell(action)="info">
 									<div class="grid-action-column">
+										<template
+											v-if="
+												info.item.confirm_status == 'confirmed' &&
+												info.item.status != 'coating process' &&
+												info.item.status != 'finished on BMI-E'
+											"
+										>
+											<a
+												@click="proceed(info.item)"
+												class="badge badge-primary del-btn"
+											>
+												PROCEED
+											</a>
+										</template>
 										<template v-if="info.item.status == 'finished on BMI-E'">
 											<a
 												@click="cek(info.item)"
@@ -146,11 +162,11 @@
 												><b-icon icon="search"></b-icon>
 											</a>
 
-                      <a
-													@click="PackingStage(info.item)"
-													class="badge badge-secondary del-btn"
-												>
-													PACKING
+											<a
+												@click="PackingStage(info.item)"
+												class="badge badge-secondary del-btn"
+											>
+												PACKING
 											</a>
 										</template>
 
@@ -182,7 +198,7 @@
 												:items="[data.item.stockprofile]"
 											>
 												<template #cell(action)="">
-												 <b>NOT ALLOWED</b>
+													<b>NOT ALLOWED</b>
 												</template>
 											</b-table>
 										</div>
@@ -298,6 +314,48 @@ export default {
 	},
 
 	methods: {
+		proceed(value) {
+			this.form.id = value.id;
+			this.form.tally = value.tally;
+			this.form.name = value.name;
+			Vue.swal({
+				title: `Proceed alert`,
+				html: `Are you sure to process the <b>${this.form.name}</b> - <b>${this.form.tally}</b> ?`,
+				icon: "question",
+				confirmButtonText: `Confirm`,
+				showCancelButton: true,
+				timerProgressBar: true,
+				showCloseButton: true,
+			}).then((result) => {
+				if (result.isConfirmed) {
+					this.proceedAction();
+				}
+			});
+		},
+
+		async proceedAction() {
+			// console.log(this.form);
+			try {
+				let response = await axios.patch(
+					`/api/gudang-coating/proceed/${this.form.id}`,
+					this.form
+				);
+				if (response.status == 200) {
+					this.form.id = "";
+					this.form.tally = "";
+					this.form.name = "";
+					this.refreshTable();
+					this.$toast.success("Proceed action success", "Done!", {
+						position: "topRight",
+					});
+				}
+			} catch (e) {
+				this.$toast.error("Something wrong", "Oops!", {
+					position: "topRight",
+				});
+				console.log(e);
+			}
+		},
 		cancelCoating(value) {
 			this.form.id = value.id;
 			this.form.name = value.name;
@@ -422,11 +480,11 @@ export default {
 			this.form.height = value.height;
 			this.form.id = value.id;
 		},
-		
+
 		cek(value) {
 			value._showDetails = !value._showDetails;
 		},
-		
+
 		finish(value) {
 			this.form.id = value.id;
 		},

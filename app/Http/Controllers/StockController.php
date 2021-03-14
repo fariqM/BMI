@@ -407,7 +407,205 @@ class StockController extends Controller
         ]);
     }
 
+    public function indexInputJoint(){
+        $stocks = Stock::where('warehouse_id', 4)->latest()->get();
+        return StockResource::collection($stocks);
+    }
 
+    public function confirmJoint(Stock $stock)
+    {
+
+        $stock->update([
+            'confirm_status' => 'confirmed',
+            'status' => 'stored at GUDANG JOINT',
+        ]);
+
+        return response()->json([
+            'message' => 'success',
+        ]);
+    }
+
+    public function proceedFingerJoint(Stock $stock){
+        $stock->update([
+            'status' => 'finger-joint process'
+        ]);
+
+        return response()->json([
+            'message' => 'success',
+        ]);
+    }
+
+    public function proceedHighFreqJoint(Stock $stock){
+        $stock->update([
+            'status' => 'high-frequency process'
+        ]);
+
+        return response()->json([
+            'message' => 'success',
+        ]);
+    }
+
+    public function mouldingJointProceed(Stock $stock){
+        $stock->update([
+            'status' => 'moulding process'
+        ]);
+        return response()->json([
+            'message' => 'success',
+        ]);
+    }
+
+    public function FinishMouldingJointProceed(Stock $stock){
+        $name = request('name').' '.'MD';
+
+        $stock->update([
+            'name' => $name,
+            'status' => 'finished on BMI-F'
+        ]);
+        return response()->json([
+            'message' => 'success',
+        ]);
+    }
+
+    public function CancelMouldingJointProceed(Stock $stock){
+        $stock->update([
+            'status' => 'finished on BMI-F'
+        ]);
+        return response()->json([
+            'message' => 'success',
+        ]);
+    }
+
+    public function rollbackJointProcess(Stock $stock)
+    {
+        $stock->update([
+            'status' => 'stored at GUDANG JOINT'
+        ]);
+        return response()->json([
+            'message' => 'success',
+        ]);
+    }
+
+    public function processIndexJoint()
+    {
+        $stocks = Stock::with('stockprofile')
+        ->where('warehouse_id', 4)->where('confirm_status', 'confirmed')->latest()->get();
+        return StockResource::collection($stocks);
+    }
+
+    public function finishFingerJoint(Stock $stock){
+
+        $stockprofile = request()->validate([
+            'length' => ['required', new PositiveBolean],
+            'width' => ['required', new PositiveBolean],
+            'height' => ['required', new PositiveBolean],
+        ]);
+        
+        $profilewood_id = $stock->stockprofile_id;
+        $length = request('length');
+        $width = request('width');
+        $height = request('height');
+        $size = $length * $width * $height;
+        $float = number_format((float)$size, 3, '.', '');
+
+        $name = request('name').' '.'FJ';
+        
+        $stockprofile2 = [
+            'size' => $float,
+        ];
+        
+        optional(Stockprofile::find($profilewood_id))
+        ->update(array_merge($stockprofile, $stockprofile2));
+
+        $stock->update([
+            'name' => $name,
+            'status' => 'finished on BMI-F'
+        ]);
+        return response()->json([
+            'message' => 'success',
+        ]);
+    }
+    
+    public function finishHighFreq(Stock $stock){
+        $stockprofile = request()->validate([
+            'length' => ['required', new PositiveBolean],
+            'width' => ['required', new PositiveBolean],
+            'height' => ['required', new PositiveBolean],
+        ]);
+        
+        $profilewood_id = $stock->stockprofile_id;
+        $length = request('length');
+        $width = request('width');
+        $height = request('height');
+        $size = $length * $width * $height;
+        $float = number_format((float)$size, 3, '.', '');
+
+        $name = request('name').' '.'HF';
+
+        $stockprofile2 = [
+            'size' => $float,
+        ];
+        
+        optional(Stockprofile::find($profilewood_id))
+        ->update(array_merge($stockprofile, $stockprofile2));
+
+        $stock->update([
+            'name' => $name,
+            'status' => 'finished on BMI-F'
+        ]);
+        return response()->json([
+            'message' => 'success',
+        ]);
+    }
+    
+    public function JointMoveto(Stock $stock){
+        $warehouse_id = request('warehouse_id');
+        $warehouse = Warehouse::find($warehouse_id);
+
+        $status = "moving to " . $warehouse->name;
+
+        $stock->update([
+            'warehouse_id' => $warehouse_id,
+            'status' => $status,
+            'origin' => 4,
+            'confirm_status' => 'unconfirmed'
+        ]);
+
+        return response()->json([
+            'message' => 'success'
+        ]);
+    }
+
+    public function outputJointIndex(){
+
+        $stocks = Stock::where('origin', 4)->get();
+
+        return StockResource::collection($stocks);
+    }
+
+    public function outputJointIndexRollback(Stock $stock){
+
+        $StockId = request('id');
+        $model = Stock::find($StockId);
+        $warehouse_id = 4;
+        $name = $model->name;
+        
+        if(strpos($name, 'KD') !== false){
+            $warehouse_id = 3;
+        } else{
+            $warehouse_id = 2;
+        }
+
+        $stock->update([
+            'warehouse_id' => 4,
+            'status' => 'finished on BMI-F',
+            'origin' => $warehouse_id,
+            'confirm_status' => 'confirmed'
+        ]);
+
+        return response()->json([
+            'message' => 'success'
+        ]);
+    }
 
 
 
@@ -421,7 +619,7 @@ class StockController extends Controller
 
         $stock->update([
             'confirm_status' => 'confirmed',
-            'status' => 'stored at GUDANG P Kering',
+            'status' => 'stored at GUDANG P KERING',
         ]);
 
         return response()->json([
