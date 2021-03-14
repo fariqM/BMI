@@ -298,12 +298,116 @@ class StockController extends Controller
         ]);
     }
 
-   
-
     public function indexInputCoating(){
         $stocks = Stock::where('warehouse_id', 13)->latest()->get();
         return StockResource::collection($stocks);
     }
+
+    public function confirmCoating(Stock $stock)
+    {
+
+        $stock->update([
+            'confirm_status' => 'confirmed',
+            'status' => 'stored at GUDANG COATING',
+        ]);
+
+        return response()->json([
+            'message' => 'success',
+        ]);
+    }
+
+    public function proceedCoating(Stock $stock)
+    {
+        $stock->update([
+            'status' => 'coating process'
+        ]);
+
+        return response()->json([
+            'message' => 'success',
+        ]);
+    }
+
+    public function rollbackCoatingProcess(Stock $stock)
+    {
+        $stock->update([
+            'status' => 'stored at GUDANG COATING'
+        ]);
+        return response()->json([
+            'message' => 'success',
+        ]);
+    }
+
+    public function processIndexCoating()
+    {
+        $stocks = Stock::with('stockprofile')->where('warehouse_id', 13)
+        ->where('confirm_status', 'confirmed')->latest()->get();
+        return StockResource::collection($stocks);
+    }
+
+    public function finishCoating(Stock $stock){
+
+        $name = request('name').' '.'COATED';
+
+        $stock->update([
+            'name' => $name,
+            'status' => 'finished on BMI-E'
+        ]);
+        return response()->json([
+            'message' => 'success',
+        ]);
+    }
+
+    public function CoatingMoveToPacking(Stock $stock){
+        $warehouse = Warehouse::find(14);
+
+        $status = "moving to " . $warehouse->name;
+
+        $stock->update([
+            'warehouse_id' => 14,
+            'status' => $status,
+            'origin' => 13,
+            'confirm_status' => 'unconfirmed'
+        ]);
+
+        return response()->json([
+            'message' => 'success'
+        ]);
+    }
+
+    public function outputCoatingIndex(){
+
+        $stocks = Stock::where('origin', 13)->get();
+
+        return StockResource::collection($stocks);
+    }
+
+    public function outputCoatingIndexRollback(Stock $stock){
+        $StockId = request('id');
+        $model = Stock::find($StockId);
+        $name = $model->name;
+        $warehouse_id = 13;
+
+        if(strpos($name, 'JOINT') !== false){
+            $warehouse_id = 4;
+        } else if (strpos($name, 'KD') !== false){
+            $warehouse_id = 3;
+        } else {
+            $warehouse_id = 2;
+        }
+        
+
+        $stock->update([
+            'warehouse_id' => 13,
+            'status' => 'finished on BMI-E',
+            'origin' => $warehouse_id,
+            'confirm_status' => 'confirmed'
+        ]);
+        return response()->json([
+            'message' => 'success'
+        ]);
+    }
+
+
 
 
 

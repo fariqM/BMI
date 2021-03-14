@@ -158,8 +158,8 @@ export default {
 	data() {
 		return {
 			isBusy: false,
-			sortBy: "",
-			sortDesc: false,
+			sortBy: "confirm_status",
+			sortDesc: true,
 			filter: null,
 			filterOn: [],
 			perPage: 5,

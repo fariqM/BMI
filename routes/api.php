@@ -90,11 +90,14 @@ Route::namespace('App\Http\Controllers')->group(function(){
 
     Route::prefix('gudang-coating')->group(function(){
         Route::get('input-index', 'StockController@indexInputCoating');
-        Route::patch('confirm/{stock:id}', 'StockController@confirmKering');
-        Route::patch('proceed/{stock:id}', 'StockController@proceedKering');
-        Route::patch('rollback/{stock:id}', 'StockController@rollbackKeringProcess');
-        Route::get('process-index', 'StockController@processIndexKering');
-        Route::get('process-index', 'StockController@processIndexKering');
+        Route::patch('confirm/{stock:id}', 'StockController@confirmCoating');
+        Route::patch('proceed/{stock:id}', 'StockController@proceedCoating');
+        Route::patch('rollback/{stock:id}', 'StockController@rollbackCoatingProcess');
+        Route::get('process-index', 'StockController@processIndexCoating');
+        Route::patch('finish-coating/{stock:id}', 'StockController@finishCoating');
+        Route::patch('move-to-packing/{stock:id}', 'StockController@CoatingMoveToPacking');
+        Route::get('output-index', 'StockController@outputCoatingIndex');
+        Route::patch('output-index/rollback/{stock:id}', 'StockController@outputCoatingIndexRollback');
     });
 
 

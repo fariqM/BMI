@@ -127,8 +127,8 @@
 									<template
 										v-if="
 											data.item.confirm_status == 'confirmed' &&
-											data.item.status != 'processed' &&
-											data.item.status != 'finished on BMI-D'
+											data.item.status != 'coating process' &&
+											data.item.status != 'finished on BMI-E'
 										"
 									>
 										<a
@@ -153,8 +153,8 @@ export default {
 	data() {
 		return {
 			isBusy: false,
-			sortBy: "",
-			sortDesc: false,
+			sortBy: "confirm_status",
+			sortDesc: true,
 			filter: null,
 			filterOn: [],
 			perPage: 5,
@@ -224,7 +224,7 @@ export default {
 		async rollbackAction() {
 			try {
 				let response = await axios.patch(
-					`/api/gudang-p-basah/rollback/${this.form.id}`,
+					`/api/gudang-coating/rollback/${this.form.id}`,
 					this.form
 				);
 				if (response.status == 200) {
@@ -263,7 +263,7 @@ export default {
 		async confirmAction() {
 			try {
 				let response = await axios.patch(
-					`/api/gudang-p-basah/confirm/${this.form.id}`,
+					`/api/gudang-coating/confirm/${this.form.id}`,
 					this.form
 				);
 				if (response.status == 200) {
@@ -303,7 +303,7 @@ export default {
 			// console.log(this.form);
 			try {
 				let response = await axios.patch(
-					`/api/gudang-p-basah/proceed/${this.form.id}`,
+					`/api/gudang-coating/proceed/${this.form.id}`,
 					this.form
 				);
 				if (response.status == 200) {
