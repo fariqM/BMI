@@ -34,6 +34,10 @@ import InputJoint from '../views/Joint/InputJoint'
 import OutputJoint from '../views/Joint/OutputJoint'
 import IndexJoint from '../views/Joint/IndexJoint'
 
+import InputPacking from '../views/Packing/InputPacking'
+import OutputPacking from '../views/Packing/OutputPacking'
+import IndexPacking from '../views/Packing/IndexPacking'
+
 export default{
     mode: 'history',
 
@@ -191,6 +195,24 @@ export default{
             path: '/p-joint/output-index',
             name: 'joint.output.index',
             component: OutputJoint
+        },
+
+        {
+            path: '/p-packing/input-index',
+            name: 'packing.input.index',
+            component: InputPacking
+        },
+
+        {
+            path: '/p-packing/master-index',
+            name: 'packing.master.index',
+            component: IndexPacking
+        },
+
+        {
+            path: '/p-packing/output-index',
+            name: 'packing.output.index',
+            component: OutputPacking
         },
 
 

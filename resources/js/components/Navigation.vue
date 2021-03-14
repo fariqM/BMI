@@ -226,6 +226,29 @@
 					</ul>
 				</li>
 
+				<li class="nav-item">
+					<a class="nav-link has-arrow" aria-expanded="false">
+						<i class="link-icon" data-feather="life-buoy"></i>
+						<span class="link-title">Gudang Packing</span>
+					</a>
+					<ul class="costum-submenu">
+						<li class="nav-item costum-nav-item">
+							<router-link
+								:to="{ name: 'packing.input.index' }"
+								class="nav-link costum-nav-link"
+								>Input Record
+							</router-link>
+						</li>
+						<li class="nav-item costum-nav-item costum-nav-item-active">
+							<router-link
+								:to="{ name: 'packing.master.index' }"
+								class="nav-link costum-nav-link"
+								>Processing Index</router-link
+							>
+						</li>
+					</ul>
+				</li>
+
 			</ul>
 		</div>
 	</nav>

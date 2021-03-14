@@ -794,6 +794,117 @@ class StockController extends Controller
             'message' => 'success'
         ]);
     }
+
+    public function updateProfileStockPacking(Stockprofile $stockprofile){
+        
+
+        $attr = request()->validate([
+            'length' => ['required', new PositiveBolean],
+            'width' => ['required', new PositiveBolean],
+            'height' => ['required', new PositiveBolean],
+        ]);
+
+        $length = request('length');
+        $width = request('width');
+        $height = request('height');
+        $size = $length * $width * $height;
+        $float = number_format((float)$size, 3, '.', '');
+
+        $attr2 = [
+            'size' => $float,
+        ];
+        
+        optional(Stockprofile::find(request('id')))->update(array_merge($attr, $attr2));
+
+        return response()->json([
+            'message' => 'success updating wood profile',
+            'attch' => $stockprofile
+        ]);
+    }
+
+    public function updateStockPacking(Stock $stock){
+        $attr = request()->validate([
+            'length' => ['required', new PositiveBolean],
+            'width' => ['required', new PositiveBolean],
+            'height' => ['required', new PositiveBolean],
+        ]);
+
+        $length = request('length');
+        $width = request('width');
+        $height = request('height');
+        $size = $length * $width * $height;
+        $float = number_format((float)$size, 3, '.', '');
+
+        $attr2 = [
+            'size' => $float,
+        ];
+
+        $stock->update(array_merge($attr, $attr2));
+
+        return response()->json([
+            'message' => 'success',
+        ]);
+    }
+
+    public function indexInputPacking(){
+        $stocks = Stock::where('warehouse_id', 14)->latest()->get();
+        return StockResource::collection($stocks);
+    }
+
+    public function confirmPacking(Stock $stock)
+    {
+
+        $stock->update([
+            'confirm_status' => 'confirmed',
+            'status' => 'stored at GUDANG PACKING',
+        ]);
+
+        return response()->json([
+            'message' => 'success',
+        ]);
+    }
+
+    public function proceedPacking(Stock $stock)
+    {
+        $stock->update([
+            'status' => 'packing process'
+        ]);
+
+        return response()->json([
+            'message' => 'success',
+        ]);
+    }
+
+    public function rollbackPackingProcess(Stock $stock)
+    {
+        $stock->update([
+            'status' => 'stored at GUDANG PACKING'
+        ]);
+        return response()->json([
+            'message' => 'success',
+        ]);
+    }
+
+    public function processIndexPacking()
+    {
+        $stocks = Stock::with('stockprofile')->where('warehouse_id', 14)
+        ->where('confirm_status', 'confirmed')->latest()->get();
+        return StockResource::collection($stocks);
+    }
+
+    public function finishPacking(Stock $stock){
+
+        $name = request('name').' '.'[READY]';
+
+        $stock->update([
+            'name' => $name,
+            'status' => 'finished on BMI-G'
+        ]);
+        return response()->json([
+            'message' => 'success',
+        ]);
+    }
+
     
 
     

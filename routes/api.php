@@ -100,6 +100,17 @@ Route::namespace('App\Http\Controllers')->group(function(){
         Route::patch('output-index/rollback/{stock:id}', 'StockController@outputCoatingIndexRollback');
     });
 
+    Route::prefix('gudang-packing')->group(function(){
+        Route::get('input-index', 'StockController@indexInputPacking');
+        Route::patch('confirm/{stock:id}', 'StockController@confirmPacking');
+        Route::patch('proceed/{stock:id}', 'StockController@proceedPacking');
+        Route::patch('rollback/{stock:id}', 'StockController@rollbackPackingProcess');
+        Route::get('process-index', 'StockController@processIndexPacking');
+        Route::patch('finish-packing/{stock:id}', 'StockController@finishPacking');
+        Route::patch('edit-stock-packing/{stock:id}', 'StockController@updateStockPacking');
+        Route::patch('edit-profile-stock-packing/{stock:id}', 'StockController@updateProfileStockPacking');
+    });
+
     Route::prefix('gudang-joint')->group(function(){
         Route::get('input-index', 'StockController@indexInputJoint');
         Route::patch('confirm/{stock:id}', 'StockController@confirmJoint');
