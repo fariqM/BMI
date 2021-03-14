@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 11, 2021 at 05:41 PM
+-- Generation Time: Mar 14, 2021 at 08:09 AM
 -- Server version: 10.4.17-MariaDB
 -- PHP Version: 8.0.1
 
@@ -149,7 +149,10 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (31, '2021_03_07_170030_create_sawmillruns_table', 11),
 (32, '2021_03_07_211608_create_stocks_table', 11),
 (33, '2021_03_08_215511_add_processed_to_sawmillstocks_table', 12),
-(34, '2021_03_10_101237_add_amount_to_raws_table', 13);
+(34, '2021_03_10_101237_add_amount_to_raws_table', 13),
+(35, '2021_03_12_205357_add_status_to_stocks_table', 14),
+(36, '2021_03_13_022304_create_stockprofiles_table', 15),
+(37, '2021_03_13_022740_add_stockprofile_id_to_stocks_table', 15);
 
 -- --------------------------------------------------------
 
@@ -253,7 +256,8 @@ CREATE TABLE `raws` (
 --
 
 INSERT INTO `raws` (`id`, `series`, `structure_category_id`, `size`, `uom`, `nop`, `amount`, `status`, `invoice_id`, `created_at`, `updated_at`) VALUES
-(24, 'MRB-8496', 2, 9, 'm3', '0', '10', 'all finished', 8, '2021-03-10 15:10:58', '2021-03-11 13:01:33');
+(30, 'TRM-8502', 3, 9, 'm3', '0', '37', 'all finished', 7, '2021-03-12 08:21:03', '2021-03-12 08:31:24'),
+(31, 'JT-8503', 4, 3, 'm3', '5', '10', 'partially finished', 11, '2021-03-12 17:57:54', '2021-03-12 20:38:13');
 
 -- --------------------------------------------------------
 
@@ -281,8 +285,10 @@ CREATE TABLE `records` (
 --
 
 INSERT INTO `records` (`id`, `series`, `tally`, `origin`, `warehouse_id`, `nop`, `unit`, `status`, `confirm_status`, `confirm_at`, `created_at`, `updated_at`) VALUES
-(120, 'MRB-8496', NULL, 5, 1, '7', 7, 'finished', 'revision confirmed', '2021-03-10 15:19:19', '2021-03-10 15:19:13', '2021-03-10 16:46:20'),
-(121, 'MRB-8496', NULL, 5, 1, '3', NULL, 'finished', 'confirmed', '2021-03-11 13:00:37', '2021-03-11 13:00:29', '2021-03-11 13:01:33');
+(145, 'TRM-8502', NULL, 5, 1, '7', NULL, 'processing all', 'confirmed', '2021-03-12 08:27:56', '2021-03-12 08:27:48', '2021-03-12 08:28:00'),
+(146, 'TRM-8502', NULL, 5, 1, '29', NULL, 'processing all', 'confirmed', '2021-03-12 08:28:37', '2021-03-12 08:28:31', '2021-03-12 08:28:39'),
+(147, 'TRM-8502', NULL, 5, 1, '1', 1, 'processing all', 'revision confirmed', '2021-03-12 08:30:17', '2021-03-12 08:30:02', '2021-03-12 08:31:19'),
+(148, 'JT-8503', NULL, 5, 1, '5', NULL, 'processing all', 'confirmed', '2021-03-12 17:58:14', '2021-03-12 17:58:08', '2021-03-12 20:38:07');
 
 -- --------------------------------------------------------
 
@@ -329,8 +335,10 @@ CREATE TABLE `sawmillruns` (
 --
 
 INSERT INTO `sawmillruns` (`id`, `sawmillstock_id`, `nop`, `status`, `created_at`, `updated_at`) VALUES
-(14, 26, '7', 'finished', '2021-03-10 15:20:09', '2021-03-10 16:46:20'),
-(15, 26, '3', 'finished', '2021-03-11 13:00:45', '2021-03-11 13:01:33');
+(27, 32, '7', 'finished', '2021-03-12 08:27:59', '2021-03-12 08:28:14'),
+(28, 32, '29', 'finished', '2021-03-12 08:28:39', '2021-03-12 08:29:15'),
+(30, 32, '1', 'finished', '2021-03-12 08:31:19', '2021-03-12 08:31:24'),
+(31, 33, '5', 'finished', '2021-03-12 20:38:07', '2021-03-12 20:38:13');
 
 -- --------------------------------------------------------
 
@@ -353,7 +361,36 @@ CREATE TABLE `sawmillstocks` (
 --
 
 INSERT INTO `sawmillstocks` (`id`, `series`, `nop`, `nop_virtual`, `processed`, `created_at`, `updated_at`) VALUES
-(26, 'MRB-8496', '0', '0', '10', '2021-03-10 15:19:19', '2021-03-11 13:00:46');
+(32, 'TRM-8502', '0', '0', '37', '2021-03-12 08:27:56', '2021-03-12 08:31:19'),
+(33, 'JT-8503', '0', '0', '5', '2021-03-12 17:58:14', '2021-03-12 20:38:07');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `stockprofiles`
+--
+
+CREATE TABLE `stockprofiles` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `size` double NOT NULL,
+  `length` double NOT NULL,
+  `width` double NOT NULL,
+  `height` double NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `stockprofiles`
+--
+
+INSERT INTO `stockprofiles` (`id`, `size`, `length`, `width`, `height`, `created_at`, `updated_at`) VALUES
+(7, 1728, 12, 12, 12, '2021-03-13 16:26:46', '2021-03-13 16:26:46'),
+(8, 272, 2, 34, 4, '2021-03-13 16:29:13', '2021-03-13 16:29:13'),
+(9, 9, 1, 3, 3, '2021-03-13 17:04:16', '2021-03-13 17:04:16'),
+(10, 124488, 76, 91, 18, '2021-03-13 17:25:28', '2021-03-13 17:25:28'),
+(11, 96048, 24, 87, 46, '2021-03-13 17:57:50', '2021-03-13 17:57:50'),
+(12, 1728, 12, 12, 12, '2021-03-14 05:56:44', '2021-03-14 05:56:44');
 
 -- --------------------------------------------------------
 
@@ -364,11 +401,14 @@ INSERT INTO `sawmillstocks` (`id`, `series`, `nop`, `nop_virtual`, `processed`, 
 CREATE TABLE `stocks` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `name` varchar(64) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `stockprofile_id` bigint(20) UNSIGNED DEFAULT NULL,
   `tally` varchar(64) COLLATE utf8mb4_unicode_ci NOT NULL,
   `size` double NOT NULL,
   `height` double DEFAULT NULL,
   `width` double DEFAULT NULL,
   `length` double DEFAULT NULL,
+  `confirm_status` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT 'NULL',
+  `status` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT 'NULL',
   `sawmillrun_id` bigint(20) UNSIGNED NOT NULL,
   `type_id` bigint(20) UNSIGNED NOT NULL,
   `unit_measure_id` bigint(20) UNSIGNED NOT NULL,
@@ -382,10 +422,12 @@ CREATE TABLE `stocks` (
 -- Dumping data for table `stocks`
 --
 
-INSERT INTO `stocks` (`id`, `name`, `tally`, `size`, `height`, `width`, `length`, `sawmillrun_id`, `type_id`, `unit_measure_id`, `origin`, `warehouse_id`, `created_at`, `updated_at`) VALUES
-(11, ' BB JOINT', 'IR13168', 8.819, 44, 0.01, 20.044, 14, 3, 1, 1, 1, '2021-03-11 11:39:47', '2021-03-11 16:37:07'),
-(13, 'MRB BB SQUARE', 'IR13170', 722.867, 12.4, 2.43, 23.99, 14, 5, 1, 1, 1, '2021-03-11 12:46:43', '2021-03-11 12:46:43'),
-(15, ' BB RST', 'IR13172', 76.468, 3.3, 2.32, 9.988, 15, 4, 1, 1, 1, '2021-03-11 13:08:55', '2021-03-11 16:36:18');
+INSERT INTO `stocks` (`id`, `name`, `stockprofile_id`, `tally`, `size`, `height`, `width`, `length`, `confirm_status`, `status`, `sawmillrun_id`, `type_id`, `unit_measure_id`, `origin`, `warehouse_id`, `created_at`, `updated_at`) VALUES
+(26, 'JT BB JOINT', 7, 'IR13183', 50715, 15, 69, 49, 'confirmed', 'finished on BMI-D', 31, 3, 1, 1, 2, '2021-03-13 16:20:55', '2021-03-13 16:28:36'),
+(27, 'JT BB RST MD', 10, 'IR13184', 34914, 23, 46, 33, 'confirmed', 'finished on BMI-D', 27, 4, 1, 1, 2, '2021-03-13 16:25:39', '2021-03-13 17:27:34'),
+(28, 'TRM BB SQUARE MD COATED', 9, 'IR13185', 4608, 12, 32, 12, 'unconfirmed', 'moving to GUDANG PACKING', 27, 5, 1, 13, 14, '2021-03-13 16:26:09', '2021-03-14 07:07:01'),
+(29, 'TRM BB JOINT KD', 12, 'IR13186', 6, 1, 2, 3, 'confirmed', 'finished on BMI-DB', 28, 3, 1, 1, 3, '2021-03-13 17:29:36', '2021-03-14 05:56:44'),
+(30, 'JT BB RST KD MD COATED', 11, 'IR13187', 69, 1, 23, 3, 'confirmed', 'finished on BMI-E', 31, 4, 1, 3, 13, '2021-03-13 17:29:56', '2021-03-14 06:58:07');
 
 -- --------------------------------------------------------
 
@@ -557,7 +599,9 @@ INSERT INTO `warehouses` (`id`, `name`, `shortname`, `capacity`, `address`, `cre
 (2, 'GUDANG P BASAH', 'BMI-D', NULL, 'PT. BINA MEGAH INDOWOOD', '2021-02-25 07:49:27', '2021-02-25 07:49:27'),
 (3, 'GUDANG P KERING', 'BMI-DB', NULL, 'PT. BINA MEGAH INDOWOOD', '2021-02-25 07:49:27', '2021-02-25 07:49:27'),
 (4, 'GUDANG JOINT', 'BMI-F', NULL, 'PT. BINA MEGAH INDOWOOD', '2021-02-25 07:49:27', '2021-02-25 07:49:27'),
-(5, 'GUDANG BAHAN BAKU', 'BMI-A', NULL, 'PT. BINA MEGAH INDOWOOD', '2021-02-25 14:11:51', '2021-02-25 14:11:51');
+(5, 'GUDANG BAHAN BAKU', 'BMI-A', NULL, 'PT. BINA MEGAH INDOWOOD', '2021-02-25 14:11:51', '2021-02-25 14:11:51'),
+(13, 'GUDANG COATING', 'BMI-E', NULL, 'PT. BINA MEGAH INDOWOOD', '2021-03-13 05:29:33', '2021-03-13 05:29:33'),
+(14, 'GUDANG PACKING', 'BMI-G', NULL, 'PT. BINA MEGAH INDOWOOD', '2021-03-13 15:59:05', '2021-03-13 15:59:05');
 
 --
 -- Indexes for dumped tables
@@ -672,6 +716,12 @@ ALTER TABLE `sawmillstocks`
   ADD UNIQUE KEY `sawmillstocks_series_unique` (`series`);
 
 --
+-- Indexes for table `stockprofiles`
+--
+ALTER TABLE `stockprofiles`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `stocks`
 --
 ALTER TABLE `stocks`
@@ -681,7 +731,8 @@ ALTER TABLE `stocks`
   ADD KEY `stocks_type_id_foreign` (`type_id`),
   ADD KEY `stocks_unit_measure_id_foreign` (`unit_measure_id`),
   ADD KEY `stocks_origin_foreign` (`origin`),
-  ADD KEY `stocks_warehouse_id_foreign` (`warehouse_id`);
+  ADD KEY `stocks_warehouse_id_foreign` (`warehouse_id`),
+  ADD KEY `stocks_stockprofile_id_foreign` (`stockprofile_id`);
 
 --
 -- Indexes for table `structure_categories`
@@ -751,7 +802,7 @@ ALTER TABLE `invoices`
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
 
 --
 -- AUTO_INCREMENT for table `permissions`
@@ -769,13 +820,13 @@ ALTER TABLE `product_categories`
 -- AUTO_INCREMENT for table `raws`
 --
 ALTER TABLE `raws`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
 
 --
 -- AUTO_INCREMENT for table `records`
 --
 ALTER TABLE `records`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=122;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=149;
 
 --
 -- AUTO_INCREMENT for table `roles`
@@ -787,19 +838,25 @@ ALTER TABLE `roles`
 -- AUTO_INCREMENT for table `sawmillruns`
 --
 ALTER TABLE `sawmillruns`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
 
 --
 -- AUTO_INCREMENT for table `sawmillstocks`
 --
 ALTER TABLE `sawmillstocks`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
+
+--
+-- AUTO_INCREMENT for table `stockprofiles`
+--
+ALTER TABLE `stockprofiles`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `stocks`
 --
 ALTER TABLE `stocks`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
 
 --
 -- AUTO_INCREMENT for table `structure_categories`
@@ -835,7 +892,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `warehouses`
 --
 ALTER TABLE `warehouses`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- Constraints for dumped tables
@@ -899,6 +956,7 @@ ALTER TABLE `sawmillstocks`
 ALTER TABLE `stocks`
   ADD CONSTRAINT `stocks_origin_foreign` FOREIGN KEY (`origin`) REFERENCES `warehouses` (`id`),
   ADD CONSTRAINT `stocks_sawmillrun_id_foreign` FOREIGN KEY (`sawmillrun_id`) REFERENCES `sawmillruns` (`id`),
+  ADD CONSTRAINT `stocks_stockprofile_id_foreign` FOREIGN KEY (`stockprofile_id`) REFERENCES `stockprofiles` (`id`),
   ADD CONSTRAINT `stocks_type_id_foreign` FOREIGN KEY (`type_id`) REFERENCES `types` (`id`),
   ADD CONSTRAINT `stocks_unit_measure_id_foreign` FOREIGN KEY (`unit_measure_id`) REFERENCES `unit_measures` (`id`),
   ADD CONSTRAINT `stocks_warehouse_id_foreign` FOREIGN KEY (`warehouse_id`) REFERENCES `warehouses` (`id`);
