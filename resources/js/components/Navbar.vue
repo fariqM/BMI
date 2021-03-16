@@ -6,7 +6,7 @@
 
 		<!-- Kolom Pencarian -->
 		<div class="navbar-content">
-			<form class="search-form">
+			<!-- <form class="search-form">
 				<div class="input-group">
 					<div class="input-group-prepend">
 						<div class="input-group-text">
@@ -22,7 +22,7 @@
 
 
 				</div>
-			</form>
+			</form> -->
 
 			<!-- Dropdown Bahasa -->
 			<ul class="navbar-nav">
@@ -64,7 +64,7 @@
 				</li>
 
 				<!-- App Dropdown -->
-				<li class="nav-item dropdown nav-apps">
+				<!-- <li class="nav-item dropdown nav-apps">
 					<a
 						class="nav-link dropdown-toggle"
 						href="#"
@@ -109,10 +109,10 @@
 							<a href="#">View all</a>
 						</div>
 					</div>
-				</li>
+				</li> -->
 
 				<!-- Dropdown Message -->
-				<li class="nav-item dropdown nav-messages">
+				<!-- <li class="nav-item dropdown nav-messages">
 					<a
 						class="nav-link dropdown-toggle"
 						href="#"
@@ -209,9 +209,9 @@
 							<a href="javascript:;">View all</a>
 						</div>
 					</div>
-				</li>
+				</li> -->
 
-				<li class="nav-item dropdown nav-notifications">
+				<!-- <li class="nav-item dropdown nav-notifications">
 					<a
 						class="nav-link dropdown-toggle"
 						href="#"
@@ -286,7 +286,7 @@
 							<a href="javascript:;">View all</a>
 						</div>
 					</div>
-				</li>
+				</li> -->
 
 				<!-- Dropdown Profile Menu -->
 				<li class="nav-item dropdown nav-profile">
@@ -313,29 +313,30 @@
 						</div>
 						<div class="dropdown-body">
 							<ul class="profile-nav p-0 pt-3">
-								<li class="nav-item">
+								<!-- <li class="nav-item">
 									<a href="profile" class="nav-link">
 										<i data-feather="user"></i>
 										<span>Profile</span>
 									</a>
-								</li>
-								<li class="nav-item">
+								</li> -->
+								<!-- <li class="nav-item">
 									<a href="javascript:;" class="nav-link">
 										<i data-feather="edit"></i>
 										<span>Edit Profile</span>
 									</a>
-								</li>
-								<li class="nav-item">
+								</li> -->
+								<!-- <li class="nav-item">
 									<a href="javascript:;" class="nav-link">
 										<i data-feather="repeat"></i>
 										<span>Switch User</span>
 									</a>
-								</li>
+								</li> -->
 								<li class="nav-item">
 									<a
 										href="#"
+										@click.prevent="logout"
 										class="nav-link"
-										onclick="event.preventDefault();document.getElementById('logout-form').submit();"
+										
 									>
 										<i data-feather="log-out"></i>
 										<span>Logout</span>
@@ -359,5 +360,24 @@
 </template>
 
 <script>
-export default {};
+export default {
+	data: () => ({
+             csrf: document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+             }),   
+        methods:{
+            logout:function(){
+               axios.post('/logout').then(response => {
+                  if (response.status === 302 || 401) {
+					window.location.href = "http://127.0.0.1:8000/login";
+                    console.log('logout')
+                  }
+                  else {
+                    // throw error and go to catch block
+                  }
+                }).catch(error => {
+
+              });
+            },
+        },
+};
 </script>

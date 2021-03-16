@@ -53,18 +53,23 @@
                                         <h5 class="text-muted font-weight-normal mb-4">Sistem Informasi Inventory BMI
                                         </h5>
                                         <form class="forms-sample" method="post" action="{{ route('login') }}">
+                                            @csrf
                                             <div class="form-group">
                                                 <label for="exampleInputEmail1">Email</label>
-                                                <input type="email" class="form-control" id="exampleInputEmail1"
-                                                    placeholder="Email">
+                                                <input name="email" type="email"
+                                                    class="form-control {{ $errors->has('email') ? ' is-invalid' : '' }}"
+                                                    id="exampleInputEmail1" placeholder="Email">
                                             </div>
                                             <div class="form-group">
                                                 <label for="exampleInputPassword1">Password</label>
-                                                <input type="password" class="form-control" id="exampleInputPassword1"
-                                                    autocomplete="current-password" placeholder="Password">
+                                                <input name="password" type="password"
+                                                    class="form-control {{ $errors->has('password') ? ' is-invalid' : '' }}"
+                                                    id="exampleInputPassword1" autocomplete="current-password"
+                                                    placeholder="Password">
                                             </div>
                                             <div class="mt-3">
-                                                <button type="submit" href="https://www.nobleui.com/laravel/template/light"
+                                                <button type="submit"
+                                                    href="https://www.nobleui.com/laravel/template/light"
                                                     class="btn btn-primary mr-2 mb-2 mb-md-0">Login</button>
                                             </div>
                                         </form>
