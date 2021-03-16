@@ -2,7 +2,12 @@
 
 use Illuminate\Support\Facades\Route;
 
-Route::view('/{any}', 'welcome')->where('any','.*');
+Route::middleware('auth')->group(function(){
+    Route::view('/web/{any}', 'welcome')->where('any','.*');
+});
+
+// Route::view('login', 'auth.login')->name('login');
+
 
 
 // Route::view('/tabel', 'master');

@@ -38,179 +38,182 @@ import InputPacking from '../views/Packing/InputPacking'
 import OutputPacking from '../views/Packing/OutputPacking'
 import IndexPacking from '../views/Packing/IndexPacking'
 
+// import Error404 from '../views/Error/404'
+
 export default{
     mode: 'history',
 
 
     routes: [
+
         {
-            path: '/home',
+            path: '/web/home',
             name: 'home',
             component: Home
         },
         
         {
-            path: '/about',
+            path: '/web/about',
             name: 'pages.about',
             component: About
         },
         {
-            path: '/tes',
+            path: '/web/tes',
             name: 'pages.tes',
             component: Tes
         },
         {
-            path: '/addfruit',
+            path: '/web/addfruit',
             name: 'fruit',
             component: AddFruit
         },
 
         {
-            path: '/fruits/:FruitId',
+            path: '/web/fruits/:FruitId',
             name: 'edit.fruit',
             component: UpdateFruit
         },
 
         {
-            path: '/tabel',
+            path: '/web/tabel',
             name: 'tabel',
             component: Tabel
         },
 
         {
-            path: '/',
+            path: '/web/dashboard',
             name: 'dashboard',
             component: Dashboard
         },
 
         {
-            path: '/bahan-baku/index',
+            path: '/web/bahan-baku/index',
             name: 'bb.index',
             component: BahanBaku
         },
 
         {
-            path: '/bahan-baku/index/:RawId',
+            path: '/web/bahan-baku/index/:RawId',
             name: 'bb.show',
             component: ShowLog
         },
 
         {
-            path: '/bahan-baku/output-index',
+            path: '/web/bahan-baku/output-index',
             name: 'bb.output.index',
             component: OutputBB
         },
 
         {
-            path: '/sawmill/index',
+            path: '/web/sawmill/index',
             name: 'sawmil.index',
             component: Sawmill
         },
 
         {
-            path: '/sawmill/input-index',
+            path: '/web/sawmill/input-index',
             name: 'sawmil.input.index',
             component: inputSawmill
         },
 
         {
-            path: '/sawmill/output-index',
+            path: '/web/sawmill/output-index',
             name: 'sawmil.output.index',
             component: OutputSawmill
         },
         
         {
-            path: '/sawmill/raw-manufacturing',
+            path: '/web/sawmill/raw-manufacturing',
             name: 'sawmil.raw.manufacturing',
             component: RawManufacturing
         },
 
         {
-            path: '/p-basah/input-index',
+            path: '/web/p-basah/input-index',
             name: 'basah.input.index',
             component: InputBasah
         },
 
         {
-            path: '/p-basah/master-index',
+            path: '/web/p-basah/master-index',
             name: 'basah.master.index',
             component: IndexBasah
         },
 
         {
-            path: '/p-basah/output-index',
+            path: '/web/p-basah/output-index',
             name: 'basah.output.index',
             component: OutputBasah
         },
 
         {
-            path: '/p-kering/input-index',
+            path: '/web/p-kering/input-index',
             name: 'kering.input.index',
             component: InputKering
         },
 
         {
-            path: '/p-kering/master-index',
+            path: '/web/p-kering/master-index',
             name: 'kering.master.index',
             component: IndexKering
         },
 
         {
-            path: '/p-kering/output-index',
+            path: '/web/p-kering/output-index',
             name: 'kering.output.index',
             component: OutputKering
         },
 
         {
-            path: '/p-coating/input-index',
+            path: '/web/p-coating/input-index',
             name: 'coating.input.index',
             component: InputCoating
         },
 
         {
-            path: '/p-coating/master-index',
+            path: '/web/p-coating/master-index',
             name: 'coating.master.index',
             component: IndexCoating
         },
 
         {
-            path: '/p-coating/output-index',
+            path: '/web/p-coating/output-index',
             name: 'coating.output.index',
             component: OutputCoating
         },
 
         {
-            path: '/p-joint/input-index',
+            path: '/web/p-joint/input-index',
             name: 'joint.input.index',
             component: InputJoint
         },
 
         {
-            path: '/p-joint/master-index',
+            path: '/web/p-joint/master-index',
             name: 'joint.master.index',
             component: IndexJoint
         },
 
         {
-            path: '/p-joint/output-index',
+            path: '/web/p-joint/output-index',
             name: 'joint.output.index',
             component: OutputJoint
         },
 
         {
-            path: '/p-packing/input-index',
+            path: '/web/p-packing/input-index',
             name: 'packing.input.index',
             component: InputPacking
         },
 
         {
-            path: '/p-packing/master-index',
+            path: '/web/p-packing/master-index',
             name: 'packing.master.index',
             component: IndexPacking
         },
 
         {
-            path: '/p-packing/output-index',
+            path: '/web/p-packing/output-index',
             name: 'packing.output.index',
             component: OutputPacking
         },
@@ -220,31 +223,31 @@ export default{
 
         
         {
-            path: '/bahan-baku/form',
+            path: '/web/bahan-baku/form',
             name: 'bb.form',
             component: FormBB
         },
 
         {
-            path: '/invoice/form',
+            path: '/web/invoice/form',
             name: 'inv.form',
             component: FormInvoice
         },
 
         {
-            path: '/structure/form',
+            path: '/web/structure/form',
             name: 'str.form',
             component: FormStructure
         },
 
         {
-            path: '/warehouse/form',
+            path: '/web/warehouse/form',
             name: 'wrh.form',
             component: FormWarehouse
         },
 
         {
-            path: '/supplier/form',
+            path: '/web/supplier/form',
             name: 'spl.form',
             component: FormSupplier
         },

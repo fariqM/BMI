@@ -191,12 +191,13 @@
 							</div>
 							<div class="header-controller-table-3">
 								<div class="header-controller-table-3-1">
-									<b-form-checkbox
+									<!-- <b-form-checkbox
+										
 										v-model="stockTable"
 										switch
 										size="lg"
 									></b-form-checkbox>
-									<span class="label-table-controller">Log Index</span>
+									<span class="label-table-controller">Log Index</span> -->
 								</div>
 								<div class="header-controller-table-3-2">
 									<template v-if="stockTable == false">

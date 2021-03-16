@@ -174,6 +174,11 @@ Route::namespace('App\Http\Controllers')->group(function(){
         Route::patch('move1/{stock:id}', 'StockController@move1');
     });
 
+    Route::prefix('dashboard')->group(function(){
+        Route::get('dashboard-stock-cart', 'DashboardController@StockChart');
+        Route::get('stock-master-admin-index', 'DashboardController@index');
+    });
+
 });
 
 // Route::middleware('auth:api')->get('/user', function (Request $request) {

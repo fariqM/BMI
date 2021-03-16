@@ -700,14 +700,16 @@
 														>EDIT</a
 													>
 
-													<a
-														@click="setEditForm(data.item)"
-														data-toggle="modal"
-														data-target="#MoveProcessModal"
-														class="badge badge-secondary del-btn"
-													>
-														PROCESS TO
-													</a>
+													<template v-if="data.item.status === null">
+														<a
+															@click="setEditForm(data.item)"
+															data-toggle="modal"
+															data-target="#MoveProcessModal"
+															class="badge badge-secondary del-btn"
+														>
+															PROCESS TO
+														</a>
+													</template>
 												</template>
 
 												<template #cell(status)="data">
