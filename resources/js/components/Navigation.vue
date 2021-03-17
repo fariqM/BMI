@@ -258,7 +258,6 @@
 						<span class="link-title">User Management</span>
 					</router-link>
 				</li>
-
 			</ul>
 		</div>
 	</nav>

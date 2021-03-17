@@ -3,12 +3,12 @@
 		<div class="card-body">
 			<h6 class="card-title">Create Log Data</h6>
 			<form method="post" class="forms-sample" @submit.prevent="store">
-                <div class="form-group row">
+				<div class="form-group row">
 					<label for="width" class="col-sm-3 col-form-label">NAME</label>
 
 					<div class="col-sm-9">
 						<input
-                            placeholder="Admin Name"
+							placeholder="Admin Name"
 							v-model="form.name"
 							type="text"
 							class="form-control"
@@ -21,12 +21,28 @@
 					</div>
 				</div>
 
-                <div class="form-group row">
+				<div class="form-group row">
+					<label for="name" class="col-sm-3 col-form-label">ROLE NAME </label>
+					<div class="col-sm-9">
+						<v-select
+							class="style-chooser"
+							@input="setPermission"
+							:options="permission_option"
+							label="title"
+						>
+						</v-select>
+						<div v-if="theErrors.permission" class="mt-2 text-danger">
+							{{ theErrors.permission[0] }}
+						</div>
+					</div>
+				</div>
+
+				<div class="form-group row">
 					<label for="width" class="col-sm-3 col-form-label">EMAIL</label>
 
 					<div class="col-sm-9">
 						<input
-                            placeholder="Admin Email for login"
+							placeholder="Admin Email for login"
 							v-model="form.email"
 							type="email"
 							class="form-control"
@@ -39,15 +55,16 @@
 					</div>
 				</div>
 
-                <div class="form-group row">
+				<div class="form-group row">
 					<label for="width" class="col-sm-3 col-form-label">PASSWORD</label>
 
 					<div class="col-sm-9">
+						<i class="fa fa-envelope icon"></i>
 						<input
-                            placeholder="Admin Email for login"
+							placeholder="Admin password for login"
 							v-model="form.password"
 							type="password"
-							class="form-control"
+							class="form-control costum-form-password-hide"
 							id="password"
 						/>
 
@@ -57,16 +74,18 @@
 					</div>
 				</div>
 
-                <div class="form-group row">
-					<label for="width" class="col-sm-3 col-form-label">RE-TYPE PASSWORD</label>
+				<div class="form-group row">
+					<label for="width" class="col-sm-3 col-form-label"
+						>RE-TYPE PASSWORD</label
+					>
 
 					<div class="col-sm-9">
 						<input
-                            placeholder="Admin Email for login"
+							placeholder="Retype password"
 							v-model="form.retype"
 							type="password"
 							class="form-control"
-							id="password"
+							id="retype"
 						/>
 
 						<div v-if="theErrors.password" class="mt-2 text-danger">
@@ -75,12 +94,12 @@
 					</div>
 				</div>
 
-                <div class="form-group row">
+				<div class="form-group row">
 					<label for="width" class="col-sm-3 col-form-label">ADDRESS</label>
 
 					<div class="col-sm-9">
 						<input
-                            placeholder="Admin Email for login"
+							placeholder="Admin address"
 							v-model="form.address"
 							type="address"
 							class="form-control"
@@ -94,20 +113,33 @@
 				</div>
 
 				<div class="form-group row">
-					<label for="name" class="col-sm-3 col-form-label"
-						>ROLE NAME
-					</label>
+					<label for="name" class="col-sm-3 col-form-label">PHONE</label>
 					<div class="col-sm-9">
-						<v-select
-							class="style-chooser"
-							@input="setPermission"
-							:options="permission_option"
-							label="title"
-						>
-							
-						</v-select>
-						<div v-if="theErrors.permission" class="mt-2 text-danger">
-							{{ theErrors.permission[0] }}
+						<masked-input
+							:mask="[
+								'(',
+								/[0-9]/,
+								/\d/,
+								/\d/,
+								')',
+								' ',
+								/\d/,
+								/\d/,
+								/\d/,
+								'-',
+								/\d/,
+								/\d/,
+								/\d/,
+								/\d/,
+							]"
+							v-model="form.mobile"
+							:guide="false"
+							type="text"
+							class="form-control"
+							id="phone"
+						/>
+						<div v-if="theErrors.phone" class="mt-2 text-danger">
+							{{ theErrors.phone[0] }}
 						</div>
 					</div>
 				</div>
@@ -130,33 +162,31 @@
 </template>
 
 <script>
-import { createPopper } from '@popperjs/core'
+import { createPopper } from "@popperjs/core";
 export default {
 	data() {
 		return {
+			eyeUnactive: true,
+			eyeActive: false,
 			form: {
-				name:"",
-                email:"",
-                password:"",
-                retype:"",
-                address:"",
-                name:"",
-                name:"",
+				name: "",
+				email: "",
+				password: "",
+				retype: "",
+				address: "",
+				mobile: "",
+				permission: "",
+				permission_id: "",
+				role: "",
 			},
 			theErrors: [],
-			invoice_option: [],
-			invoice: [],
-			category_option: [],
-			supplier_option: [],
-			placement: 'top',
+			permission_option: [],
+			placement: "top",
 		};
 	},
 
 	mounted() {
-		this.getStructure();
-		this.getInvoice();
-		this.getSupplier();
-		this.getInvoice();
+		this.getPermission();
 	},
 
 	methods: {
@@ -209,42 +239,48 @@ export default {
 			let { data } = await axios.get("/api/supplier/index");
 			this.supplier_option = data.data;
 		},
-
-		setPermission(value) {
-			this.form.series = value.shortname;
-			this.form.structure_category_id = value.id;
-		},
 		async getStructure() {
 			let { data } = await axios.get("/api/structure-category/index");
 			this.category_option = data.data;
 		},
 		async store() {
-			// console.log(this.form);
-
-			try {
-				let response = await axios.post(
-					"/api/gudang-bahanbaku/add-raw",
-					this.form
-				);
-				if (response.status == 200) {
-					this.$router.push({ name: "bb.index" });
-					this.$toast.success("Submit success", "DOne!", {
+			
+			console.log(this.form);
+			if (this.form.password != this.form.retype) {
+				this.$toast.error("Password not equal", "Oops,", {
+					position: "topRight",
+				});
+			} else {
+				
+				try {
+					
+					let response = await axios.post(
+						"/api/dashboard/add-user",
+						this.form
+					);
+					if (response.status == 200) {
+						this.$router.push({ name: "user.control" });
+						this.$toast.success("New admin has been created", "Done!", {
+							position: "topRight",
+						});
+						//  console.log(response);
+					}
+				} catch (e) {
+					this.theErrors = e.response.data.errors;
+					this.$toast.error("Something wrong!", "Oops,", {
 						position: "topRight",
 					});
-					//  console.log(response.status);
 				}
-			} catch (e) {
-				this.theErrors = e.response.data.errors;
-				this.$toast.error("Something wrong!", "Oops,", { position: "topRight" });
 			}
 		},
 
-		setInvoice(value) {
-			this.form.invoice_id = value.id;
+		setPermission(value) {
+			this.form.permission = value.title;
+			this.form.permission_id = value.id;
 		},
-		async getInvoice() {
-			let { data } = await axios.get("/api/invoice/index");
-			this.invoice_option = data.data;
+		async getPermission() {
+			let { data } = await axios.get("/api/dashboard/index-permission");
+			this.permission_option = data.data;
 		},
 	},
 };
@@ -265,15 +301,15 @@ export default {
 }
 
 .v-select.drop-up.vs--open .vs__dropdown-toggle {
-    border-radius: 0 0 4px 4px;
-    border-top-color: transparent;
-    border-bottom-color: rgba(60, 60, 60, 0.26);
-  }
+	border-radius: 0 0 4px 4px;
+	border-top-color: transparent;
+	border-bottom-color: rgba(60, 60, 60, 0.26);
+}
 
-  [data-popper-placement='top'] {
-    border-radius: 4px 4px 0 0;
-    border-top-style: solid;
-    border-bottom-style: none;
-    box-shadow: 0 -3px 6px rgba(0, 0, 0, 0.15)
-  }
+[data-popper-placement="top"] {
+	border-radius: 4px 4px 0 0;
+	border-top-style: solid;
+	border-bottom-style: none;
+	box-shadow: 0 -3px 6px rgba(0, 0, 0, 0.15);
+}
 </style>

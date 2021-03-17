@@ -51,6 +51,14 @@ Vue.component("v-select", vSelect);
 Vue.component("masked-input", MaskedInput);
 Vue.component("apexchart", VueApexCharts);
 
+Vue.component("navigation_packing", require("./components/PackingNavigation.vue").default);
+Vue.component("navigation_bb", require("./components/BBNavigation.vue").default);
+Vue.component("navigation_joint", require("./components/JointNavigation.vue").default);
+Vue.component("navigation_sawmill", require("./components/SawmillNavigation.vue").default);
+Vue.component("navigation_kering", require("./components/KeringNavigation.vue").default);
+Vue.component("navigation_basah", require("./components/BasahNavigation.vue").default);
+Vue.component("navigation_coating", require("./components/CoatingNavigation.vue").default);
+
 Vue.component("navigation", require("./components/Navigation.vue").default);
 Vue.component("navbar", require("./components/Navbar.vue").default);
 Vue.component("bawahan", require("./components/Bawahan.vue").default);

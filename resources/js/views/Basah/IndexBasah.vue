@@ -675,7 +675,7 @@
 												@click="rollback(info.item)"
 												class="badge badge-warning del-btn"
 											>
-												ROLLBACK
+												CANCEL
 											</a>
 										</template>
 

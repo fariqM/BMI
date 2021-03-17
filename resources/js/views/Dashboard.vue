@@ -15,7 +15,6 @@
 							>
 							for more info
 						</p>
-
 					</div>
 				</div>
 			</div>
@@ -39,7 +38,8 @@
 		<div class="row">
 			<div class="col-md-12 grid-margin stretch-card">
 				<div class="card">
-					<!-- <div class="card-body">
+					<div class="card-body">
+						
 						<h6 class="card-title">
 							Index of input records in <b>Gudang Sawmill</b>
 						</h6>
@@ -87,7 +87,7 @@
 									
 								</div>
 								<div class="header-controller-table-3-2">
-									<template v-if="stockTable == false">
+									<!-- <template v-if="stockTable == false">
 										<b-button @click="toggleBusy" variant="success">
 											<b-icon
 												icon="arrow-clockwise"
@@ -95,9 +95,9 @@
 											></b-icon>
 											Refresh Table
 										</b-button>
-									</template>
+									</template> -->
 
-									<template v-if="stockTable">
+									<!-- <template v-if="stockTable">
 										<b-button @click="getSawmillstock" variant="success">
 											<b-icon
 												icon="arrow-clockwise"
@@ -105,7 +105,7 @@
 											></b-icon>
 											Refresh Table
 										</b-button>
-									</template>
+									</template> -->
 								</div>
 							</div>
 						</div>
@@ -158,175 +158,7 @@
 											</path>
 										</svg>
 									</div>
-								</template>
-
-								<template #cell(confirm_at)="data">
-									<template v-if="data.item.confirm_at == null">
-										Not set
-									</template>
-									<template v-if="data.item.confirm_at != null">
-										{{ data.item.confirm_at }}
-									</template>
-								</template>
-
-								<template #cell(status)="data">
-									<template v-if="data.item.status == 'finished'">
-										<span class="badge badge-pill badge-success">
-											<b-icon
-												class="costum-badge"
-												icon="check2-square"
-											></b-icon>
-											{{ data.item.status.toUpperCase() }}
-										</span>
-									</template>
-
-									<template v-if="data.item.status == 'processing all'">
-										<span class="badge badge-pill badge-success">
-											<b-icon class="costum-badge" icon="clock"></b-icon>
-											{{ data.item.status.toUpperCase() }}
-										</span>
-									</template>
-
-									<template v-if="data.item.status == 'moving'">
-										<span class="badge badge-pill badge-dark">
-											<b-icon
-												class="costum-badge"
-												icon="box-arrow-up-right"
-											></b-icon>
-											{{ data.item.status.toUpperCase() }}
-										</span>
-									</template>
-
-									<template v-if="data.item.status == 'on queue'">
-										<span class="badge badge-pill badge-info">
-											<b-icon class="costum-badge" icon="clock"></b-icon>
-											{{ data.item.status.toUpperCase() }}
-										</span>
-									</template>
-
-									<template v-if="data.item.status == 'stored'">
-										<span class="badge badge-pill badge-info">
-											<b-icon class="costum-badge" icon="clock"></b-icon>
-											{{ data.item.status.toUpperCase() + " AT BMI-B" }}
-										</span>
-									</template>
-
-									<template v-if="data.item.status == 'returned'">
-										<span class="badge badge-pill badge-info">
-											<b-icon class="costum-badge" icon="clock"></b-icon>
-											{{ data.item.status.toUpperCase() + " AT BMI-A" }}
-										</span>
-									</template>
-								</template>
-
-								<template #cell(confirm_status)="data">
-									<template
-										v-if="data.item.confirm_status == 'revision confirmed'"
-									>
-										<span class="badge badge-pill badge-success">
-											<b-icon
-												class="costum-badge"
-												icon="check2-square"
-											></b-icon>
-											{{ data.item.confirm_status.toUpperCase() }}
-										</span>
-									</template>
-
-									<template v-if="data.item.confirm_status == 'revision'">
-										<span class="badge badge-pill badge-warning">
-											<b-icon
-												class="costum-badge"
-												icon="exclamation-triangle-fill"
-												variant="danger"
-											></b-icon>
-											{{ data.item.confirm_status.toUpperCase() }}
-										</span>
-									</template>
-
-									<template v-if="data.item.confirm_status == 'unconfirmed'">
-										<span class="badge badge-pill badge-warning">
-											<b-icon
-												class="costum-badge"
-												icon="exclamation-triangle-fill"
-												variant="danger"
-											></b-icon>
-											{{ data.item.confirm_status.toUpperCase() }}
-										</span>
-									</template>
-									<template v-if="data.item.confirm_status == 'confirmed'">
-										<span class="badge badge-pill badge-success">
-											<b-icon
-												class="costum-badge"
-												icon="check2-square"
-											></b-icon>
-											{{ data.item.confirm_status.toUpperCase() }}
-										</span>
-									</template>
-									<template v-if="data.item.confirm_status == 'mismatch'">
-										<span class="badge badge-pill badge-danger">
-											<b-icon
-												class="costum-badge"
-												icon="exclamation-triangle-fill"
-												variant="waring"
-											></b-icon>
-											{{ data.item.confirm_status.toUpperCase() }}
-										</span>
-									</template>
-								</template>
-
-								<template class="justify-content-between" #cell(action)="data">
-
-									<template
-										v-if="
-											data.item.status == 'stored' &&
-											data.item.confirm_status == 'mismatch'
-										"
-									>
-										<a
-											@click="setvalue(data.item)"
-											data-toggle="modal"
-											data-target="#ModalEditLog"
-											class="badge badge-primary del-btn"
-										>
-											EDIT
-										</a>
-									</template>
-
-									<template v-if="data.item.confirm_status == 'unconfirmed'">
-										<a
-											@click="confirm(data.item)"
-											class="badge badge-success del-btn"
-											>CONFIRM</a
-										>
-										<a
-											@click="mismatch(data.item)"
-											class="badge badge-danger del-btn"
-											>MISMATCH</a
-										>
-									</template>
-
-									<template
-										v-if="
-											data.item.confirm_status.includes('confirmed') &&
-											data.item.status != 'finished' &&
-											data.item.confirm_status != 'unconfirmed' &&
-											data.item.status != 'processing all' 
-										"
-									>
-										<a
-											@click="directProceed(data.item)"
-											class="badge badge-primary del-btn"
-											>PROCEED</a
-										>
-									</template>
-								</template>
-								<template #cell(stock_action)="data">
-									<a
-										@click="proceed(data.item)"
-										class="badge badge-primary del-btn"
-										>PROCEED</a
-									>
-								</template>
+								</template>							
 							</b-table>
 						</div>
 						<hr />
@@ -357,11 +189,10 @@
 								></b-pagination>
 							</div>
 						</div>
-					</div> -->
+					</div>
 				</div>
 			</div>
 		</div>
-
 	</div>
 </template>
 
@@ -369,15 +200,23 @@
 export default {
 	data() {
 		return {
+			raws:[],
 			btnLoading: false,
 			isBusy: false,
 			kolom: [
+				{ key: "id", label: "id", sortable: true },
+				{ key: "name", label: "name", sortable: true },
 				{ key: "series", label: "Series", sortable: true },
-				{ key: "destination_name", label: "Destination", sortable: true },
-				{ key: "nop", label: "On Hand", sortable: true },
-				{ key: "status", label: "Raw status", sortable: true },
-				{ key: "series", label: "Series", sortable: true },
-				"action",
+				{ key: "tally", label: "tally", sortable: true },
+				{ key: "size", label: "volume (m3)", sortable: true },
+				{ key: "height", label: "height (m)", sortable: true },
+				{ key: "length", label: "length (m)", sortable: true },
+				{ key: "width", label: "width (m)", sortable: true },
+				{ key: "status", label: "status", sortable: true },
+				{ key: "confirm_status", label: "confirm status", sortable: true },
+				{ key: "structure_category", label: "structure category", sortable: true },
+				{ key: "type_name", label: "type", sortable: true },
+				{ key: "warehouse", label: "warehouse", sortable: true },
 			],
 			sortBy: "",
 			sortDesc: false,
@@ -393,7 +232,7 @@ export default {
 			totalRows: 1,
 			theErrors: [],
 			currentPage: 1,
-			MasterStock:[],
+			MasterStock: [],
 			stock: [],
 			stockChartAttr: [],
 			g_sawmill: [],
@@ -401,7 +240,7 @@ export default {
 			g_kering: [],
 			g_joint: [],
 			g_bb: [],
-			cek:[],
+			cek: [],
 			g_coating: [],
 			g_packing: [],
 			dump: [],
@@ -515,11 +354,14 @@ export default {
 			var i = 0;
 			this.stock.forEach((element) => {
 				// if (element.stock !== null) {
-					
+
 				// }
 
 				if (element.name == "GUDANG SAWMILL" && element.stock !== null) {
 					this.g_sawmill[i] = element.data;
+					this.dump[i] = element.stock;
+					this.cek[i] =
+						element.stock + " - " + element.data + " - " + element.name;
 					this.g_kering[i] = 0;
 					this.g_basah[i] = 0;
 					this.g_joint[i] = 0;
@@ -528,7 +370,8 @@ export default {
 					this.g_packing[i] = 0;
 				} else if (element.name == "GUDANG P BASAH" && element.stock !== null) {
 					this.g_sawmill[i] = 0;
-					this.cek[i]= element.stock+" - "+element.data+" - "+element.name
+					this.cek[i] =
+						element.stock + " - " + element.data + " - " + element.name;
 					this.g_kering[i] = 0;
 					this.g_basah[i] = element.data;
 					this.g_joint[i] = 0;
@@ -541,7 +384,8 @@ export default {
 					element.stock !== null
 				) {
 					this.g_sawmill[i] = 0;
-					this.cek[i]= element.stock+" - "+element.data+" - "+element.name
+					this.cek[i] =
+						element.stock + " - " + element.data + " - " + element.name;
 					this.g_kering[i] = element.data;
 					this.g_basah[i] = 0;
 					this.g_joint[i] = 0;
@@ -552,12 +396,12 @@ export default {
 				} else if (element.name == "GUDANG JOINT" && element.stock !== null) {
 					this.g_sawmill[i] = 0;
 					this.g_kering[i] = 0;
-					this.cek[i]= element.stock+" - "+element.data+" - "+element.name
+					this.cek[i] =
+						element.stock + " - " + element.data + " - " + element.name;
 					this.dump[i] = element.stock;
 					this.g_basah[i] = 0;
 					this.g_joint[i] = element.data;
 					this.g_bb[i] = 0;
-					this.dump[i] = element.stock;
 					this.g_coating[i] = 0;
 					this.g_packing[i] = 0;
 				} else if (
@@ -566,7 +410,8 @@ export default {
 				) {
 					this.g_sawmill[i] = 0;
 					this.g_kering[i] = 0;
-					this.cek[i]= element.stock+" - "+element.data+" - "+element.name
+					this.cek[i] =
+						element.stock + " - " + element.data + " - " + element.name;
 					this.g_basah[i] = 0;
 					this.dump[i] = element.stock;
 					this.g_joint[i] = 0;
@@ -578,7 +423,8 @@ export default {
 					this.g_kering[i] = 0;
 					this.g_basah[i] = 0;
 					this.g_joint[i] = 0;
-					this.cek[i]= element.stock+" - "+element.data+" - "+element.name
+					this.cek[i] =
+						element.stock + " - " + element.data + " - " + element.name;
 					this.dump[i] = element.stock;
 					this.g_bb[i] = 0;
 					this.g_coating[i] = element.data;
@@ -586,7 +432,8 @@ export default {
 				} else if (element.name == "GUDANG PACKING" && element.stock !== null) {
 					this.g_sawmill[i] = 0;
 					this.g_kering[i] = 0;
-					this.cek[i]= element.stock+" - "+element.data+" - "+element.name
+					this.cek[i] =
+						element.stock + " - " + element.data + " - " + element.name;
 					this.dump[i] = element.stock;
 					this.g_basah[i] = 0;
 					this.g_joint[i] = 0;
@@ -599,7 +446,12 @@ export default {
 				i++;
 			});
 
-			console.log(this.cek);
+
+			console.log("cek = " + this.cek);
+			console.log("dump = " + this.dump);
+			console.log("p-basah = " + this.g_basah);
+			console.log("p-kering = " + this.g_kering);
+			console.log("joint = " + this.g_joint);
 			var options = {
 				chart: {
 					height: 350,
@@ -635,9 +487,8 @@ export default {
 					},
 					categories: this.dump,
 				},
-				
 			});
-			console.log("dump = "+this.dump);
+
 			// example of series in another format
 			chart.appendSeries({
 				name: "Gudang Bahan Baku",
@@ -657,7 +508,7 @@ export default {
 			});
 			chart.appendSeries({
 				name: "Gudang Joint",
-				data: this.g_basah,
+				data: this.g_joint,
 			});
 			chart.appendSeries({
 				name: "Gudang Coating",
@@ -671,16 +522,21 @@ export default {
 		async toggleBusy() {
 			this.isBusy = !this.isBusy;
 			this.raws = [];
-			let { data } = await axios.get("/api/gudang-sawmill/input-index");
+			let { data } = await axios.get("/api/dashboard/stock-master-admin-index");
 			this.raws = data.data;
 			this.totalRows = this.raws.length;
 			setTimeout((this.isBusy = !this.isBusy), 6000);
 			// console.log(this.raws.length);
 		},
 		async refreshData() {
-			let { data } = await axios.get("/api/gudang-sawmill/input-index");
+			let { data } = await axios.get("/api/dashboard/stock-master-admin-index");
 			this.raws = data.data;
 			this.totalRows = this.raws.length;
+		},
+		onFiltered(filteredItems) {
+			// Trigger pagination to update the number of buttons/pages due to filtering
+			this.totalRows = filteredItems.length;
+			this.currentPage = 1;
 		},
 	},
 };

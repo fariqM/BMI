@@ -17,16 +17,17 @@
     <link rel="stylesheet" href="{{ asset('assets/fonts/feather-font/css/iconfont.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/vendors/flag-icon-css/css/flag-icon.min.css') }}">
 
-    <link rel="shortcut icon" href="https://binamegah.com/wp-content/uploads/2020/09/cropped-favicon-logo-bmi1-32x32.png" />
+    <link rel="shortcut icon"
+        href="https://binamegah.com/wp-content/uploads/2020/09/cropped-favicon-logo-bmi1-32x32.png" />
 
     {{-- <link href="{{ asset('css/app.css') }}" rel="stylesheet"> --}}
 
 
     {{-- metismenu --}}
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/metismenu/dist/metisMenu.min.css">
-    
+
     <link rel="stylesheet" href="{{ asset('assets/css/demo_1/style.css') }}">
-    
+
     <link rel="stylesheet" href="{{ asset('assets/css/demo_1/costume.css') }}">
 </head>
 
@@ -34,7 +35,45 @@
     {{--class="not-remove sidebar-folded"--}}
     <div class="main-wrapper" id="app">
         {{-- @include('components.sidebar.mysidebar') --}}
+
+        @can('admin packing')
+        <navigation_packing></navigation_packing>
+        @endcan
+
+        @can('admin coating')
+        <navigation_coating></navigation_coating>
+        @endcan
+
+        @can('admin joint')
+        <navigation_joint></navigation_joint>
+        @endcan
+
+        @can('admin sawmill')
+        <navigation_sawmill></navigation_sawmill>
+        @endcan
+        
+        @can('admin pembahanan basah')
+        <navigation_basah></navigation_basah>
+        @endcan
+
+        @can('admin pembahanan kering')
+        <navigation_kering></navigation_kering>
+        @endcan
+
+        @can('admin bahan-baku')
+        <navigation_bb></navigation_bb>
+        @endcan
+
+
+
+        @role('super_admin')
         <navigation></navigation>
+        @else
+
+        @endrole
+
+
+
         <div class="page-wrapper">
             {{-- <x-navbar.navbar/> --}}
             <navbar></navbar>

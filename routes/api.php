@@ -181,6 +181,7 @@ Route::namespace('App\Http\Controllers')->group(function(){
         Route::get('index-permission', 'DashboardController@getAdminPermission');
         Route::post('add-user', 'DashboardController@add_user');
         Route::patch('user-edit/{user:id}', 'DashboardController@update_user');
+        Route::delete('user-controller/destroy/{user:id}', 'DashboardController@DeleteUser');
     });
 
 });
