@@ -9,7 +9,7 @@ class Raw extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['series', 'structure_category_id', 'size', 'uom', 'nop', 'unit', 'amount', 'status',  'invoice_id'];
+    protected $fillable = ['series', 'structure_category_id', 'size', 'length', 'height', 'width' , 'uom', 'nop', 'unit', 'amount', 'status',  'invoice_id'];
 
     public function invoice(){
         return $this->belongsTo(Invoice::class);

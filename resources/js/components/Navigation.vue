@@ -1,7 +1,11 @@
 <template>
 	<nav class="sidebar">
 		<div class="sidebar-header">
-			<a href="#" class="sidebar-brand">SIBMI <span>Web</span> </a>
+			<div>
+				<a href="#" class="sidebar-brand">SIBMI <span>Web</span> </a>
+				<!-- <h9>Sistem_Informasi Inventory</h9> -->
+			</div>
+
 			<div class="sidebar-toggler not-active">
 				<span></span>
 				<span></span>
@@ -104,7 +108,6 @@
 					</ul>
 				</li>
 
-
 				<li class="nav-item" style="">
 					<a class="nav-link has-arrow" aria-expanded="false">
 						<i class="link-icon" data-feather="life-buoy"></i>
@@ -134,7 +137,6 @@
 						</li>
 					</ul>
 				</li>
-
 
 				<li class="nav-item" style="">
 					<a class="nav-link has-arrow" aria-expanded="false">
@@ -247,6 +249,14 @@
 							>
 						</li>
 					</ul>
+				</li>
+
+				<li class="nav-item nav-category">User Controll</li>
+				<li class="nav-item">
+					<router-link :to="{ name: 'user.control' }" class="nav-link">
+						<i class="link-icon" data-feather="box"></i>
+						<span class="link-title">User Management</span>
+					</router-link>
 				</li>
 
 			</ul>

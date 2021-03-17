@@ -38,19 +38,57 @@
 				</div>
 
 				<div class="form-group row">
-					<label for="size" class="col-sm-3 col-form-label">SIZE</label>
+					<label for="legth" class="col-sm-3 col-form-label">LENGTH</label>
 
 					<div class="col-sm-9">
 						<input
-							v-model="form.size"
+							step="0.001"
+							v-model="form.length"
 							type="number"
 							class="form-control"
-							id="size"
+							id="length"
 							value="0"
 						/>
 
-						<div v-if="theErrors.size" class="mt-2 text-danger">
-							{{ theErrors.size[0] }}
+						<div v-if="theErrors.length" class="mt-2 text-danger">
+							{{ theErrors.length[0] }}
+						</div>
+					</div>
+				</div>
+
+				<div class="form-group row">
+					<label for="width" class="col-sm-3 col-form-label">WIDTH</label>
+
+					<div class="col-sm-9">
+						<input
+							step="0.001"
+							v-model="form.width"
+							type="number"
+							class="form-control"
+							id="width"
+							value="0"
+						/>
+
+						<div v-if="theErrors.width" class="mt-2 text-danger">
+							{{ theErrors.width[0] }}
+						</div>
+					</div>
+				</div>
+				<div class="form-group row">
+					<label for="height" class="col-sm-3 col-form-label">HEIGHT</label>
+
+					<div class="col-sm-9">
+						<input
+							step="0.001"
+							v-model="form.height"
+							type="number"
+							class="form-control"
+							id="height"
+							value="0"
+						/>
+
+						<div v-if="theErrors.height" class="mt-2 text-danger">
+							{{ theErrors.height[0] }}
 						</div>
 					</div>
 				</div>
@@ -129,6 +167,9 @@ export default {
 			form: {
 				series: "",
 				structure_category_id: "",
+				length:0,
+				width:0,
+				height:0,
 				size: "",
 				uom: "m3",
 				nop: "",

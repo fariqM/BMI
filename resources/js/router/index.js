@@ -5,6 +5,7 @@ import AddFruit from '../views/AddFruit'
 import UpdateFruit from '../views/UpdateFruit'
 import Tabel from '../views/Tabel'
 import Dashboard from '../views/Dashboard'
+import EditLog from '../views/BahanBaku/EditLog'
 import BahanBaku from '../views/BahanBaku/Index'
 import ShowLog from '../views/BahanBaku/ShowRaw'
 import OutputBB from '../views/BahanBaku/Output'
@@ -38,6 +39,8 @@ import InputPacking from '../views/Packing/InputPacking'
 import OutputPacking from '../views/Packing/OutputPacking'
 import IndexPacking from '../views/Packing/IndexPacking'
 
+import UserControll from '../views/UserControl/UserIndex'
+import AddUserForm from '../views/UserControl/AddUser'
 // import Error404 from '../views/Error/404'
 
 export default{
@@ -45,6 +48,18 @@ export default{
 
 
     routes: [
+
+        {
+            path: '/bmi/user-control',
+            name: 'user.control',
+            component: UserControll
+        },
+
+        {
+            path: '/bmi/create-admin',
+            name: 'create.admin',
+            component: AddUserForm
+        },
 
         {
             path: '/bmi/home',
@@ -90,6 +105,12 @@ export default{
             path: '/bmi/bahan-baku/index',
             name: 'bb.index',
             component: BahanBaku
+        },
+
+        {
+            path: '/bmi/bahan-baku/index/edit/:RawId',
+            name: 'bb.index.edit',
+            component: EditLog
         },
 
         {

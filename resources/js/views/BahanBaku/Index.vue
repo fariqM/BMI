@@ -148,7 +148,7 @@
 									</svg>
 								</template>
 							</div>
-							<div class="custom-button-animate-item2">Move</div>
+							<div class="custom-button-animate-item2">SUBMIT</div>
 						</button>
 						<button
 							type="button"
@@ -296,7 +296,10 @@
 										></router-link>
 
 										<router-link
-											:to="{ name: 'home' }"
+											:to="{
+												name: 'bb.index.edit',
+												params: { RawId: info.item.id },
+											}"
 											class="badge badge-primary"
 											>EDIT</router-link
 										>
@@ -307,7 +310,7 @@
 												data-toggle="modal"
 												data-target="#exampleModalCenter"
 												class="badge badge-danger del-btn"
-												>MOVE
+												>SAWMILL
 											</a>
 										</template>
 									</div>

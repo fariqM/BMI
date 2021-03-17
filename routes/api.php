@@ -29,7 +29,7 @@ Route::namespace('App\Http\Controllers')->group(function(){
         Route::get('index', 'RawController@index');
         Route::post('add-raw', 'RawController@addraw');
         Route::get('index/{raw:id}', 'RawController@show');
-        Route::patch('index/{raw:id}', 'RawController@update');
+        Route::patch('index/{raw:id}/update', 'RawController@update');
         Route::patch('{raw:id}/move', 'RawController@move');
         Route::get('output-index', 'RecordController@recordBB');
         Route::patch('confirm-mismatch/{record:id}', 'RecordController@confirmMismatch');
@@ -177,6 +177,10 @@ Route::namespace('App\Http\Controllers')->group(function(){
     Route::prefix('dashboard')->group(function(){
         Route::get('dashboard-stock-cart', 'DashboardController@StockChart');
         Route::get('stock-master-admin-index', 'DashboardController@index');
+        Route::get('user-controller', 'DashboardController@user_index');
+        Route::get('index-permission', 'DashboardController@getAdminPermission');
+        Route::post('add-user', 'DashboardController@add_user');
+        Route::patch('user-edit/{user:id}', 'DashboardController@update_user');
     });
 
 });

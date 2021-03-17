@@ -406,7 +406,7 @@
 											data-target="#ModalEditLog"
 											class="badge badge-primary del-btn"
 										>
-											EDIT
+											REVISION
 										</a>
 									</template>
 

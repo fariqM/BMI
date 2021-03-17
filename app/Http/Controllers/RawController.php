@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Resources\RawResource;
 use App\Http\Resources\TesResource;
 use App\Models\Raw;
+use App\Rules\PositiveBolean;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -16,8 +17,30 @@ class RawController extends Controller
         return RawResource::collection($raws);
     }
 
-    public function update(){
-        
+    public function update(Raw $raw){
+        $attr2 = request()->validate([
+            'structure_category_id' => 'required',
+            'length' => ['required', new PositiveBolean],
+            'width' => ['required', new PositiveBolean],
+            'height' => ['required', new PositiveBolean],
+            'invoice_id' => 'required',
+        ]);
+
+        $length = request('length');
+        $width = request('width');
+        $height = request('height');
+        $size = $length * $width * $height;
+        $float = number_format((float)$size, 3, '.', '');
+
+        $attr = [
+            'size' => $float,
+        ];
+
+        $raw->update(array_merge($attr, $attr2));
+
+        return response()->json([
+            'message' => 'success'
+        ]);
     }
 
     public function show(Raw $raw)
@@ -30,13 +53,22 @@ class RawController extends Controller
 
         $raw = request()->validate([
             'structure_category_id' => 'required',
-            'size' => 'required',
+            'length' => ['required', new PositiveBolean],
+            'width' => ['required', new PositiveBolean],
+            'height' => ['required', new PositiveBolean],
             'uom' => 'required',
             'nop' => 'required',
             'invoice_id' => 'required',
         ]);
 
+        $length = request('length');
+        $width = request('width');
+        $height = request('height');
+        $size = $length * $width * $height;
+        $float = number_format((float)$size, 3, '.', '');
+
         $raw2 = [
+            'size' => $float,
             'amount' => request('nop'),
             'status' => 'unprocessed'
         ];
