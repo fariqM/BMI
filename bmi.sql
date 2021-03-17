@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 14, 2021 at 08:09 AM
+-- Generation Time: Mar 17, 2021 at 05:44 AM
 -- Server version: 10.4.17-MariaDB
 -- PHP Version: 8.0.1
 
@@ -40,47 +40,6 @@ CREATE TABLE `failed_jobs` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `fruits`
---
-
-CREATE TABLE `fruits` (
-  `id` bigint(20) UNSIGNED NOT NULL,
-  `name` varchar(32) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `varian` varchar(32) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `latin_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `origin` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `year_found` int(10) UNSIGNED NOT NULL,
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Dumping data for table `fruits`
---
-
-INSERT INTO `fruits` (`id`, `name`, `varian`, `latin_name`, `origin`, `year_found`, `created_at`, `updated_at`) VALUES
-(1, 'Keelie Gallagher', 'Sit est aperia', 'Rhona Guthrie', 'Vitae autem sun', 6969, '2021-02-25 06:59:02', '2021-03-06 07:33:02'),
-(2, 'Holmes Sanford', 'Veniam quis ma', 'Susan Mckee', 'Odit tempor exe', 2005, '2021-02-25 07:00:21', '2021-02-25 07:00:21'),
-(3, 'Isaiah Warren', 'In sapiente rec', 'Alexander Medina', 'Beatae explicab', 2003, '2021-02-25 07:00:26', '2021-02-25 07:00:26'),
-(4, 'Oprah Beck', 'Anim dolor sed', 'Tyler Raymond', 'Ratione qui sit', 1978, '2021-02-27 09:57:02', '2021-02-27 09:57:02'),
-(5, 'Jameson Castillo', 'Ut modi adipisc', 'Justine Mcleod', 'Quaerat exercit', 2003, '2021-02-27 10:08:48', '2021-02-27 10:08:48'),
-(6, 'asd', 'asdasd', 'asdasd', 'asdasd', 2342, '2021-02-27 10:09:45', '2021-02-27 10:09:45'),
-(7, 'asdasd', 'asdasd', 'asdasdasd', 'asdasd', 3422, '2021-02-27 10:11:10', '2021-02-27 10:11:10'),
-(8, 'asd', 'asdasd', 'asdasd', 'asdasd', 2132, '2021-02-27 10:12:09', '2021-02-27 10:12:09'),
-(9, 'asdasd', 'asdasd', 'asdasd', 'asdasd', 1231, '2021-02-27 10:12:22', '2021-02-27 10:12:22'),
-(10, 'Avye Mayer', 'Necessitatibus', 'Channing Hudson', 'Corrupti quae', 2008, '2021-02-27 10:12:46', '2021-02-27 10:12:46'),
-(11, 'Dale Brown', 'Quis nemo sunt', 'Duncan Mcdaniel', 'Ut deserunt vol', 1986, '2021-02-27 10:12:57', '2021-02-27 10:12:57'),
-(12, 'Stewart Burch', 'Voluptate volup', 'Macaulay Nieves', 'Excepturi eum a', 1986, '2021-02-27 10:15:15', '2021-02-27 10:15:15'),
-(13, 'Dacey Rich', 'Expedita iusto', 'Rana Pacheco', 'Sed officiis as', 1985, '2021-02-27 10:17:08', '2021-02-27 10:17:08'),
-(14, 'Brady Hahn', 'Iste sed et min', 'Reece Pacheco', 'In illo rem est', 1997, '2021-02-27 10:17:31', '2021-02-27 10:17:31'),
-(15, 'Rama Beard', 'Fuga Tenetur a', 'Hiram Nash', 'Ut quae modi po', 2002, '2021-02-27 10:17:59', '2021-02-27 10:17:59'),
-(16, 'Zachary Snyder', 'Duis ipsum eum', 'Colin Rodgers', 'Sunt repellendu', 1977, '2021-02-27 10:18:39', '2021-02-27 10:18:39'),
-(17, 'Colby Salazar', 'Unde architecto', 'Stacey Stone', 'Corporis est s', 2002, '2021-02-27 10:19:33', '2021-02-27 10:19:33'),
-(18, 'Arthur Stuart', 'Qui eaque omnis', 'Melodie Oneil', 'Nulla voluptatu', 2006, '2021-02-27 10:20:44', '2021-02-27 10:20:44');
-
--- --------------------------------------------------------
-
---
 -- Table structure for table `invoices`
 --
 
@@ -98,15 +57,7 @@ CREATE TABLE `invoices` (
 --
 
 INSERT INTO `invoices` (`id`, `reference`, `supplier_id`, `note`, `created_at`, `updated_at`) VALUES
-(1, '4294967295', 2, '', '2021-02-25 07:58:49', '2021-02-25 07:58:49'),
-(2, '123123', 1, '', '2021-02-25 07:58:49', '2021-02-25 07:58:49'),
-(3, '234234234', 1, '', '2021-02-25 07:58:49', '2021-02-25 07:58:49'),
-(4, '21445745', 2, '', '2021-02-25 07:58:49', '2021-02-25 07:58:49'),
-(7, 'PTGR-14679', 2, 'asdasd453dfsdfs', '2021-02-28 10:54:29', '2021-02-28 10:54:29'),
-(8, 'PTGR-1467246549816', 2, 'Tesyooo', '2021-03-01 05:19:10', '2021-03-01 05:19:10'),
-(9, 'EDF-1467246549817', 6, NULL, '2021-03-06 06:52:44', '2021-03-06 06:52:44'),
-(10, 'CNm-1467246549818', 3, 'ini penambahan', '2021-03-06 07:28:47', '2021-03-06 07:28:47'),
-(11, 'PNM-1467246549819', 16, 'Terserah', '2021-03-09 18:36:25', '2021-03-09 18:36:25');
+(14, 'OLL-1467246549822', 17, NULL, '2021-03-16 16:13:21', '2021-03-16 16:13:21');
 
 -- --------------------------------------------------------
 
@@ -152,7 +103,8 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (34, '2021_03_10_101237_add_amount_to_raws_table', 13),
 (35, '2021_03_12_205357_add_status_to_stocks_table', 14),
 (36, '2021_03_13_022304_create_stockprofiles_table', 15),
-(37, '2021_03_13_022740_add_stockprofile_id_to_stocks_table', 15);
+(37, '2021_03_13_022740_add_stockprofile_id_to_stocks_table', 15),
+(38, '2021_03_17_000842_add_length_to_raws_table', 16);
 
 -- --------------------------------------------------------
 
@@ -166,6 +118,13 @@ CREATE TABLE `model_has_permissions` (
   `model_id` bigint(20) UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+--
+-- Dumping data for table `model_has_permissions`
+--
+
+INSERT INTO `model_has_permissions` (`permission_id`, `model_type`, `model_id`) VALUES
+(1, 'App\\Models\\User', 1);
+
 -- --------------------------------------------------------
 
 --
@@ -177,6 +136,14 @@ CREATE TABLE `model_has_roles` (
   `model_type` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `model_id` bigint(20) UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `model_has_roles`
+--
+
+INSERT INTO `model_has_roles` (`role_id`, `model_type`, `model_id`) VALUES
+(2, 'App\\Models\\User', 2),
+(3, 'App\\Models\\User', 1);
 
 -- --------------------------------------------------------
 
@@ -204,32 +171,12 @@ CREATE TABLE `permissions` (
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- --------------------------------------------------------
-
 --
--- Table structure for table `product_categories`
+-- Dumping data for table `permissions`
 --
 
-CREATE TABLE `product_categories` (
-  `id` bigint(20) UNSIGNED NOT NULL,
-  `name` varchar(64) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `shortname` varchar(10) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Dumping data for table `product_categories`
---
-
-INSERT INTO `product_categories` (`id`, `name`, `shortname`, `created_at`, `updated_at`) VALUES
-(1, 'BAHAN BAKU', 'BB', '2021-02-25 07:57:52', '2021-02-25 07:57:52'),
-(2, 'BAHAN BAKU FJL', 'BB-FJL', '2021-02-25 07:57:52', '2021-02-25 07:57:52'),
-(3, 'BAHAN PEMBANTU', 'BP', '2021-02-25 07:57:52', '2021-02-25 07:57:52'),
-(4, 'BAHAN SETENGAH JADI', 'BSJ', '2021-02-25 07:57:52', '2021-02-25 07:57:52'),
-(5, 'BAHAN JADI', 'BJ', '2021-02-25 07:57:52', '2021-02-25 07:57:52'),
-(6, 'BAHAN JADI FJL', 'BJ-FJL', '2021-02-25 07:57:52', '2021-02-25 07:57:52'),
-(7, 'BAHAN SETENGAH JADI FJL', 'BSJ-FJL', '2021-02-25 07:57:52', '2021-02-25 07:57:52');
+INSERT INTO `permissions` (`id`, `name`, `guard_name`, `created_at`, `updated_at`) VALUES
+(1, 'admin packing', 'web', '2021-03-16 23:49:55', '2021-03-16 23:49:55');
 
 -- --------------------------------------------------------
 
@@ -242,6 +189,9 @@ CREATE TABLE `raws` (
   `series` varchar(64) COLLATE utf8mb4_unicode_ci DEFAULT '''NULL''',
   `structure_category_id` bigint(20) UNSIGNED NOT NULL,
   `size` double UNSIGNED NOT NULL,
+  `width` double NOT NULL,
+  `height` double NOT NULL,
+  `length` double NOT NULL,
   `uom` varchar(10) COLLATE utf8mb4_unicode_ci NOT NULL,
   `nop` varchar(32) COLLATE utf8mb4_unicode_ci NOT NULL,
   `amount` varchar(32) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -255,9 +205,11 @@ CREATE TABLE `raws` (
 -- Dumping data for table `raws`
 --
 
-INSERT INTO `raws` (`id`, `series`, `structure_category_id`, `size`, `uom`, `nop`, `amount`, `status`, `invoice_id`, `created_at`, `updated_at`) VALUES
-(30, 'TRM-8502', 3, 9, 'm3', '0', '37', 'all finished', 7, '2021-03-12 08:21:03', '2021-03-12 08:31:24'),
-(31, 'JT-8503', 4, 3, 'm3', '5', '10', 'partially finished', 11, '2021-03-12 17:57:54', '2021-03-12 20:38:13');
+INSERT INTO `raws` (`id`, `series`, `structure_category_id`, `size`, `width`, `height`, `length`, `uom`, `nop`, `amount`, `status`, `invoice_id`, `created_at`, `updated_at`) VALUES
+(37, 'TRM-8509', 3, 12, 230, 21, 4, 'm3', '1', '21', 'partially finished', 14, '2021-03-16 16:13:31', '2021-03-16 17:31:16'),
+(38, 'JT-8510', 1, 8, 2, 2, 2, 'm3', '2', '23', 'partially finished', 14, '2021-03-16 17:22:34', '2021-03-16 22:31:06'),
+(39, 'TRM-8511', 3, 300390, 34, 95, 93, 'm3', '49', '49', 'unprocessed', 14, '2021-03-17 03:54:43', '2021-03-17 03:54:44'),
+(40, 'BKR-8512', 6, 1195057, 233, 23, 223, 'm3', '2', '6', 'partially finished', 14, '2021-03-17 03:55:39', '2021-03-17 03:59:24');
 
 -- --------------------------------------------------------
 
@@ -285,10 +237,9 @@ CREATE TABLE `records` (
 --
 
 INSERT INTO `records` (`id`, `series`, `tally`, `origin`, `warehouse_id`, `nop`, `unit`, `status`, `confirm_status`, `confirm_at`, `created_at`, `updated_at`) VALUES
-(145, 'TRM-8502', NULL, 5, 1, '7', NULL, 'processing all', 'confirmed', '2021-03-12 08:27:56', '2021-03-12 08:27:48', '2021-03-12 08:28:00'),
-(146, 'TRM-8502', NULL, 5, 1, '29', NULL, 'processing all', 'confirmed', '2021-03-12 08:28:37', '2021-03-12 08:28:31', '2021-03-12 08:28:39'),
-(147, 'TRM-8502', NULL, 5, 1, '1', 1, 'processing all', 'revision confirmed', '2021-03-12 08:30:17', '2021-03-12 08:30:02', '2021-03-12 08:31:19'),
-(148, 'JT-8503', NULL, 5, 1, '5', NULL, 'processing all', 'confirmed', '2021-03-12 17:58:14', '2021-03-12 17:58:08', '2021-03-12 20:38:07');
+(175, 'TRM-8509', NULL, 5, 1, '20', 20, 'processing all', 'revision confirmed', '2021-03-16 17:27:53', '2021-03-16 17:06:35', '2021-03-16 17:31:11'),
+(176, 'JT-8510', NULL, 5, 1, '21', 21, 'processing all', 'revision confirmed', '2021-03-16 17:30:36', '2021-03-16 17:30:29', '2021-03-16 17:31:08'),
+(177, 'BKR-8512', NULL, 5, 1, '4', 4, 'processing all', 'revision confirmed', '2021-03-17 03:57:53', '2021-03-17 03:56:18', '2021-03-17 03:59:07');
 
 -- --------------------------------------------------------
 
@@ -303,6 +254,21 @@ CREATE TABLE `roles` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `roles`
+--
+
+INSERT INTO `roles` (`id`, `name`, `guard_name`, `created_at`, `updated_at`) VALUES
+(2, 'super_admin', 'web', '2021-03-16 22:03:55', '2021-03-16 22:03:55'),
+(3, 'admin', 'web', '2021-03-16 23:18:09', '2021-03-16 23:18:09'),
+(4, 'admin_packing', 'web', '2021-03-16 23:21:07', '2021-03-16 23:21:07'),
+(5, 'admin_bahanbaku', 'web', '2021-03-16 23:21:23', '2021-03-16 23:21:23'),
+(6, 'admin_sawmill', 'web', '2021-03-16 23:22:02', '2021-03-16 23:22:02'),
+(7, 'admin_p_basah', 'web', '2021-03-16 23:22:11', '2021-03-16 23:22:11'),
+(8, 'admin_p_kering', 'web', '2021-03-16 23:22:16', '2021-03-16 23:22:16'),
+(9, 'admin_coating', 'web', '2021-03-16 23:22:27', '2021-03-16 23:22:27'),
+(10, 'admin_joint', 'web', '2021-03-16 23:22:32', '2021-03-16 23:22:32');
 
 -- --------------------------------------------------------
 
@@ -335,10 +301,9 @@ CREATE TABLE `sawmillruns` (
 --
 
 INSERT INTO `sawmillruns` (`id`, `sawmillstock_id`, `nop`, `status`, `created_at`, `updated_at`) VALUES
-(27, 32, '7', 'finished', '2021-03-12 08:27:59', '2021-03-12 08:28:14'),
-(28, 32, '29', 'finished', '2021-03-12 08:28:39', '2021-03-12 08:29:15'),
-(30, 32, '1', 'finished', '2021-03-12 08:31:19', '2021-03-12 08:31:24'),
-(31, 33, '5', 'finished', '2021-03-12 20:38:07', '2021-03-12 20:38:13');
+(38, 40, '21', 'finished', '2021-03-16 17:31:08', '2021-03-16 17:31:19'),
+(39, 39, '20', 'finished', '2021-03-16 17:31:10', '2021-03-16 17:31:16'),
+(40, 41, '4', 'finished', '2021-03-17 03:59:07', '2021-03-17 03:59:24');
 
 -- --------------------------------------------------------
 
@@ -361,8 +326,9 @@ CREATE TABLE `sawmillstocks` (
 --
 
 INSERT INTO `sawmillstocks` (`id`, `series`, `nop`, `nop_virtual`, `processed`, `created_at`, `updated_at`) VALUES
-(32, 'TRM-8502', '0', '0', '37', '2021-03-12 08:27:56', '2021-03-12 08:31:19'),
-(33, 'JT-8503', '0', '0', '5', '2021-03-12 17:58:14', '2021-03-12 20:38:07');
+(39, 'TRM-8509', '0', '0', '20', '2021-03-16 17:27:53', '2021-03-16 17:31:11'),
+(40, 'JT-8510', '0', '0', '21', '2021-03-16 17:30:36', '2021-03-16 17:31:08'),
+(41, 'BKR-8512', '0', '0', '4', '2021-03-17 03:57:53', '2021-03-17 03:59:07');
 
 -- --------------------------------------------------------
 
@@ -385,12 +351,9 @@ CREATE TABLE `stockprofiles` (
 --
 
 INSERT INTO `stockprofiles` (`id`, `size`, `length`, `width`, `height`, `created_at`, `updated_at`) VALUES
-(7, 1728, 12, 12, 12, '2021-03-13 16:26:46', '2021-03-13 16:26:46'),
-(8, 272, 2, 34, 4, '2021-03-13 16:29:13', '2021-03-13 16:29:13'),
-(9, 9, 1, 3, 3, '2021-03-13 17:04:16', '2021-03-13 17:04:16'),
-(10, 124488, 76, 91, 18, '2021-03-13 17:25:28', '2021-03-13 17:25:28'),
-(11, 96048, 24, 87, 46, '2021-03-13 17:57:50', '2021-03-13 17:57:50'),
-(12, 1728, 12, 12, 12, '2021-03-14 05:56:44', '2021-03-14 05:56:44');
+(26, 950, 10, 19, 5, '2021-03-17 04:03:18', '2021-03-17 04:03:18'),
+(27, 1584, 12, 12, 11, '2021-03-17 04:05:17', '2021-03-17 04:06:33'),
+(28, 1000000, 100, 100, 100, '2021-03-17 04:12:08', '2021-03-17 04:12:08');
 
 -- --------------------------------------------------------
 
@@ -423,11 +386,11 @@ CREATE TABLE `stocks` (
 --
 
 INSERT INTO `stocks` (`id`, `name`, `stockprofile_id`, `tally`, `size`, `height`, `width`, `length`, `confirm_status`, `status`, `sawmillrun_id`, `type_id`, `unit_measure_id`, `origin`, `warehouse_id`, `created_at`, `updated_at`) VALUES
-(26, 'JT BB JOINT', 7, 'IR13183', 50715, 15, 69, 49, 'confirmed', 'finished on BMI-D', 31, 3, 1, 1, 2, '2021-03-13 16:20:55', '2021-03-13 16:28:36'),
-(27, 'JT BB RST MD', 10, 'IR13184', 34914, 23, 46, 33, 'confirmed', 'finished on BMI-D', 27, 4, 1, 1, 2, '2021-03-13 16:25:39', '2021-03-13 17:27:34'),
-(28, 'TRM BB SQUARE MD COATED', 9, 'IR13185', 4608, 12, 32, 12, 'unconfirmed', 'moving to GUDANG PACKING', 27, 5, 1, 13, 14, '2021-03-13 16:26:09', '2021-03-14 07:07:01'),
-(29, 'TRM BB JOINT KD', 12, 'IR13186', 6, 1, 2, 3, 'confirmed', 'finished on BMI-DB', 28, 3, 1, 1, 3, '2021-03-13 17:29:36', '2021-03-14 05:56:44'),
-(30, 'JT BB RST KD MD COATED', 11, 'IR13187', 69, 1, 23, 3, 'confirmed', 'finished on BMI-E', 31, 4, 1, 3, 13, '2021-03-13 17:29:56', '2021-03-14 06:58:07');
+(80, 'TRM BB JOINT', NULL, 'IR13237', 1728, 12, 12, 12, NULL, NULL, 39, 3, 1, 1, 1, '2021-03-16 17:31:28', '2021-03-16 17:31:28'),
+(81, 'JT BB RST', NULL, 'IR13238', 1728, 12, 12, 12, NULL, NULL, 38, 4, 1, 1, 1, '2021-03-16 17:31:37', '2021-03-16 17:31:37'),
+(82, 'BNGKR BB RST MD COATED', 26, 'IR13239', 5796, 23, 21, 12, 'confirmed', 'finished on BMI-E', 40, 4, 1, 2, 13, '2021-03-17 03:59:57', '2021-03-17 04:04:32'),
+(83, 'BNGKR BB JOINT KD HF', 27, 'IR13240', 1728, 12, 12, 12, 'confirmed', 'finished on BMI-F', 40, 3, 1, 3, 4, '2021-03-17 04:00:10', '2021-03-17 04:14:53'),
+(84, 'BNGKR BB SQUARE KD', 28, 'IR13241', 1, 1, 1, 1, 'confirmed', 'finished on BMI-DB', 40, 5, 1, 1, 3, '2021-03-17 04:11:01', '2021-03-17 04:12:08');
 
 -- --------------------------------------------------------
 
@@ -454,10 +417,7 @@ INSERT INTO `structure_categories` (`id`, `name`, `shortname`, `created_at`, `up
 (4, 'JATI', 'JT', '2021-02-25 07:53:59', '2021-02-25 07:53:59'),
 (5, 'MAHONI', 'MHN', '2021-02-25 07:53:59', '2021-02-25 07:53:59'),
 (6, 'BENGKIRAI', 'BKR', '2021-02-25 07:53:59', '2021-02-25 07:53:59'),
-(8, 'EMBOWES', 'JOS', NULL, NULL),
 (9, 'SEMBARANG', 'SMBRNG', '2021-02-28 07:36:14', '2021-02-28 07:36:14'),
-(10, 'HERNU', 'HRN', '2021-03-06 06:51:25', '2021-03-06 06:51:25'),
-(11, 'DONI', 'DN', '2021-03-06 07:26:31', '2021-03-06 07:26:31'),
 (12, 'SUNGKAI', 'SNGK', '2021-03-09 18:32:01', '2021-03-09 18:32:01');
 
 -- --------------------------------------------------------
@@ -485,22 +445,7 @@ CREATE TABLE `suppliers` (
 --
 
 INSERT INTO `suppliers` (`id`, `name`, `shortname`, `address`, `owner`, `email`, `website`, `phone`, `created_at`, `updated_at`, `mobile`) VALUES
-(1, 'PT. VIRTUAL', 'PTVR', 'ALAMAT JALAN YANG DITEMPUH NO. 90', 'FREDERICH', NULL, NULL, NULL, '2021-02-25 07:52:06', '2021-02-25 07:52:06', NULL),
-(2, 'PT. NGARANG2', 'PTGR', 'ALAMAT SEMBARANG', 'JOHN CHENA', NULL, NULL, NULL, '2021-02-25 07:52:06', '2021-02-25 07:52:06', NULL),
-(3, 'CV. NUSANTARA MERDEKA', 'CNm', 'jalan. merbabu', 'sembarang', NULL, NULL, NULL, '2021-03-01 06:57:08', '2021-03-01 06:57:08', NULL),
-(4, 'EXCEPTURI AUT ESSE D', 'Eaed', 'Voluptatum est aut', 'Velit minim pariatur', 'wubafihex@mailinator.com', 'https://www.ginis.ws', 3423445, '2021-03-01 06:59:27', '2021-03-01 06:59:27', NULL),
-(5, 'QUIA DO UT EST QUO Q', 'QDUEQQ', 'Dolore labore corpor', 'Eum eligendi dolores', 'nurulyxovo@mailinator.com', 'https://www.pizutuvopiw.ca', 32423, '2021-03-01 07:01:04', '2021-03-01 07:01:04', NULL),
-(6, 'EXCEPTEUR DESERUNT F', 'EDF', 'Cum quas voluptate p', 'Voluptatem odit perf', 'lacicu@mailinator.com', 'https://www.fudyxuxehehyna.tv', 232323, '2021-03-01 07:48:57', '2021-03-01 07:48:57', NULL),
-(7, 'EST VELIT ANIMI EN', 'EVAE', 'Natus repellendus V', 'Voluptatem fugiat ex', 'xoje@mailinator.com', 'https://www.gyre.in', 1258322873, '2021-03-01 07:53:27', '2021-03-01 07:53:27', NULL),
-(8, 'OCCAECAT SAPIENTE EL', 'OSE', 'Ut veniam nostrum a', 'Dolore molestias asp', 'qejafi@mailinator.com', 'https://www.sehy.net', 1479436879, '2021-03-01 07:54:40', '2021-03-01 07:54:40', NULL),
-(9, 'sembarang', NULL, '34asdasdasd', NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(10, 'asdasd', NULL, 'asdasdasd', NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(11, 'QUIA AT DOLOREM DEBI', 'QADD', 'Cupiditate ad tempor', 'Quis velit corrupti', 'xudo@mailinator.com', 'https://www.vipatowacahuga.co.uk', 1552614385, '2021-03-01 08:07:02', '2021-03-01 08:07:02', 3444444444444),
-(12, 'VOLUPTATEM SUNT MOD', 'VSM', 'Ut quis vitae sint e', 'Sed rerum rerum omni', 'tabi@mailinator.com', 'https://www.buv.co.uk', 1736209339, '2021-03-01 08:35:45', '2021-03-01 08:35:45', 3333413333333),
-(13, 'AD PORRO QUISQUAM IN', 'APQI', 'Sit hic consectetur', 'Quasi recusandae Al', 'hyvihifygo@mailinator.com', 'https://www.fup.ca', 1753781222, '2021-03-01 08:35:56', '2021-03-01 08:35:56', 3534666666666),
-(14, 'EAQUE AUT CONSECTETU', 'EAC', 'Qui modi reiciendis', 'Ipsum est numquam d', 'vupug@mailinator.com', 'https://www.lytejekus.me', 1462946793, '2021-03-01 08:36:05', '2021-03-01 08:36:05', 4666666666666),
-(15, 'REPELLENDUS DOLORE', 'RD', 'Aut nulla aut deseru', 'Accusantium velit no', 'hyvi@mailinator.com', 'https://www.difotibiwen.ws', 1758493802, '2021-03-01 21:00:32', '2021-03-01 21:00:32', 2312321312313),
-(16, 'PT. NUSANTARA MERDEKA', 'PNM', 'Jl. Raya Gubernur Sunandar No 6', 'Ad commodo omnis exe', 'dytakoq@mailinator.com', 'https://www.nen.mobi', 1638155651, '2021-03-09 18:35:02', '2021-03-09 18:35:02', 2323333333333);
+(17, 'OCCAECAT LABORE LABO', 'OLL', 'Non rem quidem rerum', 'Sunt iste esse sint', 'hyhisyqyvy@mailinator.com', 'https://www.domubekureqapy.cc', 1913408338, '2021-03-16 16:13:17', '2021-03-16 16:13:17', 12312312312);
 
 -- --------------------------------------------------------
 
@@ -572,7 +517,8 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `name`, `email`, `address`, `mobile`, `email_verified_at`, `password`, `remember_token`, `created_at`, `updated_at`, `warehouse_id`) VALUES
-(1, 'dumb', 'dumb@gmail.com', 'sembarang', 1231425, NULL, 'asdasd123', NULL, NULL, NULL, 2);
+(1, 'adminpacking', 'adminpacking@gmail.com', 'sembarang', 1231425, NULL, '$2y$10$/ZsjFsKmYj9FDVmCZD9Voe/mOouO7O8eZrGpQWqhSys7oGpa.nnca', NULL, '2021-03-16 23:55:42', '2021-03-16 23:55:42', 2),
+(2, 'superadmin', 'superadmin@gmail.com', 'yes', 89232, NULL, '$2y$10$/ZsjFsKmYj9FDVmCZD9Voe/mOouO7O8eZrGpQWqhSys7oGpa.nnca', NULL, '2021-03-16 23:55:42', '2021-03-16 23:55:42', NULL);
 
 -- --------------------------------------------------------
 
@@ -615,12 +561,6 @@ ALTER TABLE `failed_jobs`
   ADD UNIQUE KEY `failed_jobs_uuid_unique` (`uuid`);
 
 --
--- Indexes for table `fruits`
---
-ALTER TABLE `fruits`
-  ADD PRIMARY KEY (`id`);
-
---
 -- Indexes for table `invoices`
 --
 ALTER TABLE `invoices`
@@ -660,13 +600,6 @@ ALTER TABLE `password_resets`
 ALTER TABLE `permissions`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `permissions_name_guard_name_unique` (`name`,`guard_name`);
-
---
--- Indexes for table `product_categories`
---
-ALTER TABLE `product_categories`
-  ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `product_categories_shortname_unique` (`shortname`);
 
 --
 -- Indexes for table `raws`
@@ -787,76 +720,64 @@ ALTER TABLE `failed_jobs`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `fruits`
---
-ALTER TABLE `fruits`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
-
---
 -- AUTO_INCREMENT for table `invoices`
 --
 ALTER TABLE `invoices`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
 
 --
 -- AUTO_INCREMENT for table `permissions`
 --
 ALTER TABLE `permissions`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `product_categories`
---
-ALTER TABLE `product_categories`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `raws`
 --
 ALTER TABLE `raws`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
 
 --
 -- AUTO_INCREMENT for table `records`
 --
 ALTER TABLE `records`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=149;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=178;
 
 --
 -- AUTO_INCREMENT for table `roles`
 --
 ALTER TABLE `roles`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `sawmillruns`
 --
 ALTER TABLE `sawmillruns`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
 
 --
 -- AUTO_INCREMENT for table `sawmillstocks`
 --
 ALTER TABLE `sawmillstocks`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=42;
 
 --
 -- AUTO_INCREMENT for table `stockprofiles`
 --
 ALTER TABLE `stockprofiles`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
 
 --
 -- AUTO_INCREMENT for table `stocks`
 --
 ALTER TABLE `stocks`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=85;
 
 --
 -- AUTO_INCREMENT for table `structure_categories`
@@ -868,7 +789,7 @@ ALTER TABLE `structure_categories`
 -- AUTO_INCREMENT for table `suppliers`
 --
 ALTER TABLE `suppliers`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- AUTO_INCREMENT for table `types`
@@ -886,7 +807,7 @@ ALTER TABLE `unit_measures`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `warehouses`
