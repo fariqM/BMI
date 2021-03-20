@@ -62,6 +62,18 @@
 								<div v-if="theErrors.length" class="mt-2 text-danger">
 									{{ theErrors.length[0] }}
 								</div>
+
+								<label for="nop" class="col-form-label">PCS</label>
+								<input
+									type="number"
+									step="1"
+									v-model="form.pcs"
+									class="form-control form-control-sm"
+									placeholder="Number Of Pieces"
+								/>
+								<div v-if="theErrors.pcs" class="mt-2 text-danger">
+									{{ theErrors.pcs[0] }}
+								</div>
 							</div>
 						</form>
 					</div>
@@ -223,6 +235,17 @@
 								/>
 								<div v-if="theErrors.length" class="mt-2 text-danger">
 									{{ theErrors.length[0] }}
+								</div>
+								<label for="nop" class="col-form-label">PCS</label>
+								<input
+									type="number"
+									step="1"
+									v-model="form.pcs"
+									class="form-control form-control-sm"
+									placeholder="Number Of Pieces"
+								/>
+								<div v-if="theErrors.pcs" class="mt-2 text-danger">
+									{{ theErrors.pcs[0] }}
 								</div>
 							</div>
 						</form>
@@ -772,6 +795,7 @@ export default {
 				height: 0,
 				width: 0,
 				length: 0,
+				pcs:0,
 				id: "",
 				nop: "",
 				series: "",
@@ -794,7 +818,8 @@ export default {
 				{ key: "height", label: "height profile (cm)", sortable: true },
 				{ key: "width", label: "width profile (cm)", sortable: true },
 				{ key: "length", label: "length profile (cm)", sortable: true },
-				{ key: "size", label: "volume profile (cm3)", sortable: true },
+				{ key: "size", label: "volume profile (m3)", sortable: true },
+				{ key: "pcs", label: "PCS", sortable: true },
 				"action",
 			],
 			sortBy: "",
@@ -1103,6 +1128,7 @@ export default {
 			this.form.tally = value.tally;
 			this.form.length = value.length;
 			this.form.width = value.width;
+			this.form.pcs = value.pcs;
 			this.form.height = value.height;
 			this.form.id = value.id;
 		},

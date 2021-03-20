@@ -39,10 +39,7 @@
 			<div class="col-md-12 grid-margin stretch-card">
 				<div class="card">
 					<div class="card-body">
-						
-						<h6 class="card-title">
-							Index of input records in <b>Gudang Sawmill</b>
-						</h6>
+						<h6 class="card-title">Stock raw <b>Master Data</b></h6>
 						<p class="card-description">
 							Read the
 							<a
@@ -83,9 +80,7 @@
 								<label class="costum-checkbox" for="kolomRef">Series</label>
 							</div>
 							<div class="header-controller-table-3">
-								<div class="header-controller-table-3-1">
-									
-								</div>
+								<div class="header-controller-table-3-1"></div>
 								<div class="header-controller-table-3-2">
 									<!-- <template v-if="stockTable == false">
 										<b-button @click="toggleBusy" variant="success">
@@ -158,7 +153,8 @@
 											</path>
 										</svg>
 									</div>
-								</template>							
+								</template>
+								
 							</b-table>
 						</div>
 						<hr />
@@ -179,7 +175,6 @@
 								</select>
 							</div>
 							<div class="footer-table-container-item2">
-							
 								<b-pagination
 									v-model="currentPage"
 									:total-rows="totalRows"
@@ -200,23 +195,27 @@
 export default {
 	data() {
 		return {
-			raws:[],
+			raws: [],
 			btnLoading: false,
 			isBusy: false,
 			kolom: [
-				{ key: "id", label: "id", sortable: true },
 				{ key: "name", label: "name", sortable: true },
 				{ key: "series", label: "Series", sortable: true },
 				{ key: "tally", label: "tally", sortable: true },
+				{ key: "warehouse", label: "warehouse", sortable: true },
+				{ key: "status", label: "status", sortable: true },
 				{ key: "size", label: "volume (m3)", sortable: true },
 				{ key: "height", label: "height (m)", sortable: true },
 				{ key: "length", label: "length (m)", sortable: true },
 				{ key: "width", label: "width (m)", sortable: true },
 				{ key: "status", label: "status", sortable: true },
 				{ key: "confirm_status", label: "confirm status", sortable: true },
-				{ key: "structure_category", label: "structure category", sortable: true },
+				{
+					key: "structure_category",
+					label: "structure category",
+					sortable: true,
+				},
 				{ key: "type_name", label: "type", sortable: true },
-				{ key: "warehouse", label: "warehouse", sortable: true },
 			],
 			sortBy: "",
 			sortDesc: false,
@@ -269,7 +268,7 @@ export default {
 				},
 				series: [],
 				title: {
-					text: "All Stock",
+					text: "Raw Stock",
 				},
 				noData: {
 					text: "Loading...",
@@ -446,7 +445,6 @@ export default {
 				i++;
 			});
 
-
 			console.log("cek = " + this.cek);
 			console.log("dump = " + this.dump);
 			console.log("p-basah = " + this.g_basah);
@@ -469,7 +467,7 @@ export default {
 				},
 				series: [],
 				title: {
-					text: "All Stock",
+					text: "Raw Stock",
 				},
 				noData: {
 					text: "Loading...",

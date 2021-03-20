@@ -94,7 +94,7 @@
 				</div>
 
 				<div class="form-group row">
-					<label for="nop" class="col-sm-3 col-form-label">ON HAND</label>
+					<label for="nop" class="col-sm-3 col-form-label">PCS</label>
 
 					<div class="col-sm-9">
 						<input
@@ -172,7 +172,7 @@ export default {
 				height:0,
 				size: "",
 				uom: "m3",
-				nop: "",
+				nop: 0,
 				supplier_id: "",
 				invoice_id: "",
 			},
@@ -261,7 +261,7 @@ export default {
 				);
 				if (response.status == 200) {
 					this.$router.push({ name: "bb.index" });
-					this.$toast.success("Submit success", "DOne!", {
+					this.$toast.success("Submit success", "Done!", {
 						position: "topRight",
 					});
 					//  console.log(response.status);

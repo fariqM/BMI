@@ -9,7 +9,7 @@ class Stockprofile extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['size', 'length', 'width', 'height'];
+    protected $fillable = ['size','pcs', 'length', 'width', 'height'];
 
     public function stocks(){
         return $this->hasMany(Stock::class);

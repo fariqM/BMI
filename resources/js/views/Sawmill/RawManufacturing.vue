@@ -92,6 +92,19 @@
 								<div v-if="theErrors.length" class="mt-2 text-danger">
 									{{ theErrors.length[0] }}
 								</div>
+
+								<label for="nop" class="col-form-label">PCS</label>
+								<input
+									type="number"
+									step="1"
+									v-model="form.pcs"
+									class="form-control form-control-sm"
+									placeholder="Number of pieces"
+								/>
+
+								<div v-if="theErrors.pcs" class="mt-2 text-danger">
+									{{ theErrors.pcs[0] }}
+								</div>
 							</div>
 						</form>
 					</div>
@@ -271,6 +284,19 @@
 								/>
 								<div v-if="theErrors.length" class="mt-2 text-danger">
 									{{ theErrors.length[0] }}
+								</div>
+
+								<label for="nop" class="col-form-label">PCS</label>
+								<input
+									type="number"
+									step="1"
+									v-model="Editform.pcs"
+									class="form-control form-control-sm"
+									placeholder="Number of pieces"
+								/>
+
+								<div v-if="theErrors.pcs" class="mt-2 text-danger">
+									{{ theErrors.pcs[0] }}
 								</div>
 							</div>
 						</form>
@@ -793,12 +819,14 @@ export default {
 				width: "",
 				length: "",
 				id: "",
+				pcs:"",
 				nop: "",
 				series: "",
 			},
 			Editform: {
 				name: "",
 				id: 0,
+				pcs: 0,
 				tally: "",
 				height: 0.0,
 				length: 0.0,
@@ -814,7 +842,7 @@ export default {
 			extendable: [],
 			kolom: [
 				{ key: "series", label: "Series", sortable: true },
-				{ key: "nop", label: "Amount", sortable: true },
+				{ key: "nop", label: "PCS (log)", sortable: true },
 				{ key: "structure_category", label: "Category", sortable: true },
 				{ key: "status", label: "Status", sortable: true },
 				"action",
@@ -825,7 +853,9 @@ export default {
 				{ key: "height", label: "height (m)", sortable: true },
 				{ key: "width", label: "width (m)", sortable: true },
 				{ key: "length", label: "length (m)", sortable: true },
+				{ key: "pcs", label: "pcs", sortable: true },
 				{ key: "size", label: "volume (m3)", sortable: true },
+				
 				{ key: "status", label: "status", sortable: true },
 				"action",
 			],
@@ -898,6 +928,7 @@ export default {
 			this.Editform.tally = value.tally;
 			this.Editform.name = value.name;
 			this.Editform.id = value.id;
+			this.Editform.pcs = value.pcs;
 			this.Editform.height = value.height;
 			this.Editform.length = value.length;
 			this.Editform.width = value.width;

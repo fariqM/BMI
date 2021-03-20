@@ -57,7 +57,7 @@ class RawController extends Controller
             'width' => ['required', new PositiveBolean],
             'height' => ['required', new PositiveBolean],
             'uom' => 'required',
-            'nop' => 'required',
+            'nop' => ['required', new PositiveBolean],
             'invoice_id' => 'required',
         ]);
 

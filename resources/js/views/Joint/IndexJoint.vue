@@ -198,6 +198,17 @@
 								<div v-if="theErrors.length" class="mt-2 text-danger">
 									{{ theErrors.length[0] }}
 								</div>
+								<label for="nop" class="col-form-label">PCS</label>
+								<input
+									type="number"
+									step="1"
+									v-model="form.pcs"
+									class="form-control form-control-sm"
+									placeholder="pcs in meters"
+								/>
+								<div v-if="theErrors.pcs" class="mt-2 text-danger">
+									{{ theErrors.pcs[0] }}
+								</div>
 							</div>
 						</form>
 					</div>
@@ -360,6 +371,18 @@
 								<div v-if="theErrors.length" class="mt-2 text-danger">
 									{{ theErrors.length[0] }}
 								</div>
+
+								<label for="nop" class="col-form-label">PCS</label>
+								<input
+									type="number"
+									step="1"
+									v-model="form.pcs"
+									class="form-control form-control-sm"
+									placeholder="pcs in meters"
+								/>
+								<div v-if="theErrors.pcs" class="mt-2 text-danger">
+									{{ theErrors.pcs[0] }}
+								</div>
 							</div>
 						</form>
 					</div>
@@ -521,6 +544,19 @@
 								/>
 								<div v-if="theErrors.length" class="mt-2 text-danger">
 									{{ theErrors.length[0] }}
+								</div>
+
+
+								<label for="nop" class="col-form-label">PCS</label>
+								<input
+									type="number"
+									step="1"
+									v-model="form.pcs"
+									class="form-control form-control-sm"
+									placeholder="pcs in meters"
+								/>
+								<div v-if="theErrors.pcs" class="mt-2 text-danger">
+									{{ theErrors.pcs[0] }}
 								</div>
 							</div>
 						</form>
@@ -955,6 +991,7 @@ export default {
 				warehouse_id: "",
 				height: 0,
 				width: 0,
+				pcs:0,
 				length: 0,
 				id: "",
 				nop: "",
@@ -978,7 +1015,8 @@ export default {
 				{ key: "height", label: "height profile (cm)", sortable: true },
 				{ key: "width", label: "width profile (cm)", sortable: true },
 				{ key: "length", label: "length profile (cm)", sortable: true },
-				{ key: "size", label: "volume profile (cm3)", sortable: true },
+				{ key: "size", label: "volume profile (m3)", sortable: true },
+				{ key: "pcs", label: "PCS", sortable: true },
 				"action",
 			],
 			sortBy: "",

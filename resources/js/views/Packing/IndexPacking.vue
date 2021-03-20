@@ -60,6 +60,18 @@
 								<div v-if="theErrors.length" class="mt-2 text-danger">
 									{{ theErrors.length[0] }}
 								</div>
+
+								<label for="nop" class="col-form-label">PCS</label>
+								<input
+									type="number"
+									step="1"
+									v-model="Editform.pcs"
+									class="form-control"
+									placeholder="PCS"
+								/>
+								<div v-if="theErrors.pcs" class="mt-2 text-danger">
+									{{ theErrors.pcs[0] }}
+								</div>
 							</div>
 						</form>
 					</div>
@@ -221,6 +233,18 @@
 								/>
 								<div v-if="theErrors.length" class="mt-2 text-danger">
 									{{ theErrors.length[0] }}
+								</div>
+
+								<label for="nop" class="col-form-label">PCS</label>
+								<input
+									type="number"
+									step="1"
+									v-model="form.pcs"
+									class="form-control form-control-sm"
+									placeholder="PCS"
+								/>
+								<div v-if="theErrors.pcs" class="mt-2 text-danger">
+									{{ theErrors.pcs[0] }}
 								</div>
 							</div>
 						</form>
@@ -455,13 +479,13 @@
 										</span>
 									</template>
 
-									<template v-if="data.item.status == 'finished on BMI-E'">
+									<template v-if="data.item.status == 'finished on BMI-G'">
 										<span class="badge badge-pill badge-success">
 											<b-icon
 												class="costum-badge"
 												icon="check2-square"
 											></b-icon>
-											FINISHED
+											PACKING FINISHED
 										</span>
 									</template>
 								</template>
@@ -586,6 +610,7 @@ export default {
 				warehouse_id: "",
 				height: 0,
 				width: 0,
+				pcs: 0,
 				length: 0,
 				id: "",
 				nop: "",
@@ -597,6 +622,7 @@ export default {
 				tally: "",
 				height: 0.0,
 				length: 0.0,
+				pcs: 0,
 				width: 0.0,
 				type_id: 0,
 				type: "",
@@ -610,6 +636,7 @@ export default {
 			kolom: [
 				{ key: "name", label: "Name", sortable: true },
 				{ key: "tally", label: "tally", sortable: true },
+				{ key: "pcs", label: "pcs", sortable: true },
 				{ key: "length", label: "length", sortable: true },
 				{ key: "width", label: "width", sortable: true },
 				{ key: "height", label: "height", sortable: true },
@@ -622,6 +649,7 @@ export default {
 				{ key: "width", label: "width profile (cm)", sortable: true },
 				{ key: "length", label: "length profile (cm)", sortable: true },
 				{ key: "size", label: "volume profile (cm3)", sortable: true },
+				{ key: "pcs", label: "pcs", sortable: true },
 				"action",
 			],
 			sortBy: "",
@@ -819,6 +847,7 @@ export default {
 			this.form.width = value.width;
 			this.form.height = value.height;
 			this.form.id = value.id;
+			this.form.pcs = value.pcs;
 		},
 
 		setEditStockForm(value) {
@@ -828,6 +857,7 @@ export default {
 			this.Editform.width = value.width;
 			this.Editform.height = value.height;
 			this.Editform.id = value.id;
+			this.Editform.pcs = value.pcs;
 		},
 
 		cek(value) {

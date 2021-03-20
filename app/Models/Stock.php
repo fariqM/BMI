@@ -9,7 +9,7 @@ class Stock extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name', 'stockprofile_id', 'tally', 'size', 'height', 'width', 'length','status','confirm_status', 'sawmillrun_id',  'type_id', 'unit_measure_id', 'origin', 'warehouse_id'];
+    protected $fillable = ['name', 'stockprofile_id', 'tally', 'size', 'height', 'width', 'length','pcs','status','confirm_status', 'sawmillrun_id',  'type_id', 'unit_measure_id', 'origin', 'warehouse_id'];
 
     public function sawmillrun(){
         return $this->belongsTo(Sawmillrun::class);

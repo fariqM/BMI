@@ -12,7 +12,7 @@
 			<div class="col-md-12 grid-margin stretch-card">
 				<div class="card">
 					<div class="card-body">
-						<h6 class="card-title">Index of Log in <b>Gudang Packing</b></h6>
+						<h6 class="card-title">Input Record in <b>Gudang Packing</b></h6>
 						<p class="card-description">
 							Read the
 							<a

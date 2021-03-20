@@ -15,7 +15,7 @@
 				<div class="card">
 					<div class="card-body">
 						<h6 class="card-title">
-							Index of Log in <b>Gudang Pembahanan Kering</b>
+							Input Record in <b>Gudang Pembahanan Kering</b>
 						</h6>
 						<p class="card-description">
 							Read the

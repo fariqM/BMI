@@ -1,7 +1,7 @@
 <template>
 	<div class="card">
 		<div class="card-body">
-			<h6 class="card-title">Create Log Data</h6>
+			<h6 class="card-title">Create Admin Account</h6>
 			<form method="post" class="forms-sample" @submit.prevent="store">
 				<div class="form-group row">
 					<label for="width" class="col-sm-3 col-form-label">NAME</label>
@@ -151,7 +151,7 @@
 					<div>
 						<router-link
 							class="btn btn-outline-secondary"
-							:to="{ name: 'bb.index' }"
+							:to="{ name: 'user.control' }"
 							>Back</router-link
 						>
 					</div>

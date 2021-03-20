@@ -25,6 +25,7 @@ class StockController extends Controller
             'length' => ['required', new PositiveBolean],
             'width' => ['required', new PositiveBolean],
             'height' => ['required', new PositiveBolean],
+            'pcs' => ['required', new PositiveBolean, 'integer'],
             'type_id' => 'required',
         ]);
 
@@ -54,6 +55,7 @@ class StockController extends Controller
             'length' => ['required', new PositiveBolean],
             'width' => ['required', new PositiveBolean],
             'height' => ['required', new PositiveBolean],
+            'pcs' => ['required', new PositiveBolean, 'integer'],
             'type_id' => 'required',
             'sawmillrun_id' => 'required',
         ]);
@@ -188,15 +190,19 @@ class StockController extends Controller
     public function createProfileStock(Stock $stock)
     {
 
+        
         $length = request('length');
         $width = request('width');
         $height = request('height');
-        $size = $length * $width * $height;
+        $pcs = request('pcs');
+        $size = ($length * $width * $height * $pcs)/1000000;
+
         $float = number_format((float)$size, 3, '.', '');
 
 
         $stockprofile = request()->validate([
             'length' => ['required', new PositiveBolean],
+            'pcs' => ['required', new PositiveBolean, 'integer'],
             'width' => ['required', new PositiveBolean],
             'height' => ['required', new PositiveBolean],
         ]);
@@ -223,13 +229,15 @@ class StockController extends Controller
 
         $attr = request()->validate([
             'length' => ['required', new PositiveBolean],
+            'pcs' => ['required', new PositiveBolean, 'integer'],
             'width' => ['required', new PositiveBolean],
             'height' => ['required', new PositiveBolean],
         ]);
         $length = request('length');
         $width = request('width');
         $height = request('height');
-        $size = $length * $width * $height;
+        $pcs = request('pcs');
+        $size = ($length * $width * $height * $pcs)/1000000;
         $float = number_format((float)$size, 3, '.', '');
 
         $attr2 = [
@@ -498,13 +506,15 @@ class StockController extends Controller
             'length' => ['required', new PositiveBolean],
             'width' => ['required', new PositiveBolean],
             'height' => ['required', new PositiveBolean],
+            'pcs' => ['required', new PositiveBolean, 'integer'],
         ]);
         
         $profilewood_id = $stock->stockprofile_id;
         $length = request('length');
         $width = request('width');
         $height = request('height');
-        $size = $length * $width * $height;
+        $pcs = request('pcs');
+        $size = ($length * $width * $height * $pcs)/1000000;
         $float = number_format((float)$size, 3, '.', '');
 
         $name = request('name').' '.'FJ';
@@ -530,13 +540,15 @@ class StockController extends Controller
             'length' => ['required', new PositiveBolean],
             'width' => ['required', new PositiveBolean],
             'height' => ['required', new PositiveBolean],
+            'pcs' => ['required', new PositiveBolean, 'integer'],
         ]);
         
         $profilewood_id = $stock->stockprofile_id;
         $length = request('length');
         $width = request('width');
         $height = request('height');
-        $size = $length * $width * $height;
+        $pcs = request('pcs');
+        $size = ($length * $width * $height * $pcs)/1000000;
         $float = number_format((float)$size, 3, '.', '');
 
         $name = request('name').' '.'HF';
@@ -712,13 +724,15 @@ class StockController extends Controller
         $length = request('length');
         $width = request('width');
         $height = request('height');
-        $size = $length * $width * $height;
+        $pcs = request('pcs');
+        $size = ($length * $width * $height * $pcs)/1000000;
         $float = number_format((float)$size, 3, '.', '');
 
 
         $stockprofile = request()->validate([
             'length' => ['required', new PositiveBolean],
             'width' => ['required', new PositiveBolean],
+            'pcs' => ['required', new PositiveBolean, 'integer'],
             'height' => ['required', new PositiveBolean],
         ]);
 
@@ -800,6 +814,7 @@ class StockController extends Controller
 
         $attr = request()->validate([
             'length' => ['required', new PositiveBolean],
+            'pcs' => ['required', new PositiveBolean, 'integer'],
             'width' => ['required', new PositiveBolean],
             'height' => ['required', new PositiveBolean],
         ]);
@@ -807,7 +822,8 @@ class StockController extends Controller
         $length = request('length');
         $width = request('width');
         $height = request('height');
-        $size = $length * $width * $height;
+        $pcs = request('pcs');
+        $size = ($length * $width * $height * $pcs)/1000000;
         $float = number_format((float)$size, 3, '.', '');
 
         $attr2 = [
@@ -827,6 +843,7 @@ class StockController extends Controller
             'length' => ['required', new PositiveBolean],
             'width' => ['required', new PositiveBolean],
             'height' => ['required', new PositiveBolean],
+            'pcs' => ['required', new PositiveBolean, 'integer'],
         ]);
 
         $length = request('length');
@@ -838,6 +855,8 @@ class StockController extends Controller
         $attr2 = [
             'size' => $float,
         ];
+
+        // optional(Stockprofile::find($stock->stockprofile_id))->update(array_merge($attr, $attr2));
 
         $stock->update(array_merge($attr, $attr2));
 

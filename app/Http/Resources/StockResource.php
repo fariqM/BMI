@@ -40,6 +40,7 @@ class StockResource extends JsonResource
             'height' => $this->height,
             'width' => $this->width,
             'length' => $this->length,
+            'pcs' => $this->pcs,
             'status' =>  $status,
             'confirm_status' => $confirm_status,
             'nop' => $this->nop,

@@ -62,7 +62,10 @@
 											<th>Description</th>
 											<th class="text-right">Type</th>
 											<th class="text-right">Quantity</th>
-											<th class="text-right">Size</th>
+											<th class="text-right">Height</th>
+											<th class="text-right">Length</th>
+											<th class="text-right">width</th>
+											<th class="text-right">Volume</th>
 										</tr>
 									</thead>
 									<tbody>
@@ -72,6 +75,9 @@
 											<td class="text-left">Log Wood</td>
 											<td>{{ raws.type }}</td>
 											<td>{{ raws.amount }}</td>
+											<td>{{ raws.height }}</td>
+											<td>{{ raws.length }}</td>
+											<td>{{ raws.width }}</td>
 											<td>{{ raws.size }}</td>
 										</tr>
 									</tbody>
@@ -85,6 +91,13 @@
 							>
 								<i data-feather="printer" class="mr-2 icon-md"></i>Print
 							</a>
+							<router-link
+							style="margin-right: 5px"
+								:to="{name: 'bb.index'}"
+								class="btn btn-secondary float-right mt-4 del-btn"
+							>
+								Back
+							</router-link>
 						</div>
 					</div>
 				</div>
