@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 17, 2021 at 05:44 AM
+-- Generation Time: Mar 17, 2021 at 07:36 PM
 -- Server version: 10.4.17-MariaDB
 -- PHP Version: 8.0.1
 
@@ -123,7 +123,13 @@ CREATE TABLE `model_has_permissions` (
 --
 
 INSERT INTO `model_has_permissions` (`permission_id`, `model_type`, `model_id`) VALUES
-(1, 'App\\Models\\User', 1);
+(1, 'App\\Models\\User', 1),
+(2, 'App\\Models\\User', 7),
+(3, 'App\\Models\\User', 9),
+(4, 'App\\Models\\User', 10),
+(5, 'App\\Models\\User', 11),
+(6, 'App\\Models\\User', 12),
+(7, 'App\\Models\\User', 8);
 
 -- --------------------------------------------------------
 
@@ -143,7 +149,13 @@ CREATE TABLE `model_has_roles` (
 
 INSERT INTO `model_has_roles` (`role_id`, `model_type`, `model_id`) VALUES
 (2, 'App\\Models\\User', 2),
-(3, 'App\\Models\\User', 1);
+(3, 'App\\Models\\User', 1),
+(3, 'App\\Models\\User', 7),
+(3, 'App\\Models\\User', 8),
+(3, 'App\\Models\\User', 9),
+(3, 'App\\Models\\User', 10),
+(3, 'App\\Models\\User', 11),
+(3, 'App\\Models\\User', 12);
 
 -- --------------------------------------------------------
 
@@ -176,7 +188,13 @@ CREATE TABLE `permissions` (
 --
 
 INSERT INTO `permissions` (`id`, `name`, `guard_name`, `created_at`, `updated_at`) VALUES
-(1, 'admin packing', 'web', '2021-03-16 23:49:55', '2021-03-16 23:49:55');
+(1, 'admin packing', 'web', '2021-03-16 23:49:55', '2021-03-16 23:49:55'),
+(2, 'admin sawmill', 'web', '2021-03-17 14:23:12', '2021-03-17 14:23:12'),
+(3, 'admin pembahanan basah', 'web', '2021-03-17 14:23:19', '2021-03-17 14:23:19'),
+(4, 'admin pembahanan kering', 'web', '2021-03-17 14:23:25', '2021-03-17 14:23:25'),
+(5, 'admin joint', 'web', '2021-03-17 14:23:30', '2021-03-17 14:23:30'),
+(6, 'admin coating', 'web', '2021-03-17 14:23:35', '2021-03-17 14:23:35'),
+(7, 'admin bahan-baku', 'web', '2021-03-17 14:23:40', '2021-03-17 14:23:40');
 
 -- --------------------------------------------------------
 
@@ -208,7 +226,7 @@ CREATE TABLE `raws` (
 INSERT INTO `raws` (`id`, `series`, `structure_category_id`, `size`, `width`, `height`, `length`, `uom`, `nop`, `amount`, `status`, `invoice_id`, `created_at`, `updated_at`) VALUES
 (37, 'TRM-8509', 3, 12, 230, 21, 4, 'm3', '1', '21', 'partially finished', 14, '2021-03-16 16:13:31', '2021-03-16 17:31:16'),
 (38, 'JT-8510', 1, 8, 2, 2, 2, 'm3', '2', '23', 'partially finished', 14, '2021-03-16 17:22:34', '2021-03-16 22:31:06'),
-(39, 'TRM-8511', 3, 300390, 34, 95, 93, 'm3', '49', '49', 'unprocessed', 14, '2021-03-17 03:54:43', '2021-03-17 03:54:44'),
+(39, 'TRM-8511', 3, 300390, 34, 95, 93, 'm3', '49', '49', 'unprocessed', 14, '2021-03-17 03:54:43', '2021-03-17 15:50:11'),
 (40, 'BKR-8512', 6, 1195057, 233, 23, 223, 'm3', '2', '6', 'partially finished', 14, '2021-03-17 03:55:39', '2021-03-17 03:59:24');
 
 -- --------------------------------------------------------
@@ -390,7 +408,12 @@ INSERT INTO `stocks` (`id`, `name`, `stockprofile_id`, `tally`, `size`, `height`
 (81, 'JT BB RST', NULL, 'IR13238', 1728, 12, 12, 12, NULL, NULL, 38, 4, 1, 1, 1, '2021-03-16 17:31:37', '2021-03-16 17:31:37'),
 (82, 'BNGKR BB RST MD COATED', 26, 'IR13239', 5796, 23, 21, 12, 'confirmed', 'finished on BMI-E', 40, 4, 1, 2, 13, '2021-03-17 03:59:57', '2021-03-17 04:04:32'),
 (83, 'BNGKR BB JOINT KD HF', 27, 'IR13240', 1728, 12, 12, 12, 'confirmed', 'finished on BMI-F', 40, 3, 1, 3, 4, '2021-03-17 04:00:10', '2021-03-17 04:14:53'),
-(84, 'BNGKR BB SQUARE KD', 28, 'IR13241', 1, 1, 1, 1, 'confirmed', 'finished on BMI-DB', 40, 5, 1, 1, 3, '2021-03-17 04:11:01', '2021-03-17 04:12:08');
+(84, 'BNGKR BB SQUARE KD', 28, 'IR13241', 1, 1, 1, 1, 'confirmed', 'finished on BMI-DB', 40, 5, 1, 1, 3, '2021-03-17 04:11:01', '2021-03-17 04:12:08'),
+(85, 'BNGKR BB RST', NULL, 'IR13242', 23552, 32, 32, 23, 'unconfirmed', 'moving to GUDANG P BASAH', 40, 4, 1, 1, 2, '2021-03-17 05:37:53', '2021-03-17 11:16:03'),
+(86, 'BNGKR BB RST', NULL, 'IR13243', 0, 0.004, 0.003, 0.003, 'unconfirmed', 'moving to GUDANG P BASAH', 40, 4, 1, 1, 2, '2021-03-17 11:16:25', '2021-03-17 11:16:34'),
+(87, 'BNGKR BB RST', NULL, 'IR13244', 12167, 23, 23, 23, 'unconfirmed', 'moving to GUDANG P BASAH', 40, 4, 1, 1, 2, '2021-03-17 11:17:03', '2021-03-17 11:17:09'),
+(88, 'BNGKR BB RST', NULL, 'IR13245', 3024, 12, 21, 12, NULL, NULL, 40, 4, 1, 1, 1, '2021-03-17 11:17:47', '2021-03-17 11:17:47'),
+(89, 'BNGKR BB JOINT', NULL, 'IR13246', 1728, 12, 12, 12, NULL, NULL, 40, 3, 1, 1, 1, '2021-03-17 18:26:42', '2021-03-17 18:26:42');
 
 -- --------------------------------------------------------
 
@@ -518,7 +541,13 @@ CREATE TABLE `users` (
 
 INSERT INTO `users` (`id`, `name`, `email`, `address`, `mobile`, `email_verified_at`, `password`, `remember_token`, `created_at`, `updated_at`, `warehouse_id`) VALUES
 (1, 'adminpacking', 'adminpacking@gmail.com', 'sembarang', 1231425, NULL, '$2y$10$/ZsjFsKmYj9FDVmCZD9Voe/mOouO7O8eZrGpQWqhSys7oGpa.nnca', NULL, '2021-03-16 23:55:42', '2021-03-16 23:55:42', 2),
-(2, 'superadmin', 'superadmin@gmail.com', 'yes', 89232, NULL, '$2y$10$/ZsjFsKmYj9FDVmCZD9Voe/mOouO7O8eZrGpQWqhSys7oGpa.nnca', NULL, '2021-03-16 23:55:42', '2021-03-16 23:55:42', NULL);
+(2, 'superadmin', 'superadmin@gmail.com', 'yes', 89232, NULL, '$2y$10$/ZsjFsKmYj9FDVmCZD9Voe/mOouO7O8eZrGpQWqhSys7oGpa.nnca', NULL, '2021-03-16 23:55:42', '2021-03-16 23:55:42', NULL),
+(7, 'adminsawmill', 'adminsawmill@gmail.com', 'terserah', 821332423, NULL, '$2y$10$Hv3US1RDY52LsTEt99xfMeDb.EcT5ZLSuw5aV6aNNIG9KbIqWSNta', NULL, '2021-03-17 14:41:17', '2021-03-17 14:41:17', NULL),
+(8, 'adminbahanbaku', 'adminbahanbaku@gmail.com', 'terserah', 2313123123, NULL, '$2y$10$GDVDP//TMilsHubPh151duHxn0/FJ69LlPBiuGGQ5NxUpbxHoEhNO', NULL, '2021-03-17 14:44:55', '2021-03-17 14:44:55', NULL),
+(9, 'admin pembahanan basah', 'admin_p_basah@gmail.com', 'terserah', 1231231231, NULL, '$2y$10$LC9moPrLyKae4ddLMUv8l.d5JrE8oSkQsvTgBD.H7xz3kj0TAyf5y', NULL, '2021-03-17 14:46:14', '2021-03-17 14:46:14', NULL),
+(10, 'admin pembahanan kering', 'admin_p_kering@gmail.com', 'terserah', 8123123, NULL, '$2y$10$fxK4ui1pcWFkf9rGHZPV8.YFW33wDvXSQvgBy9kQxWCD0aU8Bs4Su', NULL, '2021-03-17 14:47:19', '2021-03-17 14:47:19', NULL),
+(11, 'admin joint', 'adminjoint@gmail.com', 'terserah', 123123123, NULL, '$2y$10$WBXbExun1ird93tKerW1L.mHe7BJrISY08eMzM3LZTDyT.bwzg.gm', NULL, '2021-03-17 14:51:13', '2021-03-17 14:51:13', NULL),
+(12, 'admin coating', 'admincoating@gmail.com', 'terserah', 2131363442, NULL, '$2y$10$aJp4U.BZNUvJ3E2Anik2nOKlLP0lLjlEyPt2oOG5qGufm.64kYOlu', NULL, '2021-03-17 14:51:49', '2021-03-17 16:05:39', NULL);
 
 -- --------------------------------------------------------
 
@@ -735,7 +764,7 @@ ALTER TABLE `migrations`
 -- AUTO_INCREMENT for table `permissions`
 --
 ALTER TABLE `permissions`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `raws`
@@ -747,7 +776,7 @@ ALTER TABLE `raws`
 -- AUTO_INCREMENT for table `records`
 --
 ALTER TABLE `records`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=178;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=184;
 
 --
 -- AUTO_INCREMENT for table `roles`
@@ -777,7 +806,7 @@ ALTER TABLE `stockprofiles`
 -- AUTO_INCREMENT for table `stocks`
 --
 ALTER TABLE `stocks`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=85;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=90;
 
 --
 -- AUTO_INCREMENT for table `structure_categories`
@@ -807,7 +836,7 @@ ALTER TABLE `unit_measures`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT for table `warehouses`
