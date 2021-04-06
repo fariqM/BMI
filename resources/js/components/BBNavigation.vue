@@ -27,7 +27,7 @@
 
 				<li class="nav-item" style="">
 					<a class="nav-link has-arrow" aria-expanded="false">
-						<i class="link-icon" data-feather="mail"></i>
+					<i class="link-icon" data-feather="life-buoy"></i>
 						<span class="link-title">Gudang Bahan Baku</span>
 					</a>
 					<ul class="costum-submenu">

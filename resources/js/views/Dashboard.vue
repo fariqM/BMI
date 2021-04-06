@@ -64,11 +64,11 @@
 								<input
 									class="costum-checkbox"
 									v-model="filterOn"
-									value="nop"
+									value="name"
 									id="kolomID"
 									type="checkbox"
 								/>
-								<label class="costum-checkbox" for="kolomID">Nop</label>
+								<label class="costum-checkbox" for="kolomID">name</label>
 
 								<input
 									class="costum-checkbox"
@@ -77,7 +77,50 @@
 									id="kolomRef"
 									type="checkbox"
 								/>
-								<label class="costum-checkbox" for="kolomRef">Series</label>
+								<label class="costum-checkbox" for="kolomRef">series</label>
+
+								<input
+									class="costum-checkbox"
+									v-model="filterOn"
+									value="tally"
+									id="kolomID"
+									type="checkbox"
+								/>
+								<label class="costum-checkbox" for="kolomID">tally</label>
+
+								<input
+									class="costum-checkbox"
+									v-model="filterOn"
+									value="pcs"
+									id="kolomRef"
+									type="checkbox"
+								/>
+								<label class="costum-checkbox" for="kolomRef">pcs</label>
+								<input
+									class="costum-checkbox"
+									v-model="filterOn"
+									value="height"
+									id="kolomID"
+									type="checkbox"
+								/>
+								<label class="costum-checkbox" for="kolomID">height</label>
+
+								<input
+									class="costum-checkbox"
+									v-model="filterOn"
+									value="length"
+									id="kolomRef"
+									type="checkbox"
+								/>
+								<label class="costum-checkbox" for="kolomRef">length</label>
+								<input
+									class="costum-checkbox"
+									v-model="filterOn"
+									value="width"
+									id="kolomRef"
+									type="checkbox"
+								/>
+								<label class="costum-checkbox" for="kolomRef">width</label>
 							</div>
 							<div class="header-controller-table-3">
 								<div class="header-controller-table-3-1"></div>
@@ -202,6 +245,7 @@ export default {
 				{ key: "name", label: "name", sortable: true },
 				{ key: "series", label: "Series", sortable: true },
 				{ key: "tally", label: "tally", sortable: true },
+				{ key: "pcs", label: "pcs", sortable: true },
 				{ key: "warehouse", label: "warehouse", sortable: true },
 				{ key: "status", label: "status", sortable: true },
 				{ key: "size", label: "volume (m3)", sortable: true },

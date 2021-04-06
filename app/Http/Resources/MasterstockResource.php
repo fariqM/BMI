@@ -36,6 +36,7 @@ class MasterstockResource extends JsonResource
             'stockprofile_id' => $this->stockprofile_id,
             'profile_wood' => $this->stockprofile,
             'tally' => $this->tally,
+            'pcs' => $this->pcs,
             'size' => $this->size,
             'height' => $this->height,
             'width' => $this->width,

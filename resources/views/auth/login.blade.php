@@ -42,9 +42,7 @@
                         <div class="card">
                             <div class="row">
                                 <div class="col-md-4 pr-md-0">
-                                    <div class="auth-left-wrapper"
-                                        style="background-image: url(https://binamegah.com/wp-content/uploads/2014/03/Warehouse.jpg)">
-
+                                    <div class="auth-left-wrapper">
                                     </div>
                                 </div>
                                 <div class="col-md-8 pl-md-0">
