@@ -106,8 +106,12 @@ Laravel is a web application framework with expressive, elegant syntax. We belie
 
 Laravel is accessible, powerful, and provides tools required for large, robust applications.
 
-## Documentation of Laravel
+## Capture
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+![Screenshot (934)](https://user-images.githubusercontent.com/71390462/122751149-970e1f80-d2b9-11eb-8f56-53a43daff1ac.png)
+![Screenshot (938)](https://user-images.githubusercontent.com/71390462/122751161-9aa1a680-d2b9-11eb-892a-1cb49803c93f.png)
+![Screenshot (1230)](https://user-images.githubusercontent.com/71390462/122754338-bdce5500-d2bd-11eb-920b-aa4f9f0e5633.png)
+![Screenshot (1231)](https://user-images.githubusercontent.com/71390462/122754339-beff8200-d2bd-11eb-96b2-2cc47bb93e81.png)
+![Screenshot (1232)](https://user-images.githubusercontent.com/71390462/122754346-c0c94580-d2bd-11eb-9b4f-9e79a7ff61c6.png)
+![Screenshot (1234)](https://user-images.githubusercontent.com/71390462/122754348-c161dc00-d2bd-11eb-8db1-28594681bd6c.png)
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 1500 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
